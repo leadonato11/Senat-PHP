@@ -1,0 +1,150 @@
+p {
+  margin: 0;
+}
+
+.divider {
+  border: 1px solid #afafaf;
+  width: 100%;
+  margin: 0;
+}
+
+.sidebar__logo {
+  width: 80px;
+}
+
+.alimento__fotoPrincipal {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.imgAlimentoProfile {
+  width: 350px;
+}
+
+.alimento__dataInicial {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.macronutrientes__data {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.inputMacroData__subCategory {
+  background-color: #f6f8ff;
+}
+
+.inputMacroData__principalCategory {
+background-color: #d8cccc;
+}
+
+.inputMacroData {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.inputMicroData,
+.imgPorcionesFiles {
+  display: flex;
+  flex-direction: row;
+}
+
+.porciones__data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgPorcionesFiles {
+  flex-wrap: wrap;
+}
+
+.porcion {
+  margin: 10px;
+}
+
+.custom-file-input ~ .custom-file-label::after {
+  content: "Elegir";
+}
+
+.InputInfoPorcion {
+  margin-top: 5px;
+}
+
+.input-group {
+  margin: 10px;
+  width: 100%;
+}
+
+.buttons__AlimentoAlta {
+  display: flex;
+  justify-content: center;
+}
+
+.labelMacroNut {
+  width: 80px;
+  justify-content: center;
+  border: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.labelMacroMicroNut {
+  width: 130px;
+  justify-content: center;
+  border: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.labelUnidMed {
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+  width: 55px;
+  max-width: 100px;
+  justify-content: center;
+}
+
+.inputCantGeneral {
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.tableGrupos {
+  width: 50%;
+  margin: 15px auto;
+}
+
+.tableGrupos th, .tableGrupos td {
+  vertical-align: middle;
+}
+
+textarea {
+  resize: none;
+}
+
+.checkbox_frec {
+  margin-top: 50px;
+}
