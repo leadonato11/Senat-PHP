@@ -55,7 +55,7 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
 	}		
 ?>
 <!-- Generación de ID's para actualizar valores en timpo real (ver de hacer con una sentencia FOR)--> 
-<script type"text/javascript">
+<script type="text/javascript">
 	function cantidad(valor) 
 	{	
 		
@@ -369,7 +369,7 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="alimento__fotoPrincipal">
                   <img class="img-fluid rounded mb-2 imgAlimentoProfile"
-                    src="https://www.eluniversal.com.mx/sites/default/files/2016/09/07/manzana.jpg" alt="foodImage">
+                    src="../../img/imgAlimentos/<?php echo $db['nombre']; ?>falimento.jpg" alt="foodImage">
                 </div>
               </div>
               <div class="col-lg-8 col-md-4 col-sm-12">
@@ -411,7 +411,7 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
                     <div class="col-lg-3 col-md-6 col-sm-12">
                       <div class="porcion">
                         <img class="img-fluid rounded mb-2 imgAlimentoProfile"
-                          src="https://www.eluniversal.com.mx/sites/default/files/2016/09/07/manzana.jpg"
+                          src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion1.jpg"
                           alt="foodImage">
                         <div class="InputInfoPorcion">
                           <input type="number" class="form-control"
@@ -422,7 +422,7 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
                     <div class="col-lg-3 col-md-6 col-sm-12">
                       <div class="porcion">
                         <img class="img-fluid rounded mb-2 imgAlimentoProfile"
-                          src="https://www.eluniversal.com.mx/sites/default/files/2016/09/07/manzana.jpg"
+                          src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion2.jpg"
                           alt="foodImage">
                         <div class="InputInfoPorcion">
                           <input type="number" class="form-control" 
@@ -433,7 +433,7 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
                     <div class="col-lg-3 col-md-6 col-sm-12">
                       <div class="porcion">
                         <img class="img-fluid rounded mb-2 imgAlimentoProfile"
-                          src="https://www.eluniversal.com.mx/sites/default/files/2016/09/07/manzana.jpg"
+                          src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion3.jpg"
                           alt="foodImage">
                         <div class="InputInfoPorcion">
                           <input type="number" class="form-control" 
@@ -444,7 +444,7 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
                     <div class="col-lg-3 col-md-6 col-sm-12">
                       <div class="porcion">
                         <img class="img-fluid rounded mb-2 imgAlimentoProfile"
-                          src="https://www.eluniversal.com.mx/sites/default/files/2016/09/07/manzana.jpg"
+                          src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion4.jpg"
                           alt="foodImage">
                         <div class="InputInfoPorcion">
                           <input type="number" class="form-control" 
@@ -1005,14 +1005,7 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="../../../vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="../../../js/demo/chart-area-demo.js"></script>
-  <script src="../../../js/demo/chart-pie-demo.js"></script>
-
+  
 </body>
 
 </html>

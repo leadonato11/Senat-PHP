@@ -317,7 +317,7 @@ function confirmDelete()
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                           id="basic-addon1">Cantidad</span>
                       </div>
-                      <input type="number" class="form-control inputCantGeneral" name="cant" placeholder="Cantidad porción gral..."
+                      <input type="number" step="any" min="0" class="form-control inputCantGeneral" name="cant" placeholder="Cantidad porción gral..."
                         aria-label="cantidadAlimento" aria-describedby="basic-addon1" title="Cantidad porción gral...">
                       <select class="custom-select" name="umedida" id="inputGroupSelect01" title="Unidad de medida">
                         <option selected disabled>Unidad de medida</option>
@@ -358,7 +358,7 @@ function confirmDelete()
                               01</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" class="form-control" name="porcion1" placeholder="Peso/Volumen porción 01"
+                            <input type="number" step="any" min="0" class="form-control" name="porcion1" placeholder="Peso/Volumen porción 01"
                               aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                           </div>
                         </div>
@@ -371,7 +371,7 @@ function confirmDelete()
                               02</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" class="form-control" name="porcion2" placeholder="Peso/Volumen porción 02"
+                            <input type="number" step="any" min="0" class="form-control" name="porcion2" placeholder="Peso/Volumen porción 02"
                               aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                           </div>
                         </div>
@@ -384,7 +384,7 @@ function confirmDelete()
                               03</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" class="form-control" name="porcion3" placeholder="Peso/Volumen porción 03"
+                            <input type="number" step="any" min="0" class="form-control" name="porcion3" placeholder="Peso/Volumen porción 03"
                               aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                           </div>
                         </div>
@@ -397,7 +397,7 @@ function confirmDelete()
                               04</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" class="form-control" name="porcion4" placeholder="Peso/Volumen porción 04"
+                            <input type="number" step="any" min="0" class="form-control" name="porcion4" placeholder="Peso/Volumen porción 04"
                               aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                           </div>
                         </div>
@@ -416,7 +416,7 @@ function confirmDelete()
                             <span class="input-group-text labelMacroNut bg-dark text-light"
                               id="basic-addon1">Energía</span>
                           </div>
-                          <input type="number" id="cant1" name="1" class="form-control" aria-label="fuenteAlimento"
+                          <input type="number" step="any" min="0" id="cant1" name="1" class="form-control" aria-label="fuenteAlimento"
                             aria-describedby="basic-addon1">
                           <div class="input-group-prepend">
                             <span class="input-group-text labelUnidMed bg-dark text-light" id="basic-addon1">kcal</span>
@@ -427,7 +427,7 @@ function confirmDelete()
                             <span class="input-group-text labelMacroNut bg-dark text-light"
                               id="basic-addon1">Grasa</span>
                           </div>
-                          <input type="number" id="cant2" name="2" class="form-control" aria-label="fuenteAlimento"
+                          <input type="number" step="any" min="0" id="cant2" name="2" class="form-control" aria-label="fuenteAlimento"
                             aria-describedby="basic-addon1">
                           <div class="input-group-prepend">
                             <span class="input-group-text labelUnidMed bg-dark text-light" id="basic-addon1">g</span>
@@ -438,7 +438,7 @@ function confirmDelete()
                             <span class="input-group-text labelMacroNut bg-dark text-light" id="basic-addon1">H.
                               Carb.</span>
                           </div>
-                          <input type="number" id="cant3" name="3" class="form-control" aria-label="fuenteAlimento"
+                          <input type="number" step="any" min="0" id="cant3" name="3" class="form-control" aria-label="fuenteAlimento"
                             aria-describedby="basic-addon1">
                           <div class="input-group-prepend">
                             <span class="input-group-text labelUnidMed bg-dark text-light" id="basic-addon1">g</span>
@@ -449,7 +449,7 @@ function confirmDelete()
                             <span class="input-group-text labelMacroNut bg-dark text-light"
                               id="basic-addon1">Proteína</span>
                           </div>
-                          <input type="number" id="cant4" name="4" class="form-control" aria-label="fuenteAlimento"
+                          <input type="number" step="any" min="0" id="cant4" name="4" class="form-control" aria-label="fuenteAlimento"
                             aria-describedby="basic-addon1">
                           <div class="input-group-prepend">
                             <span class="input-group-text labelUnidMed bg-dark text-light" id="basic-addon1">g</span>
@@ -469,7 +469,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Colesterol</span>
                         </div>
-                        <input type="number" id="cant5" name="5" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant5" name="5" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -481,7 +481,7 @@ function confirmDelete()
                             title="Fibra alimentaria">Fibra
                             Alim.</span>
                         </div>
-                        <input type="number" id="cant6" name="6" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant6" name="6" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -492,7 +492,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Sodio</span>
                         </div>
-                        <input type="number" id="cant7" name="7" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant7" name="7" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -503,7 +503,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Agua</span>
                         </div>
-                        <input type="number" id="cant8" name="8" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant8" name="8" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -515,7 +515,7 @@ function confirmDelete()
                             id="basic-addon1">Vitamina
                             A</span>
                         </div>
-                        <input type="number" id="cant9" name="9" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant9" name="9" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
@@ -527,7 +527,7 @@ function confirmDelete()
                             id="basic-addon1">Vitamina
                             B6</span>
                         </div>
-                        <input type="number" id="cant10" name="10" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant10" name="10" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -539,7 +539,7 @@ function confirmDelete()
                             id="basic-addon1">Vitamina
                             B12</span>
                         </div>
-                        <input type="number" id="cant11" name="11" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant11" name="11" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
@@ -551,7 +551,7 @@ function confirmDelete()
                             id="basic-addon1">Vitamina
                             C</span>
                         </div>
-                        <input type="number" id="cant12" name="12" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant12" name="12" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -563,7 +563,7 @@ function confirmDelete()
                             id="basic-addon1">Vitamina
                             D</span>
                         </div>
-                        <input type="number" id="cant13" name="13" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant13" name="13" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
@@ -574,7 +574,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Cloruro</span>
                         </div>
-                        <input type="number" id="cant39" name="39" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant39" name="39" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -585,7 +585,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Folato</span>
                         </div>
-                        <input type="number" id="cant34" name="34" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant34" name="34" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
@@ -596,7 +596,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Ácido
                             fólico</span>
                         </div>
-                        <input type="number" id="cant35" name="35" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant35" name="35" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
@@ -611,7 +611,7 @@ function confirmDelete()
                             id="basic-addon1">Vitamina
                             E</span>
                         </div>
-                        <input type="number" id="cant14" name="14" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant14" name="14" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -623,7 +623,7 @@ function confirmDelete()
                             id="basic-addon1">Vitamina
                             K</span>
                         </div>
-                        <input type="number" id="cant15" name="15" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant15" name="15" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
@@ -634,7 +634,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Almidón</span>
                         </div>
-                        <input type="number" id="cant16" name="16" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant16" name="16" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -645,7 +645,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Lactosa</span>
                         </div>
-                        <input type="number" id="cant17" name="17" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant17" name="17" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -656,7 +656,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Alcohol</span>
                         </div>
-                        <input type="number" id="cant18" name="18" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant18" name="18" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -667,7 +667,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Cafeína</span>
                         </div>
-                        <input type="number" id="cant19" name="19" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant19" name="19" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -678,7 +678,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Azúcares</span>
                         </div>
-                        <input type="number" id="cant20" name="20" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant20" name="20" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -689,7 +689,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Calcio</span>
                         </div>
-                        <input type="number" id="cant21" name="21" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant21" name="21" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -700,7 +700,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Hierro</span>
                         </div>
-                        <input type="number" id="cant22" name="22" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant22" name="22" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -711,7 +711,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Grasas
                             trans</span>
                         </div>
-                        <input type="number" id="cant36" name="36" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant36" name="36" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -723,7 +723,7 @@ function confirmDelete()
                             title="Grasas monoinsaturadas">Grasas
                             mono.</span>
                         </div>
-                        <input type="number" id="cant37" name="37" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant37" name="37" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -735,7 +735,7 @@ function confirmDelete()
                             title="Grasas poliinsaturadas">Grasas
                             poli.</span>
                         </div>
-                        <input type="number" id="cant38" name="38" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant38" name="38" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">g</span>
@@ -749,7 +749,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Magnesio</span>
                         </div>
-                        <input type="number" id="cant23" name="23" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant23" name="23" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -760,7 +760,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Fósforo</span>
                         </div>
-                        <input type="number" id="cant24" name="24" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant24" name="24" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -771,7 +771,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Cinc</span>
                         </div>
-                        <input type="number" id="cant25" name="25" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant25" name="25" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -782,7 +782,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Cobre</span>
                         </div>
-                        <input type="number" id="cant26" name="26" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant26" name="26" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -793,7 +793,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Fluor</span>
                         </div>
-                        <input type="number" id="cant27" name="27" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant27" name="27" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
@@ -804,7 +804,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Manganeso</span>
                         </div>
-                        <input type="number" id="cant28" name="28" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant28" name="28" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -815,7 +815,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Selenio</span>
                         </div>
-                        <input type="number" id="cant29" name="29" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant29" name="29" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
@@ -826,7 +826,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Tiamina</span>
                         </div>
-                        <input type="number" id="cant30" name="30" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant30" name="30" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -837,7 +837,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Riboflavina</span>
                         </div>
-                        <input type="number" id="cant32" name="32" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant32" name="32" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -848,7 +848,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                             id="basic-addon1">Niacina</span>
                         </div>
-                        <input type="number" id="cant33" name="33" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant33" name="33" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -859,7 +859,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1"
                             title="Ácido pantetónico">Ácido pant.</span>
                         </div>
-                        <input type="number" id="cant31" name="31" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant31" name="31" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">mg</span>
@@ -870,7 +870,7 @@ function confirmDelete()
                           <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1"
                             title="">Carotenos</span>
                         </div>
-                        <input type="number" id="cant40" name="40" class="form-control" aria-label="fuenteAlimento"
+                        <input type="number" step="any" min="0" id="cant40" name="40" class="form-control" aria-label="fuenteAlimento"
                           aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                           <span class="input-group-text bg-dark text-light labelUnidMed" id="basic-addon1">µg</span>
