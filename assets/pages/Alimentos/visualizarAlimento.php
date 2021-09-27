@@ -13,8 +13,8 @@ $c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $a=mysqli_fetch_assoc($c);
 
 //Datos del alimento desde Tabla alimentos a traves de idalimentos(Variable de Session) -> db
-if(isset($_REQUEST['idAlimento']) && !empty($_REQUEST['idAlimento'])){
-$_SESSION['alimento']=$_REQUEST['idAlimento'];
+if(isset($_REQUEST['e']) && !empty($_REQUEST['e'])){
+$_SESSION['alimento']=$_REQUEST['e'];
 }
 $idalimentos=$_SESSION['alimento'];
 $dbquery=mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idalimentos'");
@@ -26,15 +26,7 @@ $gquery=mysqli_query($conect, "SELECT * FROM grupos ");
 while($gdb=$gquery->fetch_array()){
         $gdbs[]=$gdb;
     }
-//
-//Eliminar Alimento
-if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])){
-  $idAlimentoEliminar=$_REQUEST['eliminarAlimento'];
-  $delete=mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos='$idAlimentoEliminar' ");
-  if($delete!=0){
-    header("Location:gestionAlimentos.php?eliminados=".$delete);
-  }
-}
+
     
 ?>
 
@@ -60,125 +52,125 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
 	{	
 		
 		var val1 = '<?php echo strval($valueNutrientes[1]); ?>';
-		document.getElementById("cant1").setAttribute("value", (parseFloat(valor)*parseFloat(val1)).toFixed(2));
+		document.getElementById("cant1").setAttribute("value", parseFloat(valor)*parseFloat(val1));
 		
 		
 		var val2 = '<?php echo strval($valueNutrientes[2])?>';
-		document.getElementById("cant2").setAttribute("value", parseFloat(valor)*parseFloat(val2)).toFixed(2));
+		document.getElementById("cant2").setAttribute("value", parseFloat(valor)*parseFloat(val2));
 		
 		var val3 = '<?php echo strval($valueNutrientes[3]); ?>';
-		document.getElementById("cant3").setAttribute("value", parseFloat(valor)*parseFloat(val3)).toFixed(2));
+		document.getElementById("cant3").setAttribute("value", parseFloat(valor)*parseFloat(val3));
 		
 		var val4 = '<?php echo strval($valueNutrientes[4]); ?>';
-		document.getElementById("cant4").setAttribute("value", parseFloat(valor)*parseFloat(val4)).toFixed(2));
+		document.getElementById("cant4").setAttribute("value", parseFloat(valor)*parseFloat(val4));
 		
 		var val5 = '<?php echo strval($valueNutrientes[5]); ?>';
-		document.getElementById("cant5").setAttribute("value", parseFloat(valor)*parseFloat(val5)).toFixed(2));
+		document.getElementById("cant5").setAttribute("value", parseFloat(valor)*parseFloat(val5));
 		
 		var val6 = '<?php echo strval($valueNutrientes[6]); ?>';
-		document.getElementById("cant6").setAttribute("value", parseFloat(valor)*parseFloat(val6)).toFixed(2));
+		document.getElementById("cant6").setAttribute("value", parseFloat(valor)*parseFloat(val6));
 		
 		var val7 = '<?php echo strval($valueNutrientes[7]); ?>';
-		document.getElementById("cant7").setAttribute("value", parseFloat(valor)*parseFloat(val7)).toFixed(2));
+		document.getElementById("cant7").setAttribute("value", parseFloat(valor)*parseFloat(val7));
 		
 		var val8 = '<?php echo strval($valueNutrientes[8]); ?>';
-		document.getElementById("cant8").setAttribute("value", parseFloat(valor)*parseFloat(val8)).toFixed(2));
+		document.getElementById("cant8").setAttribute("value", parseFloat(valor)*parseFloat(val8));
 		
 		var val9 = '<?php echo strval($valueNutrientes[9]); ?>';
-		document.getElementById("cant9").setAttribute("value", parseFloat(valor)*parseFloat(val9)).toFixed(2));
+		document.getElementById("cant9").setAttribute("value", parseFloat(valor)*parseFloat(val9));
 		
 		var val10 = '<?php echo strval($valueNutrientes[10]); ?>';
-		document.getElementById("cant10").setAttribute("value", parseFloat(valor)*parseFloat(val10)).toFixed(2));
+		document.getElementById("cant10").setAttribute("value", parseFloat(valor)*parseFloat(val10));
 		
 		var val11 = '<?php echo strval($valueNutrientes[11]); ?>';
-		document.getElementById("cant11").setAttribute("value", parseFloat(valor)*parseFloat(val11)).toFixed(2));
+		document.getElementById("cant11").setAttribute("value", parseFloat(valor)*parseFloat(val11));
 		
 		var val12 = '<?php echo strval($valueNutrientes[12]); ?>';
-		document.getElementById("cant12").setAttribute("value", parseFloat(valor)*parseFloat(val12)).toFixed(2));
+		document.getElementById("cant12").setAttribute("value", parseFloat(valor)*parseFloat(val12));
 		
 		var val13 = '<?php echo strval($valueNutrientes[13]); ?>';
-		document.getElementById("cant13").setAttribute("value", parseFloat(valor)*parseFloat(val13)).toFixed(2));
+		document.getElementById("cant13").setAttribute("value", parseFloat(valor)*parseFloat(val13));
 		
 		var val14 = '<?php echo strval($valueNutrientes[14]); ?>';
-		document.getElementById("cant14").setAttribute("value", parseFloat(valor)*parseFloat(val14)).toFixed(2));
+		document.getElementById("cant14").setAttribute("value", parseFloat(valor)*parseFloat(val14));
 		
 		var val15 = '<?php echo strval($valueNutrientes[15]); ?>';
-		document.getElementById("cant15").setAttribute("value", parseFloat(valor)*parseFloat(val15)).toFixed(2));
+		document.getElementById("cant15").setAttribute("value", parseFloat(valor)*parseFloat(val15));
 		
 		var val16 = '<?php echo strval($valueNutrientes[16]); ?>';
-		document.getElementById("cant16").setAttribute("value", parseFloat(valor)*parseFloat(val16)).toFixed(2));
+		document.getElementById("cant16").setAttribute("value", parseFloat(valor)*parseFloat(val16));
 		
 		var val17 = '<?php echo strval($valueNutrientes[17]); ?>';
-		document.getElementById("cant17").setAttribute("value", parseFloat(valor)*parseFloat(val17)).toFixed(2));
+		document.getElementById("cant17").setAttribute("value", parseFloat(valor)*parseFloat(val17));
 		
 		var val18 = '<?php echo strval($valueNutrientes[18]); ?>';
-		document.getElementById("cant18").setAttribute("value", parseFloat(valor)*parseFloat(val18)).toFixed(2));
+		document.getElementById("cant18").setAttribute("value", parseFloat(valor)*parseFloat(val18));
 		
 		var val19 = '<?php echo strval($valueNutrientes[19]); ?>';
-		document.getElementById("cant19").setAttribute("value", parseFloat(valor)*parseFloat(val19)).toFixed(2));
+		document.getElementById("cant19").setAttribute("value", parseFloat(valor)*parseFloat(val19));
 		
 		var val20 = '<?php echo strval($valueNutrientes[20]); ?>';
-		document.getElementById("cant20").setAttribute("value", parseFloat(valor)*parseFloat(val20)).toFixed(2));
+		document.getElementById("cant20").setAttribute("value", parseFloat(valor)*parseFloat(val20));
 		
 		var val21 = '<?php echo strval($valueNutrientes[21]); ?>';
-		document.getElementById("cant21").setAttribute("value", parseFloat(valor)*parseFloat(val21)).toFixed(2));
+		document.getElementById("cant21").setAttribute("value", parseFloat(valor)*parseFloat(val21));
 		
 		var val22 = '<?php echo strval($valueNutrientes[22]); ?>';
-		document.getElementById("cant22").setAttribute("value", parseFloat(valor)*parseFloat(val22)).toFixed(2));
+		document.getElementById("cant22").setAttribute("value", parseFloat(valor)*parseFloat(val22));
 		
 		var val23 = '<?php echo strval($valueNutrientes[23]); ?>';
-		document.getElementById("cant23").setAttribute("value", parseFloat(valor)*parseFloat(val23)).toFixed(2));
+		document.getElementById("cant23").setAttribute("value", parseFloat(valor)*parseFloat(val23));
 		
 		var val24 = '<?php echo strval($valueNutrientes[24]); ?>';
-		document.getElementById("cant24").setAttribute("value", parseFloat(valor)*parseFloat(val24)).toFixed(2));
+		document.getElementById("cant24").setAttribute("value", parseFloat(valor)*parseFloat(val24));
 		
 		var val25 = '<?php echo strval($valueNutrientes[25]); ?>';
-		document.getElementById("cant25").setAttribute("value", parseFloat(valor)*parseFloat(val25)).toFixed(2));
+		document.getElementById("cant25").setAttribute("value", parseFloat(valor)*parseFloat(val25));
 		
 		var val26 = '<?php echo strval($valueNutrientes[26]); ?>';
-		document.getElementById("cant26").setAttribute("value", parseFloat(valor)*parseFloat(val26)).toFixed(2));
+		document.getElementById("cant26").setAttribute("value", parseFloat(valor)*parseFloat(val26));
 		
 		var val27 = '<?php echo strval($valueNutrientes[27]); ?>';
-		document.getElementById("cant27").setAttribute("value", parseFloat(valor)*parseFloat(val27)).toFixed(2));
+		document.getElementById("cant27").setAttribute("value", parseFloat(valor)*parseFloat(val27));
 		
 		var val28 = '<?php echo strval($valueNutrientes[28]); ?>';
-		document.getElementById("cant28").setAttribute("value", parseFloat(valor)*parseFloat(val28)).toFixed(2));
+		document.getElementById("cant28").setAttribute("value", parseFloat(valor)*parseFloat(val28));
 		
 		var val29 = '<?php echo strval($valueNutrientes[29]); ?>';
-		document.getElementById("cant29").setAttribute("value", parseFloat(valor)*parseFloat(val29)).toFixed(2));
+		document.getElementById("cant29").setAttribute("value", parseFloat(valor)*parseFloat(val29));
 		
 		var val30 = '<?php echo strval($valueNutrientes[30]); ?>';
-		document.getElementById("cant30").setAttribute("value", parseFloat(valor)*parseFloat(val30)).toFixed(2));
+		document.getElementById("cant30").setAttribute("value", parseFloat(valor)*parseFloat(val30));
 		
 		var val31 = '<?php echo strval($valueNutrientes[31]); ?>';
-		document.getElementById("cant31").setAttribute("value", parseFloat(valor)*parseFloat(val31)).toFixed(2));
+		document.getElementById("cant31").setAttribute("value", parseFloat(valor)*parseFloat(val31));
 		
 		var val32 = '<?php echo strval($valueNutrientes[32]); ?>';
-		document.getElementById("cant32").setAttribute("value", parseFloat(valor)*parseFloat(val32)).toFixed(2));
+		document.getElementById("cant32").setAttribute("value", parseFloat(valor)*parseFloat(val32));
 		
 		var val33 = '<?php echo strval($valueNutrientes[33]); ?>';
-		document.getElementById("cant33").setAttribute("value", parseFloat(valor)*parseFloat(val33)).toFixed(2));
+		document.getElementById("cant33").setAttribute("value", parseFloat(valor)*parseFloat(val33));
 		
 		var val34 = '<?php echo strval($valueNutrientes[34]); ?>';
-		document.getElementById("cant34").setAttribute("value", parseFloat(valor)*parseFloat(val34)).toFixed(2));
+		document.getElementById("cant34").setAttribute("value", parseFloat(valor)*parseFloat(val34));
 		
 		var val35 = '<?php echo strval($valueNutrientes[35]); ?>';
-		document.getElementById("cant35").setAttribute("value", parseFloat(valor)*parseFloat(val35)).toFixed(2));
+		document.getElementById("cant35").setAttribute("value", parseFloat(valor)*parseFloat(val35));
 		
 		var val36 = '<?php echo strval($valueNutrientes[36]); ?>';
-		document.getElementById("cant36").setAttribute("value", parseFloat(valor)*parseFloat(val36)).toFixed(2));
+		document.getElementById("cant36").setAttribute("value", parseFloat(valor)*parseFloat(val36));
 		
 		var val37 = '<?php echo strval($valueNutrientes[37]); ?>';
-		document.getElementById("cant37").setAttribute("value", parseFloat(valor)*parseFloat(val37)).toFixed(2));
+		document.getElementById("cant37").setAttribute("value", parseFloat(valor)*parseFloat(val37));
 		
 		var val38 = '<?php echo strval($valueNutrientes[38]); ?>';
-		document.getElementById("cant38").setAttribute("value", parseFloat(valor)*parseFloat(val38)).toFixed(2));
+		document.getElementById("cant38").setAttribute("value", parseFloat(valor)*parseFloat(val38));
 		
 		var val39 = '<?php echo strval($valueNutrientes[39]); ?>';
-		document.getElementById("cant39").setAttribute("value", parseFloat(valor)*parseFloat(val39)).toFixed(2));
-    
-    var val40 = '<?php echo strval($valueNutrientes[40]); ?>';
-		document.getElementById("cant40").setAttribute("value", parseFloat(valor)*parseFloat(val40)).toFixed(2));
+		document.getElementById("cant39").setAttribute("value", parseFloat(valor)*parseFloat(val39));
+        
+        var val40 = '<?php echo strval($valueNutrientes[40]); ?>';
+		document.getElementById("cant40").setAttribute("value", parseFloat(valor)*parseFloat(val40));
 	}	
 </script>
 

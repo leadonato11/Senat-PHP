@@ -15,8 +15,6 @@ $a=mysqli_fetch_assoc($c);
 //Datos del alimento desde Tabla alimentos a traves de idalimentos(Variable de Session) -> db
 if(isset($_REQUEST['e']) && !empty($_REQUEST['e'])){
 $_SESSION['editarAlimento']=$_REQUEST['e'];
-}else{
-    $_SESSION['editarAlimento']=""; 
 }
 $idalimentos=$_SESSION['editarAlimento'];
 $dbquery=mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idalimentos'");
@@ -48,18 +46,10 @@ if(isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])){
 				$validar=false;
 			}
 		}unset($alimentos);
-        if($nombre!=$db['nombre']){
-            $cambiarNombreFoto=true;
-        }else{
-            $cambiarNombreFoto=false;
-        }
+        
 	//grupo
-			$idgrupos=$_REQUEST['grupo'];
-			//Datos del Grupo desde Tabla grupos a traves de idgrupos -> grupodb
-			$grupoquery=mysqli_query($conect, "SELECT * FROM grupos WHERE idgrupos='$idgrupos'");
-			$grupodb=mysqli_fetch_assoc($grupoquery);
-	
-		$grupo=$grupodb['nombres'];
+			$grupo=$_REQUEST['grupo'];
+		
 	
 	//umedida	
 		$umedida=$_REQUEST['umedida'];
@@ -86,54 +76,41 @@ if(isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])){
 		}
 		
 	//edicion VALIDADA. 
-	
+	if($validar){
 		
-			$update=mysqli_query($conect, "UPDATE alimentos SET  nombre='$nombre', cant='$cant', umedida='$umedida', porcion1='$porcion1', porcion2='$porcion2', porcion3='$porcion3', porcion4='$porcion4', grupo='$grupo', energia='$nutrientes[1]', grasa='$nutrientes[2]', hcarbono='$nutrientes[3]', proteina='$nutrientes[4]', colesterol='$nutrientes[5]', falimentaria='$nutrientes[6]', sodio='$nutrientes[7]', agua='$nutrientes[8]', vitaminaa='$nutrientes[9]', vitaminab6='$nutrientes[10]', vitaminab12='$nutrientes[11]', vitaminac='$nutrientes[12]', vitaminad='$nutrientes[13]', vitaminae='$nutrientes[14]', vitaminak='$nutrientes[15]', almidon='$nutrientes[16]', lactosa='$nutrientes[17]', alcohol='$nutrientes[18]', cafeina='$nutrientes[19]', azucares='$nutrientes[20]', calcio='$nutrientes[21]', hierro='$nutrientes[22]', magnesio='$nutrientes[23]', fosforo='$nutrientes[24]', cinc='$nutrientes[25]', cobre='$nutrientes[26]', fluor='$nutrientes[27]', manganeso='$nutrientes[28]', selenio='$nutrientes[29]', tiamina='$nutrientes[30]', acpant='$nutrientes[31]', riboflavina='$nutrientes[32]', niacina='$nutrientes[33]', folato='$nutrientes[34]', acfolico='$nutrientes[35]', grasast='$nutrientes[36]', grasasmi='$nutrientes[37]', grasaspi='$nutrientes[38]', cloruro='$nutrientes[39]', caroteno='$nutrientes[40]' WHERE idalimentos='$idalimentos'");
+			$update=mysqli_query($conect, "UPDATE alimentos SET nombre='$nombre', cant='$cant', umedida='$umedida', porcion1='$porcion1', porcion2='$porcion2', porcion3='$porcion3', porcion4='$porcion4', grupo='$grupo', energia='$nutrientes[1]', grasa='$nutrientes[2]', hcarbono='$nutrientes[3]', proteina='$nutrientes[4]', colesterol='$nutrientes[5]', falimentaria='$nutrientes[6]', sodio='$nutrientes[7]', agua='$nutrientes[8]', vitaminaa='$nutrientes[9]', vitaminab6='$nutrientes[10]', vitaminab12='$nutrientes[11]', vitaminac='$nutrientes[12]', vitaminad='$nutrientes[13]', vitaminae='$nutrientes[14]', vitaminak='$nutrientes[15]', almidon='$nutrientes[16]', lactosa='$nutrientes[17]', alcohol='$nutrientes[18]', cafeina='$nutrientes[19]', azucares='$nutrientes[20]', calcio='$nutrientes[21]', hierro='$nutrientes[22]', magnesio='$nutrientes[23]', fosforo='$nutrientes[24]', cinc='$nutrientes[25]', cobre='$nutrientes[26]', fluor='$nutrientes[27]', manganeso='$nutrientes[28]', selenio='$nutrientes[29]', tiamina='$nutrientes[30]', acpant='$nutrientes[31]', riboflavina='$nutrientes[32]', niacina='$nutrientes[33]', folato='$nutrientes[34]', acfolico='$nutrientes[35]', grasast='$nutrientes[36]', grasasmi='$nutrientes[37]', grasaspi='$nutrientes[38]', cloruro='$nutrientes[39]', caroteno='$nutrientes[40]' WHERE idalimentos='$idalimentos'");
 				
 						
 			
-			if($_FILES['fotoalimento']['name']!="" || $cambiarNombreFoto){
-            $arch01="../../img/imgAlimentos/".$db['nombre']."falimento.jpg";
-			$arch1=move_uploaded_file($_FILES['fotoalimento']['tmp_name'],"../../img/imgAlimentos/".$namef.".jpg");
-                if($cambiarNombreFoto){
-                    unlink($arch01);
-                }
+			if($_FILES['fotoalimento']['name']!=""){
+            
+			$arch1=move_uploaded_file($_FILES['fotoalimento']['tmp_name'],"../../img/imgAlimentos/".$namef.".jpg");  
             }
-			if($_FILES['fotoporcion1']['name']!="" || $cambiarNombreFoto){
-			$arch02="../../img/imgAlimentos/".$db['nombre']."porcion1.jpg";
-                $arch2=move_uploaded_file($_FILES['fotoporcion1']['tmp_name'],"../../img/imgPorciones/".$name1.".jpg");
-			 if($cambiarNombreFoto){
-                    unlink($arch02);
-                }
+            
+			if($_FILES['fotoporcion1']['name']!=""){
+			
+            $arch2=move_uploaded_file($_FILES['fotoporcion1']['tmp_name'],"../../img/imgPorciones/".$name1.".jpg");
             }
-			if($_FILES['fotoporcion2']['name']!="" || $cambiarNombreFoto){
-			$arch03="../../img/imgAlimentos/".$db['nombre']."porcion2.jpg";
+			if($_FILES['fotoporcion2']['name']!=""){
+            
             $arch3=move_uploaded_file($_FILES['fotoporcion2']['tmp_name'],"../../img/imgPorciones/".$name2.".jpg");
-		    if($cambiarNombreFoto){
-                    unlink($arch03);
-                }	
             }
-			if($_FILES['fotoporcion3']['name']!="" || $cambiarNombreFoto){
-			$arch04="../../img/imgAlimentos/".$db['nombre']."porcion3.jpg";
+			if($_FILES['fotoporcion3']['name']!=""){
+			
             $arch4=move_uploaded_file($_FILES['fotoporcion3']['tmp_name'],"../../img/imgPorciones/".$name3.".jpg");
-                if($cambiarNombreFoto){
-                        unlink($arch04);
-                    }	
             }
-			if($_FILES['fotoporcion4']['name']!="" || $cambiarNombreFoto){
-			$arch05="../../img/imgAlimentos/".$db['nombre']."porcion4.jpg";
+			if($_FILES['fotoporcion4']['name']!=""){
+			
             $arch5=move_uploaded_file($_FILES['fotoporcion4']['tmp_name'],"../../img/imgPorciones/".$name4.".jpg");
-                if($cambiarNombreFoto){
-                        unlink($arch05);
-                    }	
-            }			
+            }	
 				
 		
         if($update>0){
-		    header("Location:gestionAlimentos.php?modificado=exitoso");
+		    header("Location:gestionAlimentos.php?modificado=exitoso".$grupo);
         }else{
-            header("Location:gestionAlimentos.php?modificado=".$nutrientes[5]);
+            header("Location:gestionAlimentos.php?modificado=".$grupo);
         }
+    }
 }
 ?>
 
@@ -341,8 +318,9 @@ function confirmChanges()
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                           id="basic-addon1">Nombre</span>
                       </div>
-                      <input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento..." value="<?php echo $db['nombre'] ?>"
-                        aria-label="nombreAlimento" aria-describedby="basic-addon1">
+                      <input type="text" class="form-control" placeholder="Nombre del alimento..." value="<?php echo $db['nombre'] ?>"  
+                        aria-label="nombreAlimento" aria-describedby="basic-addon1" disabled>
+                        <input type="hidden" name="nombre" value="<?php echo $db['nombre'] ?>"></input>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -366,7 +344,7 @@ function confirmChanges()
                         <option selected><?php echo $db['grupo'] ?></option>
                         <?php 
 												foreach($gdbs as $gdb){
-													echo '<option value="'.$gdb["idgrupos"].'">'.$gdb["nombres"].'</option>';
+													echo '<option value="'.$gdb["nombres"].'">'.$gdb["nombres"].'</option>';
 												}unset($gdbs);
 												?>
                       </select>
@@ -1001,11 +979,7 @@ function confirmChanges()
   <script src="../../../js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="../../../vendor/chart.js/Chart.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="../../../js/demo/chart-area-demo.js"></script>
-  <script src="../../../js/demo/chart-pie-demo.js"></script>
 
 </body>
 
