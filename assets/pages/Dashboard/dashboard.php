@@ -1,8 +1,8 @@
 <?php 
-include("includes/conectar.php");
+include("../../../includes/conectar.php");
 session_start();
 if(!isset($_SESSION['user'])){
-    header("Location:index.php");
+    header("Location:../../../index.php");
 }
 
 //Fecha
@@ -16,7 +16,7 @@ $dbUser=mysqli_fetch_assoc($queryUser);
 
 if(isset($_REQUEST['cerrar'])){
     session_destroy();
-    header("Location:index.php");
+    header("Location:../../../index.php");
 }
 
 ?>
@@ -30,12 +30,12 @@ if(isset($_REQUEST['cerrar'])){
   <meta name="description"
     content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
     rel="stylesheet">
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="css/estilos.css" rel="stylesheet">
+  <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../../../css/estilos.css" rel="stylesheet">
   <title>SENAT | Dashboard</title>
 </head>
 
@@ -48,7 +48,7 @@ if(isset($_REQUEST['cerrar'])){
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-          <img class="sidebar__logo" src="assets/img/Logos/logo_senat_letrasBlancas.png" alt="Logo SENAT">
+          <img class="sidebar__logo" src="../../img/Logos/logo_senat_letrasBlancas.png" alt="Logo SENAT">
         </div>
       </a>
       <hr class="sidebar-divider my-0">
@@ -449,21 +449,16 @@ if(isset($_REQUEST['cerrar'])){
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="../../../js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
 </body>
 
 </html>

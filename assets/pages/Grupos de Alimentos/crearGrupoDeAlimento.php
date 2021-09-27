@@ -1,3 +1,60 @@
+<?php 
+include("../../../includes/conectar.php");
+session_start();
+if(!isset($_SESSION['user'])){
+    header("Location:index.php");
+}
+date_default_timezone_set("America/Argentina/Buenos_Aires");
+$fechaActual=Date("Y-m-d H:i:s");
+$u=$_SESSION['user'];
+$c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
+$a=mysqli_fetch_assoc($c);
+
+
+//TABLA grupos (ALL)-> gdbs[]
+$gquery=mysqli_query($conect, "SELECT * FROM grupos ");
+while($gdb=$gquery->fetch_array()){
+        $gdbs[]=$gdb;
+    }
+
+//CARGA VALIDADA	
+if(isset($_REQUEST['nombreGrupo']) && !empty($_REQUEST['nombreGrupo'])){
+    $n=$_REQUEST['nombreGrupo'];
+	
+    $validar=true;
+
+    foreach($gdbs as $gdb){
+		if($gdb['nombres']==$n){
+			$validar=false;
+		}
+	}unset($gbds);
+	
+	//carga
+if($validar==false){
+	echo "<script>alert('Ya se registro un grupo con este nombre.')</script>";
+}else{
+    $insert=mysqli_query($conect, "INSERT INTO grupos VALUES (NULL, '$n')");
+	if($insert==1){
+		header("Location:gestionGrupoDeAlimentos.php?cargaNuevoGrupo=Exitosa");
+    }else{
+		header("Location:gestionGrupoDeAlimentos.php?cargaNuevoGrupo=HuboUnError");
+	}
+	}
+}
+
+//BAJA (Sólo de la tabla Grupos)
+ if(isset($_REQUEST['e'])){  
+    mysqli_query($conect, "DELETE FROM grupos WHERE idgrupos='".$_REQUEST['e']."'");
+    header("Location:grupos.php");
+    }    
+   
+       
+if(isset($_REQUEST['cerrar'])){
+    session_destroy();
+    header("Location:index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -167,28 +224,28 @@
               <div class="col-lg-8 col-md-4 col-sm-12">
                 <div class="alimento__dataInicial">
                   <h3>Datos del grupo de alimentos</h3>
-                  <form class="form-inline d-flex flex-column align-items-center">
+                  <form action="crearGrupoDeAlimento.php" class="form-inline d-flex flex-column align-items-center">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                           id="basic-addon1">Nombre</span>
                       </div>
-                      <input type="text" class="form-control" placeholder="Nombre del grupo..."
+                      <input type="text" name="nombreGrupo" class="form-control" placeholder="Nombre del grupo..."
                         aria-label="nombreAlimento" aria-describedby="basic-addon1">
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- Botonera -->
-            <div class="row m-3 justify-content-center">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="buttons__AlimentoAlta">
-                  <button class="btn btn-outline-danger m-2">Cancelar</button>
-                  <button class="btn btn-success m-2">Guardar grupo de alimentos</button>
+              <!-- Botonera -->
+              <div class="row m-3 justify-content-center">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="buttons__AlimentoAlta">
+                    <a class="btn btn-outline-danger m-2" href="#">Cancelar</a>
+                    <button class="btn btn-success m-2">Guardar grupo de alimentos</button>
+                  </div>
                 </div>
-              </div>
-            </div> <!-- Fin Botonera -->
+              </div> <!-- Fin Botonera -->
+            </form>
           </div>
         </div> <!-- Fin alta de grupos -->
       </div>

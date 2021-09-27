@@ -1,3 +1,37 @@
+<?php 
+include("../../../includes/conectar.php");
+session_start();
+if(!isset($_SESSION['user'])){
+    header("Location:index.php");
+}
+date_default_timezone_set("America/Argentina/Buenos_Aires");
+$fechaActual=Date("Y-m-d H:i:s");
+$u=$_SESSION['user'];
+$c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
+$a=mysqli_fetch_assoc($c);
+
+
+//TABLA grupos (ALL)-> gdbs[]
+$gquery=mysqli_query($conect, "SELECT * FROM grupos ");
+$nGrupo=mysqli_num_rows($gquery);
+while($gdb=$gquery->fetch_array()){
+        $gdbs[]=$gdb;
+    }
+
+
+//BAJA (Sólo de la tabla Grupos)
+ if(isset($_REQUEST['e'])){  
+    mysqli_query($conect, "DELETE FROM grupos WHERE idgrupos='".$_REQUEST['e']."'");
+    header("Location:grupos.php");
+    }    
+   
+       
+if(isset($_REQUEST['cerrar'])){
+    session_destroy();
+    header("Location:index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -176,160 +210,25 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-center">Carnes rojas</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Carnes blancas</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Frutas</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Lacteos</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Frutos secos</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Jugos de frutas</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Preparaciones a base de carnes rojas</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Preparaciones a base de carnes blancas</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Sopas</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Aceites y grasas</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Embutidos</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Cereales</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Dulces</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Legumbres y derivados</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
-                            class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteGroup">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
+                    
+                  <?php
+                  if($nGrupo>0){ 
+                    foreach($gdbs as $gdb){ 
+                    echo' <tr>
+                        <td class="text-center">'.$gdb['nombres'].'</td>
+                        <td class="text-center">
+                          <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
+                              class="fas fa-edit"></i></a>
+                          <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                            data-target="#deleteGroup">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>';
+                    }unset($gdbs);
+                  }
+                  ?>
+  
                   </tbody>
                   <tfoot>
                     <tr>

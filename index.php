@@ -1,5 +1,5 @@
 <?php 
-include("../../../includes/conectar.php");
+include("includes/conectar.php");
 session_start();
 if(isset($_REQUEST['u']) && !empty($_REQUEST['u'])){
 $u=$_REQUEST['u'];
@@ -9,10 +9,10 @@ if(mysqli_num_rows($res)==1){
 	$a=mysqli_fetch_assoc($res);
     $_SESSION['user']=$u;
 	if($a['rol']=='admin'){
-    header("Location:../../../dashboard.php");
+    header("Location:assets/pages/Dashboard/dashboard.php");
 	}
 	if($a['rol']=='nutri'){
-    header("Location:../../../dashboard.php");
+    header("Location:assets/pages/Dashboard/dashboard.php");
 	}
 	
     }else{
@@ -21,7 +21,7 @@ if(mysqli_num_rows($res)==1){
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
@@ -30,12 +30,12 @@ if(mysqli_num_rows($res)==1){
   <meta name="description"
     content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
-  <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
     rel="stylesheet">
-  <link href="../../../css/sb-admin-2.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../../css/estilos.css">
+  <link href="css/sb-admin-2.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
   <title>SENAT | SectionName</title>
 </head>
 <body class="bg-gradient-primary">
@@ -74,14 +74,14 @@ if(mysqli_num_rows($res)==1){
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="../../../vendor/jquery/jquery.min.js"></script>
-  <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="../../../js/sb-admin-2.min.js"></script>
+  <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 
