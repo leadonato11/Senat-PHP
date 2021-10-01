@@ -241,7 +241,7 @@ while($gdb=$gquery->fetch_array()){
                         <td class="text-center">
                           <a class="btn btn-primary btn-sm" href="visualizarAlimento.php?idAlimento='.$db['idalimentos'].'" role="button"><i
                               class="fas fa-external-link-square-alt"></i></a>
-                          <a class="btn btn-info btn-sm" href="#" role="button"><i class="fas fa-edit"></i></a>
+                          <a class="btn btn-info btn-sm" href="editarAlimento.php?editarAlimento='.$db['idalimentos'].'" role="button"><i class="fas fa-edit"></i></a>
                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                             data-target="#borrarAlimentoModal" >
                             <i class="fas fa-trash"></i>
