@@ -25,7 +25,12 @@ $aquery=mysqli_query($conect, "SELECT * FROM alimentos");
 while($alimento=$aquery->fetch_array()){
         $alimentos[]=$alimento;
     }
-
+$cantAli=mysqli_num_rows($aquery);
+foreach($alimentos as $alimento){
+  
+    $validarConJS[]=$alimento['nombre'];
+  
+}unset($alimentos);
 //TABLA grupos (ALL)-> gdbs[]
 $gquery=mysqli_query($conect, "SELECT * FROM grupos ");
 while($gdb=$gquery->fetch_array()){
@@ -897,12 +902,32 @@ function confirmChanges()
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <div class="buttons__AlimentoAlta">
                         <a class="btn btn-outline-danger m-2" href="gestionAlimentos.php">Cancelar</a>
-                        <button class="btn btn-success m-2" onclick="return confirmChanges()">Guardar Cambios</button>
+                        <a href="#" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarAlimentoModal"
+                        role="button">Guardar Cambios</a>
                       </div>
                     </div>
                   </div> <!-- Fin Botonera -->
                 </div>
               </div> <!-- Fin Tabla Alimentos -->
+              <!-- Guardar alimento Modal-->
+                <div class="modal fade" id="guardarAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos del alimento</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">Estás seguro?</div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary"data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-success">Guardar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </form>
           </div>
         </div>
@@ -920,25 +945,7 @@ function confirmChanges()
     </div>
   </div> <!-- Fin Contenedor principal -->
 
-  <!-- Guardar alimento Modal-->
-  <div class="modal fade" id="guardarAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos del alimento</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Estás seguro?</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary"data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-success">Guardar</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">

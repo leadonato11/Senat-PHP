@@ -18,7 +18,11 @@ $dbquery=mysqli_query($conect, "SELECT * FROM alimentos");
 while($db=$dbquery->fetch_array()){
         $dbs[]=$db;
     }
-	
+    foreach($dbs as $db){
+  
+      $validarConJS[]=$db['nombre'];
+        
+    }unset($dbs);
 //TABLA grupos (ALL)-> gdbs[]
 $gquery=mysqli_query($conect, "SELECT * FROM grupos ");
 while($gdb=$gquery->fetch_array()){
@@ -99,12 +103,30 @@ if(isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])){
 					header("Location:gestionAlimentos.php?carga=fallida");
 				}
 		}else{
-			header("Location:gestionAlimentos.php?carga=yaExistia");
+			header("Location:gestionAlimentos.php?carga=yaExiste");
 		}
 }
     
 ?>
-
+<script type="text/javascript">
+  var validarJS = <?php echo json_encode($validarConJS); ?>;
+  let nombreAlimento=document.getElementById('nombreAlimento');
+  console.log(nombreAlimento.value);
+  let buttonGuardarAlimento=document.getElementById('guardarAlimento');
+  nombreAlimento.addEventListener('change', stateHandle);
+  function stateHandle(){
+    validarJS.forEach(function(date){
+      if(nombreAlimento.value===date){
+        
+        buttonGuardarAlimento.classList.add(disabled);
+        console.log('nombre repetido, boton deshabilitado');
+      }else{
+        console.log('nombre NO repetido, boton habilitado');
+      }
+    });
+  }
+  
+</script>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -310,7 +332,7 @@ function confirmDelete()
                           id="basic-addon1">Nombre</span>
                       </div>
                       <input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento..."
-                        aria-label="nombreAlimento" aria-describedby="basic-addon1">
+                        aria-label="nombreAlimento" aria-describedby="basic-addon1" id="nombreAlimento">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -883,12 +905,32 @@ function confirmDelete()
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <div class="buttons__AlimentoAlta">
                         <a class="btn btn-outline-danger m-2" href="gestionAlimentos.php">Cancelar</a>
-                        <button class="btn btn-success m-2" onclick="return confirmDelete()">Guardar alimento</button>
+                        <a href="#" id="guardarAlimento" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarAlimentoModal"
+                        role="button">Guardar alimento</a>
                       </div>
                     </div>
                   </div> <!-- Fin Botonera -->
                 </div>
               </div> <!-- Fin Tabla Alimentos -->
+              <!-- Guardar alimento Modal-->
+                <div class="modal fade" id="guardarAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos del alimento</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">Estás seguro?</div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary"data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-success">Guardar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </form>
           </div>
         </div>
@@ -906,25 +948,7 @@ function confirmDelete()
     </div>
   </div> <!-- Fin Contenedor principal -->
 
-  <!-- Guardar alimento Modal-->
-  <div class="modal fade" id="guardarAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos del alimento</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Estás seguro?</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary"data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-success">Guardar</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -964,12 +988,9 @@ function confirmDelete()
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="../../../vendor/chart.js/Chart.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="../../../js/demo/chart-area-demo.js"></script>
-  <script src="../../../js/demo/chart-pie-demo.js"></script>
+
+
 
 </body>
 

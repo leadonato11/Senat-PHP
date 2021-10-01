@@ -27,7 +27,11 @@ while($gdb=$gquery->fetch_array()){
         $gdbs[]=$gdb;
     }
 
-    
+//Eliminar Alimento
+if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])){
+  mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos  ='".$_REQUEST['eliminarAlimento']."'");  
+  header("Location:gestionAlimentos.php");
+}
 ?>
 
 <?php 
