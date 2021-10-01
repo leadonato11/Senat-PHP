@@ -13,8 +13,8 @@ $c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $a=mysqli_fetch_assoc($c);
 
 //Datos del alimento desde Tabla alimentos a traves de idalimentos(Variable de Session) -> db
-if(isset($_REQUEST['e']) && !empty($_REQUEST['e'])){
-$_SESSION['alimento']=$_REQUEST['e'];
+if(isset($_REQUEST['idAlimento']) && !empty($_REQUEST['idAlimento'])){
+$_SESSION['alimento']=$_REQUEST['idAlimento'];
 }
 $idalimentos=$_SESSION['alimento'];
 $dbquery=mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idalimentos'");

@@ -84,8 +84,8 @@ if(isset($_REQUEST['cerrar'])){
         <div id="collapseFoods" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú alimentos:</h6>
-            <a class="collapse-item" href="assets/pages/Alimentos/crearAlimento.html">Agregar nuevo</a>
-            <a class="collapse-item" href="assets/pages/Alimentos/gestionAlimentos.php">Gestionar alimentos</a>
+            <a class="collapse-item" href="../../pages/Alimentos/crearAlimento.html">Agregar nuevo</a>
+            <a class="collapse-item" href="../../pages/Alimentos/gestionAlimentos.php">Gestionar alimentos</a>
           </div>
         </div>
       <li class="nav-item">
@@ -98,7 +98,7 @@ if(isset($_REQUEST['cerrar'])){
           data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú grupo alimentos:</h6>
-            <a class="collapse-item" href="assets/pages/Grupos de Alimentos/gestionGrupoDeAlimentos.html">Gestionar
+            <a class="collapse-item" href="../pages/Grupos de Alimentos/gestionGrupoDeAlimentos.html">Gestionar
               grupos</a>
           </div>
         </div>
