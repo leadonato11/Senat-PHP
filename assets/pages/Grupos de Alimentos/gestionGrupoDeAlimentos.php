@@ -20,9 +20,9 @@ while($gdb=$gquery->fetch_array()){
 
 
 //BAJA (Sólo de la tabla Grupos)
- if(isset($_REQUEST['e'])){  
-    mysqli_query($conect, "DELETE FROM grupos WHERE idgrupos='".$_REQUEST['e']."'");
-    header("Location:grupos.php");
+ if(isset($_REQUEST['eliminarGrupo'])){  
+    mysqli_query($conect, "DELETE FROM grupos WHERE idgrupos='".$_REQUEST['eliminarGrupo']."'");
+    header("Location:gestionGrupoDeAlimentos.php");
     }    
    
        
@@ -195,7 +195,7 @@ if(isset($_REQUEST['cerrar'])){
             <div class="row">
               <div class="col">
                 <div class="navbar justify-content-start">
-                  <a class="btn btn-success" href="crearGrupoDeAlimento.html" role="button"><i class="fas fa-plus"></i>
+                  <a class="btn btn-success" href="crearGrupoDeAlimento.php" role="button"><i class="fas fa-plus"></i>
                     Crear nuevo grupo</a>
                 </div>
               </div>
@@ -217,7 +217,7 @@ if(isset($_REQUEST['cerrar'])){
                     echo' <tr>
                         <td class="text-center">'.$gdb['nombres'].'</td>
                         <td class="text-center">
-                          <a class="btn btn-primary btn-sm" href="crearGrupoDeAlimento.html" role="button"><i
+                          <a class="btn btn-primary btn-sm" href="editarGrupoDeAlimento.php?editarGrupo='.$gdb['idgrupos'].'" role="button"><i
                               class="fas fa-edit"></i></a>
                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                             data-target="#deleteGroup">
@@ -272,7 +272,7 @@ if(isset($_REQUEST['cerrar'])){
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger">Borrar grupo de alimentos</button>
+          <a type="button" href="gestionGrupoDeAlimentos.php?eliminarGrupo=<?php echo $gdb['idgrupos']; ?>" class="btn btn-danger">Borrar grupo de alimentos</a>
         </div>
       </div>
     </div>

@@ -240,7 +240,7 @@ if(isset($_REQUEST['cerrar'])){
               <div class="row m-3 justify-content-center">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="buttons__AlimentoAlta">
-                    <a class="btn btn-outline-danger m-2" href="#">Cancelar</a>
+                    <a class="btn btn-outline-danger m-2" href="gestionGrupoDeAlimentos.php">Cancelar</a>
                     <button class="btn btn-success m-2">Guardar grupo de alimentos</button>
                   </div>
                 </div>

@@ -10,14 +10,20 @@ $u=$_SESSION['user'];
 $c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $a=mysqli_fetch_assoc($c);
 
-
+//Editar  
+if(isset($_REQUEST['editarGrupo']) && !empty($_REQUEST['editarGrupo'])){
+  $_SESSION['editarGrupo']=$_REQUEST['editarGrupo'];
+}
+$idGrupo=$_SESSION['editarGrupo'];
+//Grupo
+$grupoQuery=mysqli_query($conect, "SELECT * FROM grupos WHERE idgrupos='$idGrupo'");
+$grupo=mysqli_fetch_assoc($grupoQuery);
 //TABLA grupos (ALL)-> gdbs[]
 $gquery=mysqli_query($conect, "SELECT * FROM grupos ");
 while($gdb=$gquery->fetch_array()){
-        $gdbs[]=$gdb;
-    }
-
-//CARGA VALIDADA	
+    $gdbs[]=$gdb;
+}
+//Edicion VALIDADA	
 if(isset($_REQUEST['nombreGrupo']) && !empty($_REQUEST['nombreGrupo'])){
     $n=$_REQUEST['nombreGrupo'];
 	
@@ -33,11 +39,11 @@ if(isset($_REQUEST['nombreGrupo']) && !empty($_REQUEST['nombreGrupo'])){
 if($validar==false){
 	echo "<script>alert('Ya se registro un grupo con este nombre.')</script>";
 }else{
-    $insert=mysqli_query($conect, "INSERT INTO grupos VALUES (NULL, '$n')");
+    $insert=mysqli_query($conect, "UPDATE grupos SET nombres='$n' WHERE idgrupos='$idGrupo'");
 	if($insert==1){
-		header("Location:gestionGrupoDeAlimentos.php?cargaNuevoGrupo=Exitosa");
+		header("Location:gestionGrupoDeAlimentos.php?editarNuevoGrupo=Exitosa");
     }else{
-		header("Location:gestionGrupoDeAlimentos.php?cargaNuevoGrupo=HuboUnError");
+		header("Location:gestionGrupoDeAlimentos.php?editarNuevoGrupo=HuboUnError".$n.$idGrupo);
 	}
 	}
 }
@@ -224,14 +230,14 @@ if(isset($_REQUEST['cerrar'])){
               <div class="col-lg-8 col-md-4 col-sm-12">
                 <div class="alimento__dataInicial">
                   <h3>Datos del grupo de alimentos</h3>
-                  <form action="crearGrupoDeAlimento.php" class="form-inline d-flex flex-column align-items-center">
+                  <form action="editarGrupoDeAlimento.php" class="form-inline d-flex flex-column align-items-center">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                           id="basic-addon1">Nombre</span>
                       </div>
                       <input type="text" name="nombreGrupo" class="form-control" placeholder="Nombre del grupo..."
-                        aria-label="nombreAlimento" aria-describedby="basic-addon1">
+                        aria-label="nombreAlimento" aria-describedby="basic-addon1" value="<?php echo $grupo['nombres']; ?>">
                     </div>
                   </div>
                 </div>
@@ -240,7 +246,7 @@ if(isset($_REQUEST['cerrar'])){
               <div class="row m-3 justify-content-center">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="buttons__AlimentoAlta">
-                    <a class="btn btn-outline-danger m-2" href="#">Cancelar</a>
+                    <a class="btn btn-outline-danger m-2" href="gestionGrupoDeAlimentos.php">Cancelar</a>
                     <button class="btn btn-success m-2">Guardar grupo de alimentos</button>
                   </div>
                 </div>
