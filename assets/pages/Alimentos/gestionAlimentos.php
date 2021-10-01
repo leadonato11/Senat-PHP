@@ -20,7 +20,13 @@ $gquery=mysqli_query($conect, "SELECT * FROM grupos ");
 while($gdb=$gquery->fetch_array()){
         $gdbs[]=$gdb;
     }
-	
+
+//Eliminar Alimento
+if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])){
+  mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos  ='".$_REQUEST['eliminarAlimento']."'");  
+  header("Location:gestionAlimentos.php");
+}
+?>
 
 ?>
 <!DOCTYPE html>
@@ -291,7 +297,7 @@ while($gdb=$gquery->fetch_array()){
         <div class="modal-body">Estás seguro?</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-danger" onclick="borrarAlimento()" href="visualizarAlimento.php?eliminarAlimento=<?php echo $db['idalimentos']; ?>">Estoy seguro, borralo</a>
+          <a class="btn btn-danger" onclick="borrarAlimento()" href="gestionAlimentos.php?eliminarAlimento=<?php echo $db['idalimentos']; ?>">Estoy seguro, borralo</a>
         </div>
       </div>
     </div>
