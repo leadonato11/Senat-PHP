@@ -1,3 +1,16 @@
+<?php 
+include("../../../includes/conectar.php");
+session_start();
+if(!isset($_SESSION['user'])){
+    header("Location:index.php");
+}
+date_default_timezone_set("America/Argentina/Buenos_Aires");
+$fechaActual=Date("Y-m-d");
+$u=$_SESSION['user'];
+$c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
+$a=mysqli_fetch_assoc($c);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -126,7 +139,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cecilia Torrent</span>
-                <img class="img-profile rounded-circle" src="../../img/undraw_profile_1.svg">
+                <img class="img-profile rounded-circle" src="../../img/ImgUsuarios/<?php echo $a['dni']; ?>.jpg">
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
@@ -161,7 +174,7 @@
             <div class="row">
               <div class="col">
                 <div class="navbar justify-content-start">
-                  <a class="btn btn-success" href="crearUsuario.html" role="button"><i class="fas fa-plus"></i> Crear
+                  <a class="btn btn-success" href="crearUsuario.php" role="button"><i class="fas fa-plus"></i> Crear
                     usuario</a>
                 </div>
               </div>
@@ -182,114 +195,47 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-center">Leandro</td>
-                      <td class="text-center">Donato</td>
-                      <td class="text-center">34466919</td>
-                      <td class="text-center">32</td>
-                      <td class="text-center">leadonato11@gmail.com</td>
-                      <td class="text-center">Administrador</td>
-                      <td class="text-center">Activo</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="#" role="button" title="Ver perfil"><i
-                            class="fas fa-external-link-square-alt"></i></a>
-                        <a class="btn btn-info btn-sm" href="#" role="button" title="Editar datos de usuario"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteReport" title="Eliminar usuario">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Sebastián</td>
-                      <td class="text-center">Meza</td>
-                      <td class="text-center">25456852</td>
-                      <td class="text-center">42</td>
-                      <td class="text-center">sebameza@gmail.com</td>
-                      <td class="text-center">Administrador</td>
-                      <td class="text-center">Activo</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="#" role="button" title="Ver perfil"><i
-                            class="fas fa-external-link-square-alt"></i></a>
-                        <a class="btn btn-info btn-sm" href="#" role="button" title="Editar datos de usuario"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteReport" title="Eliminar usuario">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Jonatan</td>
-                      <td class="text-center">García Schaff</td>
-                      <td class="text-center">32011578</td>
-                      <td class="text-center">31</td>
-                      <td class="text-center">sgarciaschaff@gmail.com</td>
-                      <td class="text-center">Usuario</td>
-                      <td class="text-center">Inactivo</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="#" role="button" title="Ver perfil"><i
-                            class="fas fa-external-link-square-alt"></i></a>
-                        <a class="btn btn-info btn-sm" href="#" role="button" title="Editar datos de usuario"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteReport" title="Eliminar usuario">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Juan Cruz</td>
-                      <td class="text-center">Utge</td>
-                      <td class="text-center">35844569</td>
-                      <td class="text-center">30</td>
-                      <td class="text-center">jc.utge@gmail.com</td>
-                      <td class="text-center">Administrador</td>
-                      <td class="text-center">Activo</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="#" role="button" title="Ver perfil"><i
-                            class="fas fa-external-link-square-alt"></i></a>
-                        <a class="btn btn-info btn-sm" href="#" role="button" title="Editar datos de usuario"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteReport" title="Eliminar usuario">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Hernan</td>
-                      <td class="text-center">Sosa</td>
-                      <td class="text-center">28544963</td>
-                      <td class="text-center">38</td>
-                      <td class="text-center">hernan.sosa@gmail.com</td>
-                      <td class="text-center">Administrador</td>
-                      <td class="text-center">Activo</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="#" role="button" title="Ver perfil"><i
-                            class="fas fa-external-link-square-alt"></i></a>
-                        <a class="btn btn-info btn-sm" href="#" role="button" title="Editar datos de usuario"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteReport" title="Eliminar usuario">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">Facundo</td>
-                      <td class="text-center">Bachin</td>
-                      <td class="text-center">34788596</td>
-                      <td class="text-center">31</td>
-                      <td class="text-center">fbachin.21@gmail.com</td>
-                      <td class="text-center">Usuario</td>
-                      <td class="text-center">Activo</td>
-                      <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="#" role="button" title="Ver perfil"><i
-                            class="fas fa-external-link-square-alt"></i></a>
-                        <a class="btn btn-info btn-sm" href="#" role="button" title="Editar datos de usuario"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                          data-target="#deleteReport" title="Eliminar usuario">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
+                  <?php
+                    $c=mysqli_query($conect,"SELECT * FROM usuario ORDER BY idusuario DESC");
+                    $n=mysqli_num_rows($c);
+                    if($n>0){ 
+                      while($userList=$c->fetch_assoc()){
+                          $userListS[]=$userList;
+                      }
+                      foreach($userListS as $userList){  
+                        //ESTADO
+                        if($userList['estado']==1){
+                          $estado='Activo';
+                        }else{
+                          $estado='Inactivo';
+                        }
+                        //ROL
+                        if($userList['rol']==1){
+                          $rol='Administrador';
+                        }else{
+                          $rol='Nutricionista';
+                        }
+                        echo '<tr>
+                          <td class="text-center">'.$userList['nombre'].'</td>
+                          <td class="text-center">'.$userList['apellido'].'</td>
+                          <td class="text-center">'.$userList['dni'].'</td>
+                          <td class="text-center">'.$userList['edad'].'</td>
+                          <td class="text-center">'.$userList['correo'].'</td>
+                          <td class="text-center">'.$rol.'</td>
+                          <td class="text-center">'.$estado.'</td>
+                          <td class="text-center">
+                            <a class="btn btn-primary btn-sm" href="visualizacionUsuarios.php?visualizarUsuario='.$userList['idusuario'].'" role="button" title="Ver perfil"><i
+                                class="fas fa-external-link-square-alt"></i></a>
+                            <a class="btn btn-info btn-sm" href="editarUsuario.php?editarUsuario='.$userList['idusuario'].'" role="button" title="Editar datos de usuario"><i class="fas fa-edit"></i></a>
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                              data-target="#deleteReport" title="Eliminar usuario">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>';
+                      }unset($userListS);
+                    }
+                    ?>
                   </tbody>
                   <tfoot>
                     <tr>

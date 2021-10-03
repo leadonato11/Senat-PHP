@@ -332,7 +332,7 @@ if(isset($_REQUEST['cerrar'])){
               <div class="row m-3 justify-content-center">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="buttons__AlimentoAlta">
-                    <a href="gestionDeUsuarios.php" class="btn btn-outline-danger m-2">Cancelar</a>
+                    <a href="gestionUsuarios.php" class="btn btn-outline-danger m-2">Cancelar</a>
                     <a href="#" id="guardarUsuario" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarUsuarioModal"
                         role="button">Guardar usuario</a>
                   </div>

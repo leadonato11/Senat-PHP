@@ -1,3 +1,80 @@
+<?php 
+include("../../../includes/conectar.php");
+session_start();
+if(!isset($_SESSION['user'])){
+    header("Location:index.php");
+}
+date_default_timezone_set("America/Argentina/Buenos_Aires");
+$fechaActual=Date("Y-m-d");
+$u=$_SESSION['user'];
+$c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
+$a=mysqli_fetch_assoc($c);
+//Usuario a Editar  
+  if(isset($_REQUEST['editarUsuario']) && !empty($_REQUEST['editarUsuario'])){
+    $_SESSION['editarUsuario']=$_REQUEST['editarUsuario'];
+  }
+  $idUsuarioEdit=$_SESSION['editarUsuario'];
+  $userEditQuery=mysqli_query($conect, "SELECT * FROM usuario WHERE idusuario='$idUsuarioEdit'");
+  $userEdit=mysqli_fetch_assoc($userEditQuery);
+  //ROL
+  if($userEdit['rol']==1){
+    $rol='Administrador';
+  }else{
+    $rol='Nutricionista';
+  }
+  //ESTADO
+  if($userEdit['estado']==1){
+    $estado='Activo';
+  }else{
+    $estado='Inactivo';
+  }
+//Editar
+if(isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])){
+  $dni=$_REQUEST['dni']; 
+  $p=$_REQUEST['pass'];
+  $n=$_REQUEST['nombre'];
+  $ap=$_REQUEST['apellido'];
+  $c=$_REQUEST['correo']; 
+  $r=$_REQUEST['rol'];
+  $edad=$_REQUEST['edad'];
+  $f=$_FILES['fotoUsuario']['name'];
+  if($f==""){
+    $f=$userEdit['foto'];
+  }
+  $est=$_REQUEST['estado'];
+  if($est=='1'){
+    $estInt=1;
+  }else{
+    $estInt=0;
+  }
+  
+  $checcar=mysqli_query($conect, "SELECT dni FROM usuario");
+  
+  while($row=$checcar->fetch_array()){
+      $rows[]=$row;
+  }
+
+  $booleana=0;
+
+  foreach($rows as $row){
+    if($row['dni']==$dni && $userEdit['dni']!=$dni){
+      $booleana=1;
+    }
+  }unset($rows);
+  if($booleana==1){
+    echo "<script>alert('Este Usuario ha sido registrado.')</script>";
+  }else{
+    $update1=mysqli_query($conect, "UPDATE usuario SET foto='$f', nombre='$n', clave='$p', apellido='$ap', correo='$c', dni='$dni', rol='$r', edad='$edad', estado='$est' WHERE idusuario='$idUsuarioEdit'");
+    if($_FILES['fotoUsuario']['name']!=""){
+      $arch1=move_uploaded_file($_FILES['fotoUsuario']['tmp_name'],"../../img/imgUsuarios/".$dni.".jpg");
+    }
+    header("Location:gestionUsuarios.php");
+  }
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -155,14 +232,15 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Agregar nuevo usuario</h6>
             </div>
+            <form action="editarUsuario.php" method="POST" enctype="multipart/form-data" class="form-inline d-flex flex-column align-items-start">
             <div class="row m-3 justify-content-center">
               <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="alimento__fotoPrincipal">
                   <h3>Foto de perfil</h3>
-                  <img src="../../img/undraw_profile_2.svg" width="350"
+                  <img src="../../img/ImgUsuarios/<?php echo $userEdit['dni']; ?>.jpg" width="350"
                     class="img-fluid rounded mb-2" alt="foodImage">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="imagenUsuario">
+                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario">
                       <label class="custom-file-label" for="imagenUsuario">Imagen Usuario</label>
                     </div>
                 </div>
@@ -171,14 +249,13 @@
               <div class="col-lg-8 col-md-4 col-sm-12">
                 <div class="alimento__dataInicial">
                   <h3>Datos del usuario</h3>
-                  <form class="form-inline d-flex flex-column align-items-start">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                           id="basic-addon1">Nombre</span>
                       </div>
                       <input type="text" class="form-control" placeholder="Ingrese su nombre..."
-                        aria-describedby="basic-addon1">
+                        aria-describedby="basic-addon1" name="nombre" value="<?php echo $userEdit['nombre']; ?>">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -186,7 +263,7 @@
                           id="basic-addon1">Apellido</span>
                       </div>
                       <input type="text" class="form-control" placeholder="Ingrese su apellido..."
-                        aria-describedby="basic-addon1">
+                        aria-describedby="basic-addon1" name="apellido" value="<?php echo $userEdit['apellido']; ?>">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -194,7 +271,7 @@
                           title="Documento de identidad">Edad</span>
                       </div>
                       <input type="number" class="form-control" placeholder="Ingrese su edad..."
-                        aria-describedby="basic-addon1">
+                        aria-describedby="basic-addon1" name="edad" value="<?php echo $userEdit['edad']; ?>">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -202,7 +279,7 @@
                           title="Documento de identidad">DNI</span>
                       </div>
                       <input type="number" class="form-control" placeholder="Ingrese su DNI..."
-                        aria-describedby="basic-addon1" title="DNI (sin puntos ni espacios)">
+                        aria-describedby="basic-addon1" name="dni" title="DNI (sin puntos ni espacios)" value="<?php echo $userEdit['dni']; ?>">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -210,7 +287,7 @@
                           id="basic-addon1">Correo</span>
                       </div>
                       <input type="email" class="form-control" placeholder="Ingrese su correo..."
-                        aria-describedby="basic-addon1">
+                        aria-describedby="basic-addon1" name="correo" value="<?php echo $userEdit['correo']; ?>">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -218,17 +295,24 @@
                           Clave</span>
                       </div>
                       <input type="password" class="form-control" placeholder="Ingrese su clave..."
-                        aria-describedby="basic-addon1">
+                        aria-describedby="basic-addon1" name="pass" value="<?php echo $userEdit['clave']; ?>">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut"
                           id="basic-addon1">Rol</span>
                       </div>
-                      <select class="custom-select" id="inputGroupSelect01">
-                        <option selected disabled>Seleccionar...</option>
-                        <option value="1">Administrador</option>
-                        <option value="2">Usuario</option>
+                      <select name="rol" class="custom-select" id="inputGroupSelect01">
+                        <option disabled>Seleccione...</option>
+                        <option selected value="<?php echo $userEdit['rol']; ?>"><?php echo $rol; ?></option>
+                        <?php
+                        if($rol=='Nutricionista'){
+                        echo '<option value="1">Administrador</option>';
+                        }
+                        if($rol=='Administrador'){
+                        echo '<option value="2">Nutricionista</option>';
+                        }
+                        ?>
                       </select>
                     </div>
                     <div class="input-group">
@@ -237,22 +321,28 @@
                           id="basic-addon1">Estado</span>
                       </div>
                       <div>
-                        <select class="custom-select inputCantGeneral" id="inputGroupSelect01">
-                          <option selected disabled>Seleccionar...</option>
-                          <option value="activo">Activo</option>
-                          <option value="inactivo">Inactivo</option>
+                        <select name="estado" class="custom-select inputCantGeneral" id="inputGroupSelect01">
+                          <option disabled>Seleccione...</option>
+                          <option selected value="<?php echo $userEdit['estado']; ?>"><?php echo $estado; ?></option>
+                          <?php
+                            if($estado=='Activo'){
+                              echo '<option value="0">Inactivo</option>';
+                            }
+                            if($estado=='Inactivo'){
+                              echo '<option value="1">Activo</option>';
+                            }
+                          ?>
                         </select>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
-              </div>
             </div>
-
+            
             <div class="row m-3 justify-content-center">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="buttons__AlimentoAlta">
-                  <button class="btn btn-outline-danger m-2">Cancelar</button>
+                  <a href="gestionUsuarios.php" class="btn btn-outline-danger m-2">Cancelar</a>
                   <button class="btn btn-success m-2">Guardar usuario</button>
                 </div>
                 <!-- End content -->
@@ -260,6 +350,7 @@
             </div>
           </div>
         </div>
+      </form>
         <!-- Carga usuarios End -->
       </div>
       <!-- Footer -->

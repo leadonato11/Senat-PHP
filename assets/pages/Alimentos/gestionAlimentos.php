@@ -28,7 +28,7 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
 }
 ?>
 
-?>
+
 <!DOCTYPE html>
 <html lang="es">
 

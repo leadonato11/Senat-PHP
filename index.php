@@ -8,10 +8,10 @@ $res=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u' AND clave='$p'"
 if(mysqli_num_rows($res)==1){
 	$a=mysqli_fetch_assoc($res);
     $_SESSION['user']=$u;
-	if($a['rol']=='admin'){
+	if($a['rol']==1){
     header("Location:assets/pages/Dashboard/dashboard.php");
 	}
-	if($a['rol']=='nutri'){
+	if($a['rol']==2){
     header("Location:assets/pages/Dashboard/dashboard.php");
 	}
 	
