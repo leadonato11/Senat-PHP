@@ -67,13 +67,13 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups"
           aria-expanded="true" aria-controls="collapseFoodGroups">
           <i class="fas fa-database"></i>
-          <span>Grupos de alimentos</span>
+          <span>GruposDeAlimentos</span>
         </a>
         <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities"
           data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú grupo alimentos:</h6>
-            <a class="collapse-item" href="../Grupos de Alimentos/gestionGrupoDeAlimentos.html">Gestionar grupos</a>
+            <a class="collapse-item" href="../GruposDeAlimentos/gestionGrupoDeAlimentos.html">Gestionar grupos</a>
           </div>
         </div>
       </li>

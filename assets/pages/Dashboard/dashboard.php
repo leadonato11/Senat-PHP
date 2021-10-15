@@ -1,22 +1,22 @@
-<?php 
+<?php
 include("../../../includes/conectar.php");
 session_start();
-if(!isset($_SESSION['user'])){
-    header("Location:../../../index.php");
+if (!isset($_SESSION['user'])) {
+  header("Location:../../../index.php");
 }
 
 //Fecha
 date_default_timezone_set("America/Argentina/Buenos_Aires");
-$fechaActual=Date("Y-m-d h:i:s");
+$fechaActual = Date("Y-m-d h:i:s");
 
 //Base de datos del usuario --> $dbUser
-$u=$_SESSION['user'];
-$queryUser=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
-$dbUser=mysqli_fetch_assoc($queryUser);
+$u = $_SESSION['user'];
+$queryUser = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
+$dbUser = mysqli_fetch_assoc($queryUser);
 
-if(isset($_REQUEST['cerrar'])){
-    session_destroy();
-    header("Location:../../../index.php");
+if (isset($_REQUEST['cerrar'])) {
+  session_destroy();
+  header("Location:../../../index.php");
 }
 
 ?>
@@ -27,13 +27,10 @@ if(isset($_REQUEST['cerrar'])){
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description"
-    content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
+  <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
   <link href="../../../css/estilos.css" rel="stylesheet">
   <title>SENAT | Dashboard</title>
@@ -46,14 +43,14 @@ if(isset($_REQUEST['cerrar'])){
 
     <!-- Sidebar Index -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
         <div class="sidebar-brand-icon">
           <img class="sidebar__logo" src="../../img/Logos/logo_senat_letrasBlancas.png" alt="Logo SENAT">
         </div>
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="dashboard.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -62,72 +59,65 @@ if(isset($_REQUEST['cerrar'])){
         Interface
       </div>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
-          aria-controls="collapseUsers">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
           <i class="fas fa-users"></i>
           <span>Usuarios</span>
         </a>
         <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú usuarios:</h6>
-            <a class="collapse-item" href="assets/pages/Usuarios/crearUsuario.html">Agregar nuevo</a>
-            <a class="collapse-item" href="assets/pages/Usuarios/gestionUsuarios.html">Gestionar usuarios</a>
+            <a class="collapse-item" href="../Usuarios/crearUsuario.php">Agregar nuevo</a>
+            <a class="collapse-item" href="../Usuarios/gestionUsuarios.php">Gestionar usuarios</a>
           </div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true"
-          aria-controls="collapseFoods">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true" aria-controls="collapseFoods">
           <i class="fas fa-apple-alt"></i>
           <span>Alimentos</span>
         </a>
         <div id="collapseFoods" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú alimentos:</h6>
-            <a class="collapse-item" href="../../pages/Alimentos/crearAlimento.html">Agregar nuevo</a>
-            <a class="collapse-item" href="../../pages/Alimentos/gestionAlimentos.php">Gestionar alimentos</a>
+            <a class="collapse-item" href="../Alimentos/crearAlimento.php">Agregar nuevo</a>
+            <a class="collapse-item" href="../Alimentos/gestionAlimentos.php">Gestionar alimentos</a>
           </div>
         </div>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups"
-          aria-expanded="true" aria-controls="collapseFoodGroups">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
           <i class="fas fa-database"></i>
-          <span>Grupos de alimentos</span>
+          <span>Grupo de alimentos</span>
         </a>
-        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities"
-          data-parent="#accordionSidebar">
+        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú grupo alimentos:</h6>
-            <a class="collapse-item" href="../pages/Grupos de Alimentos/gestionGrupoDeAlimentos.html">Gestionar
+            <a class="collapse-item" href="../GruposDeAlimentos/gestionGrupoDeAlimentos.php">Gestionar
               grupos</a>
           </div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys"
-          aria-expanded="true" aria-controls="collapseSurveys">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys" aria-expanded="true" aria-controls="collapseSurveys">
           <i class="fas fa-poll"></i>
           <span>Encuestas</span>
         </a>
         <div id="collapseSurveys" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú encuestas:</h6>
-            <a class="collapse-item" href="assets/pages/Encuestas/crearEncuesta.html">Crear nueva encuesta</a>
-            <a class="collapse-item" href="assets/pages/Encuestas/encuestasActivas.html">Encuestas activas</a>
-            <a class="collapse-item" href="assets/pages/Encuestas/encuestasFinalizadas.html">Encuestas finalizadas</a>
+            <a class="collapse-item" href="../Encuestas/crearEncuesta.php">Crear nueva encuesta</a>
+            <a class="collapse-item" href="../Encuestas/gestionDeEncuestas.php">Gestión de encuestas</a>
           </div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports"
-          aria-expanded="true" aria-controls="collapseReports">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports" aria-expanded="true" aria-controls="collapseReports">
           <i class="fas fa-file-excel"></i>
           <span>Reportes</span>
         </a>
         <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Reportes:</h6>
-            <a class="collapse-item" href="assets/pages/Reportes/reportes.html">Ver reportes</a>
+            <a class="collapse-item" href="../Reportes/reportes.php">Ver reportes</a>
           </div>
         </div>
       </li>
@@ -149,19 +139,14 @@ if(isset($_REQUEST['cerrar'])){
           <ul class="navbar-nav ml-auto">
             <div class="topbar-divider d-none d-sm-block"></div>
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $dbUser['nombre'].' '.$dbUser['apellido']; ?></span>
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $dbUser['nombre'] . ' ' . $dbUser['apellido']; ?></span>
                 <img class="img-profile rounded-circle" src="assets/img/undraw_profile_2.svg">
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Ver Perfil
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Opciones
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -185,13 +170,11 @@ if(isset($_REQUEST['cerrar'])){
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Panel de usuarios</h6>
                   <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                      aria-labelledby="dropdownMenuLink">
-                      <a class="dropdown-item" href="assets/pages/Usuarios/gestionUsuarios.html">Ver panel de
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="../Usuarios/gestionUsuarios.php">Ver panel de
                         usuarios</a>
                     </div>
                   </div>
@@ -274,13 +257,11 @@ if(isset($_REQUEST['cerrar'])){
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Base de alimentos</h6>
                   <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                      aria-labelledby="dropdownMenuLink">
-                      <a class="dropdown-item" href="assets/pages/Alimentos/gestionAlimentos.html">Ver panel de
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="../Alimentos/gestionAlimentos.html">Ver panel de
                         alimentos</a>
                     </div>
                   </div>
@@ -345,14 +326,12 @@ if(isset($_REQUEST['cerrar'])){
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Encuestas activas</h6>
                   <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                      aria-labelledby="dropdownMenuLink">
-                      <a class="dropdown-item" href="assets/pages/Encuestas/encuestasActivas.html">Ver panel de
-                        encuestas activas</a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="../Encuestas/gestionDeEncuestas.php">Ver panel de
+                        encuestas</a>
                     </div>
                   </div>
                 </div>
@@ -429,8 +408,7 @@ if(isset($_REQUEST['cerrar'])){
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -442,7 +420,7 @@ if(isset($_REQUEST['cerrar'])){
           <div class="modal-body">Para finalizar, hacé click en el botón "Cerrar sesión".</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-danger" href="assets/pages/Login/login.html">Cerrar sesión</a>
+            <a class="btn btn-danger" href="../../../index.php">Cerrar sesión</a>
           </div>
         </div>
       </div>

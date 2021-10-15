@@ -5,13 +5,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description"
-    content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
+  <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.css" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/estilos.css">
   <title>SENAT | Crear encuesta</title>
@@ -40,8 +37,7 @@
         Interface
       </div>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
-          aria-controls="collapseUsers">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
           <i class="fas fa-users"></i>
           <span>Usuarios</span>
         </a>
@@ -54,8 +50,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true"
-          aria-controls="collapseFoods">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true" aria-controls="collapseFoods">
           <i class="fas fa-apple-alt"></i>
           <span>Alimentos</span>
         </a>
@@ -67,22 +62,19 @@
           </div>
         </div>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups"
-          aria-expanded="true" aria-controls="collapseFoodGroups">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
           <i class="fas fa-database"></i>
-          <span>Grupos de alimentos</span>
+          <span>GruposDeAlimentos</span>
         </a>
-        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities"
-          data-parent="#accordionSidebar">
+        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú grupo alimentos:</h6>
-            <a class="collapse-item" href="assets/pages/Grupos de Alimentos/gestionAlimentos.html">Gestionar grupos</a>
+            <a class="collapse-item" href="assets/pages/GruposDeAlimentos/gestionAlimentos.html">Gestionar grupos</a>
           </div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys"
-          aria-expanded="true" aria-controls="collapseSurveys">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys" aria-expanded="true" aria-controls="collapseSurveys">
           <i class="fas fa-poll"></i>
           <span>Encuestas</span>
         </a>
@@ -96,8 +88,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports"
-          aria-expanded="true" aria-controls="collapseReports">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports" aria-expanded="true" aria-controls="collapseReports">
           <i class="fas fa-file-excel"></i>
           <span>Reportes</span>
         </a>
@@ -125,8 +116,7 @@
           <ul class="navbar-nav ml-auto">
             <div class="topbar-divider d-none d-sm-block"></div>
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cecilia Torrent</span>
                 <img class="img-profile rounded-circle" src="assets/img/undraw_profile_1.svg">
               </a>
@@ -168,22 +158,16 @@
                   <form class="form-inline d-flex flex-column align-items-center">
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text bg-dark text-light labelMacroMicroNut"
-                          id="basic-addon1">Nombre</span>
+                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Nombre</span>
                       </div>
-                      <input type="text" class="form-control" placeholder="Nombre de la encuesta..."
-                        aria-label="nombreAlimento" aria-describedby="basic-addon1">
+                      <input type="text" class="form-control" placeholder="Nombre de la encuesta..." aria-label="nombreAlimento" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text bg-dark text-light labelMacroMicroNut"
-                          id="basic-addon1">Descripción</span>
+                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Descripción</span>
                       </div>
-                      <textarea class="form-control" aria-label="descripcionEncuesta" aria-describedby="basic-addon1"
-                        name="descripcionEncuesta" id="" cols="20" rows="5"
-                        placeholder="Descripción de la encuesta..."></textarea>
+                      <textarea class="form-control" aria-label="descripcionEncuesta" aria-describedby="basic-addon1" name="descripcionEncuesta" id="" cols="20" rows="5" placeholder="Descripción de la encuesta..."></textarea>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>
@@ -252,73 +236,85 @@
               <div class="col-lg-8 col-md-4 col-sm-12">
                 <div class="alimento__dataInicial">
                   <h3>Alimentos para el cuestionario</h3>
-                  <h4>Selector de frecuencia</h4>
-                  <p>Indique qué frecuencia desea que figuren en la encuesta (2 como mínimo)</p>
+                  <p>Indique qué alimentos formarán parte de la encuesta (2 como mínimo)</p>
                   <div class="text-left">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
+                          <thead class="thead-light">
+                            <tr>
+                              <th class="text-center">Nombre</th>
+                              <th class="text-center">Grupo</th>
+                              <th class="text-center">Seleccionar</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- código en php -->
+                            <tr>
+                              <td class="text-center">Mango</td>
+                              <td class="text-center">Frutas</td>
+                              <td class="text-center">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="">
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <th class="text-center" colspan="7">Última actualización:</th>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div> <!-- End Table -->
+                      <!-- Botonera -->
+                      <div class="row m-3 justify-content-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <div class="buttons__AlimentoAlta">
+                            <a class="btn btn-outline-danger m-2" href="gestionDeEncuestas.php">Cancelar</a>
+                            <a href="#" id="guardarEncuesta" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarEncuestaModal" role="button">Guardar encuesta</a>
+                          </div>
+                        </div>
+                      </div> <!-- Fin Botonera -->
 
-                  </div>
+                      <!-- Guardar alimento Modal-->
+                      <div class="modal fade" id="guardarEncuestaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos de la encuesta</h5>
+                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">Estás seguro?</div>
+                            <div class="modal-footer">
+                              <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                              <button class="btn btn-success">Si, guardar encuesta</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </form>
+                    </div> <!-- End Card body -->
+                  </div> <!-- End content -->
                 </div>
               </div>
-            </div>
-
-
-            <!-- Botonera -->
-            <div class="row m-3 justify-content-center">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="buttons__AlimentoAlta">
-                  <button class="btn btn-outline-danger m-2">Cancelar</button>
-                  <button class="btn btn-success m-2">Continuar</button>
-                </div>
-              </div>
-            </div> <!-- Fin Botonera -->
+            </div> <!-- End row -->
           </div>
-        </div> <!-- Fin alta de encuesta -->
-
-        <!-- End content -->
-
-
+        </div>
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Desarrollado para UCEL por Leandro Donato, Sebastián Meza y Hernán Sosa &copy; Ingeniería en Sistemas
+                UCEL</span>
+            </div>
+          </div>
+        </footer> <!-- End of Footer -->
       </div>
-    </div>
-  </div>
-
-  </div>
-  <!-- Tabla Alimentos End -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </div> <!-- Fin alta de encuesta -->
+  </div> <!-- End wrapper -->
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -326,8 +322,7 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -359,11 +354,11 @@
   <script src="../../../js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="../../../vendor/chart.js/Chart.min.js"></script>
+  <script src="../../../vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="../../../js/demo/chart-area-demo.js"></script>
-  <script src="../../../js/demo/chart-pie-demo.js"></script>
+  <script src="../../../js/demo/datatables-demo.js"></script>
 
 </body>
 

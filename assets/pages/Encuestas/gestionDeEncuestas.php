@@ -98,7 +98,7 @@
                     aria-expanded="true" aria-controls="collapseFoodGroups">
                     <!-- <i class="fas fa-fw fa-wrench"></i> -->
                     <i class="fas fa-database"></i>
-                    <span>Grupos de alimentos</span>
+                    <span>GruposDeAlimentos</span>
                 </a>
                 <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
