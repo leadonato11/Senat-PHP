@@ -246,6 +246,12 @@ if (isset($_REQUEST['cerrar'])) {
                     <h3>Datos del usuario</h3>
                     <div class="input-group">
                       <div class="input-group-prepend">
+                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1" title="Documento de identidad">DNI</span>
+                      </div>
+                      <input type="number" class="form-control" placeholder="Ingrese su DNI..." aria-describedby="basic-addon1" title="DNI (sin puntos ni espacios)" name="dni">
+                    </div>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Nombre</span>
                       </div>
                       <input type="text" class="form-control" placeholder="Ingrese su nombre..." aria-describedby="basic-addon1" name="nombre">
@@ -255,18 +261,6 @@ if (isset($_REQUEST['cerrar'])) {
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Apellido</span>
                       </div>
                       <input type="text" class="form-control" placeholder="Ingrese su apellido..." aria-describedby="basic-addon1" name="apellido">
-                    </div>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1" title="Documento de identidad">Edad</span>
-                      </div>
-                      <input type="number" class="form-control" placeholder="Ingrese su edad..." aria-describedby="basic-addon1" name="edad">
-                    </div>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1" title="Documento de identidad">DNI</span>
-                      </div>
-                      <input type="number" class="form-control" placeholder="Ingrese su DNI..." aria-describedby="basic-addon1" title="DNI (sin puntos ni espacios)" name="dni">
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">

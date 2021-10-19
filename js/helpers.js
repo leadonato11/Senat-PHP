@@ -13,3 +13,4 @@ function confirmDelete() {
     return false;
   }
 }
+

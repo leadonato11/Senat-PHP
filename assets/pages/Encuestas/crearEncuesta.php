@@ -177,7 +177,7 @@
                 <div class="alimento__dataInicial">
                   <h3>Información para el cuestionario</h3>
                   <h4>Selector de frecuencia</h4>
-                  <p>Indique qué frecuencia desea que figuren en la encuesta (2 como mínimo)</p>
+                  <p>Indique qué frecuencias desea que figuren en el cuestionario (2 como mínimo)</p>
                   <div id="checkbox_frec" class="text-left">
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="frec_nunca">
@@ -236,11 +236,11 @@
               <div class="col-lg-8 col-md-4 col-sm-12">
                 <div class="alimento__dataInicial">
                   <h3>Alimentos para el cuestionario</h3>
-                  <p>Indique qué alimentos formarán parte de la encuesta (2 como mínimo)</p>
+                  <p>Indique qué alimentos formarán parte del cuestionario (2 como mínimo)</p>
                   <div class="text-left">
                     <div class="card-body">
                       <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
+                        <!-- <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
                           <thead class="thead-light">
                             <tr>
                               <th class="text-center">Nombre</th>
@@ -249,7 +249,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <!-- código en php -->
+                            
                             <tr>
                               <td class="text-center">Mango</td>
                               <td class="text-center">Frutas</td>
@@ -265,7 +265,43 @@
                               <th class="text-center" colspan="7">Última actualización:</th>
                             </tr>
                           </tfoot>
+                        </table> -->
+
+                        <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
+                          <thead class="thead-light">
+                            <tr>
+                              <th class="text-center">Nombre</th>
+                              <th class="text-center">Grupo</th>
+                              <th class="text-center">Acciones</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                            //Tabla alimentos(ALL) -> dbs[]
+                            $dbquery = mysqli_query($conect, "SELECT * FROM alimentos");
+                            $cantA = mysqli_num_rows($dbquery);
+                            if ($cantA > 0) {
+                              while ($db = $dbquery->fetch_array()) {
+                                $dbs[] = $db;
+                              }
+
+                              foreach ($dbs as $db) {
+                                echo '<tr>
+                                        <td class="text-center">' . $db['nombre'] . '</td>
+                                        <td class="text-center">' . $db['grupo'] . '</td>
+                                        <td class="text-center">
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="">
+                                          </div>
+                                        </td>
+                                      /tr>';
+                              }
+                              unset($dbs);
+                            }
+                            ?>
+                          </tbody>
                         </table>
+
                       </div> <!-- End Table -->
                       <!-- Botonera -->
                       <div class="row m-3 justify-content-center">
