@@ -29,7 +29,16 @@ while($gdb=$gquery->fetch_array()){
 
 //Eliminar Alimento
 if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])){
-  mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos  ='".$_REQUEST['eliminarAlimento']."'");  
+  $queryAlimentoBorrar=mysqli_connect($conect, "SELECT * FROM alimentos WHERE idalimentos='".$_REQUEST['eliminarAlimento']."'");
+  $dbAliBorrar=mysqli_fetch_assoc($queryAlimentoBorrar);
+  $nombre=$$dbALiBorrar['nombre'];
+  $nombrePerfil=$nombre.'falimento.jpg';
+  $nombreP1=$nombre.'porcion1.jpg';
+  $nombreP2=$nombre.'porcion2.jpg';
+  $nombreP3=$nombre.'porcion3.jpg';
+  $nombreP4=$nombre.'porcion4.jpg';
+
+  mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos  ='".$_REQUEST['eliminarAlimento']."'"); 
   header("Location:gestionAlimentos.php");
 }
 ?>

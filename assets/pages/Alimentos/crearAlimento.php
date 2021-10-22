@@ -10,11 +10,18 @@ $fechaActual = Date("Y-m-d H:i:s");
 //Datos del usuario desde Tabla usuarios a traves de dni(Variable de Session) -> a
 $u = $_SESSION['user'];
 $c = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
-$a = mysqli_fetch_assoc($c);
+$dbUser = mysqli_fetch_assoc($c);
 
 
 //Tabla alimentos(ALL) -> dbs[]
 $dbquery = mysqli_query($conect, "SELECT * FROM alimentos");
+$numQueryAlim=mysqli_num_rows($dbquery);
+if($numQueryAlim!=0){
+  $validarCant=true;
+}else{
+  $validarCant=false;
+}
+if($validarCant){
 while ($db = $dbquery->fetch_array()) {
   $dbs[] = $db;
 }
@@ -23,6 +30,7 @@ foreach ($dbs as $db) {
   $validarConJS[] = $db['nombre'];
 }
 unset($dbs);
+}
 //TABLA grupos (ALL)-> gdbs[]
 $gquery = mysqli_query($conect, "SELECT * FROM grupos ");
 while ($gdb = $gquery->fetch_array()) {
@@ -38,13 +46,14 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
   //Validacion contra base de datos (Tabla Alimentos): nombre debe ser unico.
   $validar = true;
+  if($validarCant){
   foreach ($dbs as $db) {
     if ($nombre == $db['nombre']) {
       $validar = false;
     }
   }
   unset($dbs);
-
+  } 
   //grupo
   $idgrupos = $_REQUEST['grupo'];
   //Datos del Grupo desde Tabla grupos a traves de idgrupos -> grupodb
@@ -761,7 +770,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       </div>
                       <div class="input-group">
                         <div class="input-group-prepend">
-                          <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Niacina</span>
+                           <spanclass="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Niacina</span>
                         </div>
                         <input type="number" step="any" min="0" id="cant33" name="33" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
@@ -793,7 +802,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <div class="buttons__AlimentoAlta">
                         <a class="btn btn-outline-danger m-2" href="gestionAlimentos.php">Cancelar</a>
-                        <a href="#" id="guardarAlimento" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarAlimentoModal" role="button">Guardar alimento</a>
+                        <a id="guardarAlimento" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarAlimentoModal" role="button">Guardar alimento</a>
                       </div>
                     </div>
                   </div> <!-- Fin Botonera -->
@@ -811,7 +820,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     </div>
                     <div class="modal-body">Estás seguro?</div>
                     <div class="modal-footer">
-                      <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <a class="btn btn-secondary" href="#">Cancelar</a>
                       <button class="btn btn-success">Guardar</button>
                     </div>
                   </div>
@@ -872,7 +881,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   <script src="../../../js/sb-admin-2.min.js"></script>
 
   <!-- Helpers scripts-->
-  <script src="../../../js/helpers.js"></script>
+  <!-- <script src="../../../js/helpers.js"></script> -->
 
 </body>
 
