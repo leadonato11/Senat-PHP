@@ -1,5 +1,6 @@
 <?php 
 include("../../../includes/conectar.php");
+include("../../../utils/footer.php");
 session_start();
 if(!isset($_SESSION['user'])){
     header("Location:index.php");
@@ -22,9 +23,21 @@ while($gdb=$gquery->fetch_array()){
     }
 
 //Eliminar Alimento
+
+//Eliminar Alimento
 if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])){
-  mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos  ='".$_REQUEST['eliminarAlimento']."'");  
-  header("Location:gestionAlimentos.php");
+  $idAlimentoEliminar=$_REQUEST['eliminarAlimento'];
+  $queryAlimentoBorrar=mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idalimentos'");
+  $dbAliBorrar=mysqli_fetch_assoc($queryAlimentoBorrar);
+  $nombre=$$dbALiBorrar['nombre'];
+  $nombrePerfil=$nombre.'falimento.jpg';
+  $nombreP1=$nombre.'porcion1.jpg';
+  $nombreP2=$nombre.'porcion2.jpg';
+  $nombreP3=$nombre.'porcion3.jpg';
+  $nombreP4=$nombre.'porcion4.jpg';
+
+  mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos  ='$idAlimentoEliminar'"); 
+  header("Location:gestionAlimentos.php?eliminar=".$idAlimentoEliminar."exitoso");
 }
 ?>
 
@@ -249,11 +262,31 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
                               class="fas fa-external-link-square-alt"></i></a>
                           <a class="btn btn-info btn-sm" href="editarAlimento.php?editarAlimento='.$db['idalimentos'].'" role="button"><i class="fas fa-edit"></i></a>
                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                            data-target="#borrarAlimentoModal" >
+                            data-target="#borrarAlimentoModal'.$db['idalimentos'].'" >
                             <i class="fas fa-trash"></i>
                           </button>
                         </td>
                       </tr>';
+                      echo '<!-- Borrar alimento Modal-->
+                      <div class="modal fade" id="borrarAlimentoModal'.$db['idalimentos'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                       aria-hidden="true">
+                       <div class="modal-dialog" role="document">
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <h5 class="modal-title" id="exampleModalLabel">Estás por borrar el alimento</h5>
+                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">×</span>
+                             </button>
+                           </div>
+                           <div class="modal-body">Estás seguro?</div>
+                           <div class="modal-footer">
+                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                             <a class="btn btn-danger" onclick="borrarAlimento()" href="gestionAlimentos.php?eliminarAlimento='. $db['idalimentos'].'">Estoy seguro, borralo</a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   ';
                       }unset($dbs);
                     }
                     ?>
@@ -271,38 +304,12 @@ if(isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento'])
         </div> <!-- End Table -->
       </div>
       <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Desarrollado para UCEL por Leandro Donato, Sebastián Meza y Hernán Sosa &copy; Ingeniería en Sistemas
-              UCEL</span>
-          </div>
-        </div>
-      </footer>
+      <?php echo $footer; ?>
       <!-- End of Footer -->
     </div>
   </div>
   
-   <!-- Borrar alimento Modal-->
-   <div class="modal fade" id="borrarAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Estás por borrar el alimento</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Estás seguro?</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-danger" onclick="borrarAlimento()" href="gestionAlimentos.php?eliminarAlimento=<?php echo $db['idalimentos']; ?>">Estoy seguro, borralo</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
+   
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>

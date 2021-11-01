@@ -1,5 +1,6 @@
 <?php
 include("../../../includes/conectar.php");
+include("../../../utils/menu.php");
 session_start();
 if (!isset($_SESSION['user'])) {
   header("Location:../../../index.php");
@@ -10,6 +11,10 @@ $u = $_SESSION['user'];
 $c = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $a = mysqli_fetch_assoc($c);
 
+if (isset($_REQUEST['CargaUsuario']) && !empty($_REQUEST['CargaUsuario']) && $_REQUEST['CargaUsuario']=='yaExiste') {
+  echo "<script>alert('Este Usuario ha sido registrado.')</script>";
+}
+
 if (isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])) {
   $u = $_REQUEST['dni'];
   $p = $_REQUEST['pass'];
@@ -17,7 +22,7 @@ if (isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])) {
   $ap = $_REQUEST['apellido'];
   $c = $_REQUEST['correo'];
   $r = $_REQUEST['rol'];
-  $edad = $_REQUEST['edad'];
+  
   $f = $_FILES['fotoUsuario']['name'];
   $est = $_REQUEST['estado'];
   if ($est == '1') {
@@ -41,9 +46,10 @@ if (isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])) {
   }
   unset($rows);
   if ($booleana == 1) {
-    echo "<script>alert('Este Usuario ha sido registrado.')</script>";
+    header("Location:crearUsuario.php?CargaUsuario=yaExiste");
+    
   } else {
-    $insert = mysqli_query($conect, "INSERT INTO usuario VALUES (NULL, '$u', '$p', '$n', '$ap', '$r', '$c', '$f', '$estInt', '$edad')");
+    $insert = mysqli_query($conect, "INSERT INTO usuario VALUES (NULL, '$u', '$p', '$n', '$ap', '$r', '$c', '$f', '$estInt')");
     if ($insert == 1) {
       $arch = move_uploaded_file($_FILES['fotoUsuario']['tmp_name'], "../../img/ImgUsuarios/" . $u . ".jpg");
       if ($arch) {
@@ -235,7 +241,7 @@ if (isset($_REQUEST['cerrar'])) {
                     <h3>Foto de perfil</h3>
                     <img src="../../img/undraw_profile_2.svg" width="350" class="img-fluid rounded mb-2" alt="foodImage">
                     <div class="custom-file">
-                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario">
+                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario" required>
                       <label class="custom-file-label" for="imagenUsuario">Imagen Usuario</label>
                     </div>
                   </div>
@@ -248,39 +254,39 @@ if (isset($_REQUEST['cerrar'])) {
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1" title="Documento de identidad">DNI</span>
                       </div>
-                      <input type="number" class="form-control" placeholder="Ingrese su DNI..." aria-describedby="basic-addon1" title="DNI (sin puntos ni espacios)" name="dni">
+                      <input type="number" class="form-control" placeholder="Ingrese su DNI..." aria-describedby="basic-addon1" title="DNI (sin puntos ni espacios)" name="dni" required>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Nombre</span>
                       </div>
-                      <input type="text" class="form-control" placeholder="Ingrese su nombre..." aria-describedby="basic-addon1" name="nombre">
+                      <input type="text" class="form-control" placeholder="Ingrese su nombre..." aria-describedby="basic-addon1" name="nombre" required>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Apellido</span>
                       </div>
-                      <input type="text" class="form-control" placeholder="Ingrese su apellido..." aria-describedby="basic-addon1" name="apellido">
+                      <input type="text" class="form-control" placeholder="Ingrese su apellido..." aria-describedby="basic-addon1" name="apellido" required>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Correo</span>
                       </div>
-                      <input type="email" class="form-control" placeholder="Ingrese su correo..." aria-describedby="basic-addon1" name="correo">
+                      <input type="email" class="form-control" placeholder="Ingrese su correo..." aria-describedby="basic-addon1" name="correo" required>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">
                           Clave</span>
                       </div>
-                      <input type="password" class="form-control" placeholder="Ingrese su clave..." aria-describedby="basic-addon1" name="pass">
+                      <input type="password" class="form-control" placeholder="Ingrese su clave..." aria-describedby="basic-addon1" name="pass" required>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Rol</span>
                       </div>
-                      <select class="custom-select" id="inputGroupSelect01" name="rol">
-                        <option selected disabled>Seleccionar...</option>
+                      <select class="custom-select" id="inputGroupSelect01" name="rol" required>
+                        <option value="">Seleccionar...</option>
                         <option value="1">Administrador</option>
                         <option value="2">Nutricionista</option>
                       </select>
@@ -290,8 +296,8 @@ if (isset($_REQUEST['cerrar'])) {
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Estado</span>
                       </div>
                       <div>
-                        <select name="estado" class="custom-select inputCantGeneral" id="inputGroupSelect01">
-                          <option selected disabled>Seleccionar...</option>
+                        <select name="estado" class="custom-select inputCantGeneral" id="inputGroupSelect01" required>
+                          <option value="">Seleccionar...</option>
                           <option value="1">Activo</option>
                           <option value="0">Inactivo</option>
                         </select>

@@ -20,9 +20,10 @@ while($gdb=$gquery->fetch_array()){
 
 
 //BAJA (Sólo de la tabla Grupos)
- if(isset($_REQUEST['eliminarGrupo'])){  
-    mysqli_query($conect, "DELETE FROM grupos WHERE idgrupos='".$_REQUEST['eliminarGrupo']."'");
-    header("Location:gestionGrupoDeAlimentos.php");
+ if(isset($_REQUEST['eliminarGrupo'])){
+  $idGrupoEliminar=$_REQUEST['eliminarGrupo'] ; 
+    mysqli_query($conect, "DELETE FROM grupos WHERE idgrupos='$idGrupoEliminar'");
+    header("Location:gestionGrupoDeAlimentos.php?GrupoEliminado=".$idGrupoEliminar."Exitoso");
     }    
    
        
@@ -220,11 +221,34 @@ if(isset($_REQUEST['cerrar'])){
                           <a class="btn btn-primary btn-sm" href="editarGrupoDeAlimento.php?editarGrupo='.$gdb['idgrupos'].'" role="button"><i
                               class="fas fa-edit"></i></a>
                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                            data-target="#deleteGroup">
+                            data-target="#deleteGroup'.$gdb['idgrupos'].'">
                             <i class="fas fa-trash"></i>
                           </button>
                         </td>
                       </tr>';
+                      echo '
+                      <!-- deleteGroup Modal -->
+  <div class="modal fade" id="deleteGroup'.$gdb['idgrupos'].'" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteGroupLabel">Eliminar grupo de alimentos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Está seguro que desea eliminar el grupo seleccionado?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <a type="button" href="gestionGrupoDeAlimentos.php?eliminarGrupo='.$gdb['idgrupos'].'" class="btn btn-danger">Borrar grupo de alimentos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+                      ';
                     }unset($gdbs);
                   }
                   ?>
@@ -256,27 +280,7 @@ if(isset($_REQUEST['cerrar'])){
     </div>
   </div>
 
-  <!-- deleteGroup Modal -->
-  <div class="modal fade" id="deleteGroup" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteGroupLabel">Eliminar grupo de alimentos</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ¿Está seguro que desea eliminar el grupo seleccionado?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <a type="button" href="gestionGrupoDeAlimentos.php?eliminarGrupo=<?php echo $gdb['idgrupos']; ?>" class="btn btn-danger">Borrar grupo de alimentos</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">

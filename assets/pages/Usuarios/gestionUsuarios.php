@@ -1,6 +1,7 @@
 <?php 
 include("../../../includes/conectar.php");
-session_start();
+include("../../../utils/navbar.php");
+
 if(!isset($_SESSION['user'])){
     header("Location:index.php");
 }
@@ -9,6 +10,16 @@ $fechaActual=Date("Y-m-d");
 $u=$_SESSION['user'];
 $c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $a=mysqli_fetch_assoc($c);
+
+if(isset($_REQUEST['eliminarUsuario'])){
+  $idUserEliminar=$_REQUEST['eliminarUsuario'];
+$update=mysqli_query($conect, "UPDATE usuario SET estado='0' WHERE idusuario='$idUserEliminar' ");
+if($update){
+  header("Location:gestionUsuarios.php?BajadeUsuario=".$idUserEliminar."Exitoso");
+}else{
+  header("Location:gestionUsuarios.php?BajadeUsuario=".$idUserEliminar."Fallido");
+}
+}
 ?>
 
 <!DOCTYPE html>
@@ -129,36 +140,11 @@ $a=mysqli_fetch_assoc($c);
       <!-- Main Content -->
       <div id="content">
         <!-- Navbar Index -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-          <ul class="navbar-nav ml-auto">
-            <div class="topbar-divider d-none d-sm-block"></div>
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cecilia Torrent</span>
-                <img class="img-profile rounded-circle" src="../../img/ImgUsuarios/<?php echo $a['dni']; ?>.jpg">
-              </a>
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Ver Perfil
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Opciones
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar sesión
-                </a>
-              </div>
-            </li>
-          </ul>
-        </nav>
+        <?php
+        
+        echo $navbar;
+        
+        ?>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -187,7 +173,7 @@ $a=mysqli_fetch_assoc($c);
                       <th class="text-center">Nombre</th>
                       <th class="text-center">Apellido</th>
                       <th class="text-center">DNI</th>
-                      <th class="text-center">Edad</th>
+                      
                       <th class="text-center">Correo</th>
                       <th class="text-center">Rol</th>
                       <th class="text-center">Estado</th>
@@ -219,7 +205,7 @@ $a=mysqli_fetch_assoc($c);
                           <td class="text-center">'.$userList['nombre'].'</td>
                           <td class="text-center">'.$userList['apellido'].'</td>
                           <td class="text-center">'.$userList['dni'].'</td>
-                          <td class="text-center">'.$userList['edad'].'</td>
+                          
                           <td class="text-center">'.$userList['correo'].'</td>
                           <td class="text-center">'.$rol.'</td>
                           <td class="text-center">'.$estado.'</td>
@@ -228,12 +214,36 @@ $a=mysqli_fetch_assoc($c);
                                 class="fas fa-external-link-square-alt"></i></a>
                             <a class="btn btn-info btn-sm" href="editarUsuario.php?editarUsuario='.$userList['idusuario'].'" role="button" title="Editar datos de usuario"><i class="fas fa-edit"></i></a>
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                              data-target="#deleteReport" title="Eliminar usuario">
+                              data-target="#deleteUser'.$userList['idusuario'].'" title="Eliminar usuario">
                               <i class="fas fa-trash"></i>
                             </button>
                           </td>
                         </tr>';
+                        echo '
+                        <!-- deleteUser Modal -->
+    <div class="modal fade" id="deleteUser'.$userList['idusuario'].'" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteGroupLabel">Eliminar grupo de alimentos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ¿Está seguro que desea eliminar el grupo seleccionado?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <a type="button" href="gestionUsuarios.php?eliminarUsuario='.$userList['idusuario'].'" class="btn btn-danger">Borrar grupo de alimentos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+                        ';
                       }unset($userListS);
+  
                     }
                     ?>
                   </tbody>

@@ -1,4 +1,15 @@
-<!-- Navbar Index -->
+<?php
+session_start();
+if(!isset($_SESSION['user'])){
+    header("Location:index.php");
+}
+date_default_timezone_set("America/Argentina/Buenos_Aires");
+$fechaActual=Date("Y-m-d");
+$u=$_SESSION['user'];
+$c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
+$a=mysqli_fetch_assoc($c);
+
+$navbar='
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
   <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
     <i class="fa fa-bars"></i>
@@ -8,7 +19,7 @@
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nombre y Apellido de Usuario</span>
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">'.$a['apellido'].', '.$a['nombre'].'</span>
         <img class="img-profile rounded-circle" src="assets/img/undraw_profile_1.svg">
       </a>
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -25,3 +36,4 @@
     </li>
   </ul>
 </nav>
+';

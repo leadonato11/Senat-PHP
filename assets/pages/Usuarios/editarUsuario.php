@@ -16,6 +16,7 @@ $a=mysqli_fetch_assoc($c);
   $idUsuarioEdit=$_SESSION['editarUsuario'];
   $userEditQuery=mysqli_query($conect, "SELECT * FROM usuario WHERE idusuario='$idUsuarioEdit'");
   $userEdit=mysqli_fetch_assoc($userEditQuery);
+  $dniUserEdit=$userEdit['dni'];
   //ROL
   if($userEdit['rol']==1){
     $rol='Administrador';
@@ -29,14 +30,14 @@ $a=mysqli_fetch_assoc($c);
     $estado='Inactivo';
   }
 //Editar
-if(isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])){
-  $dni=$_REQUEST['dni']; 
+if(isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])){
+  $dni=$dniUserEdit;
   $p=$_REQUEST['pass'];
   $n=$_REQUEST['nombre'];
   $ap=$_REQUEST['apellido'];
   $c=$_REQUEST['correo']; 
   $r=$_REQUEST['rol'];
-  $edad=$_REQUEST['edad'];
+ 
   $f=$_FILES['fotoUsuario']['name'];
   if($f==""){
     $f=$userEdit['foto'];
@@ -64,7 +65,7 @@ if(isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])){
   if($booleana==1){
     echo "<script>alert('Este Usuario ha sido registrado.')</script>";
   }else{
-    $update1=mysqli_query($conect, "UPDATE usuario SET foto='$f', nombre='$n', clave='$p', apellido='$ap', correo='$c', dni='$dni', rol='$r', edad='$edad', estado='$est' WHERE idusuario='$idUsuarioEdit'");
+    $update1=mysqli_query($conect, "UPDATE usuario SET foto='$f', nombre='$n', clave='$p', apellido='$ap', correo='$c', dni='$dni', rol='$r', estado='$est' WHERE idusuario='$idUsuarioEdit'");
     if($_FILES['fotoUsuario']['name']!=""){
       $arch1=move_uploaded_file($_FILES['fotoUsuario']['tmp_name'],"../../img/imgUsuarios/".$dni.".jpg");
     }
@@ -265,21 +266,14 @@ if(isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])){
                       <input type="text" class="form-control" placeholder="Ingrese su apellido..."
                         aria-describedby="basic-addon1" name="apellido" value="<?php echo $userEdit['apellido']; ?>">
                     </div>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1"
-                          title="Documento de identidad">Edad</span>
-                      </div>
-                      <input type="number" class="form-control" placeholder="Ingrese su edad..."
-                        aria-describedby="basic-addon1" name="edad" value="<?php echo $userEdit['edad']; ?>">
-                    </div>
+                    
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1"
                           title="Documento de identidad">DNI</span>
                       </div>
                       <input type="number" class="form-control" placeholder="Ingrese su DNI..."
-                        aria-describedby="basic-addon1" name="dni" title="DNI (sin puntos ni espacios)" value="<?php echo $userEdit['dni']; ?>">
+                        aria-describedby="basic-addon1" name="dni" title="DNI (sin puntos ni espacios)" value="<?php echo $userEdit['dni']; ?>" disabled>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -397,17 +391,12 @@ if(isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])){
 
   <!-- Core plugin JavaScript-->
   <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="../../../js/helpers.js"></script>
+  
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="../../../vendor/chart.js/Chart.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="../../../js/demo/chart-area-demo.js"></script>
-  <script src="../../../js/demo/chart-pie-demo.js"></script>
 
 </body>
 

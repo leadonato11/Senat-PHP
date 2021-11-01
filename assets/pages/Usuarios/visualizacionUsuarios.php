@@ -28,49 +28,7 @@ $a=mysqli_fetch_assoc($c);
   }else{
     $estado='Inactivo';
   }
-//Editar
-if(isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])){
-  $dni=$_REQUEST['dni']; 
-  $p=$_REQUEST['pass'];
-  $n=$_REQUEST['nombre'];
-  $ap=$_REQUEST['apellido'];
-  $c=$_REQUEST['correo']; 
-  $r=$_REQUEST['rol'];
-  $edad=$_REQUEST['edad'];
-  $f=$_FILES['fotoUsuario']['name'];
-  if($f==""){
-    $f=$userEdit['foto'];
-  }
-  $est=$_REQUEST['estado'];
-  if($est=='1'){
-    $estInt=1;
-  }else{
-    $estInt=0;
-  }
-  
-  $checcar=mysqli_query($conect, "SELECT dni FROM usuario");
-  
-  while($row=$checcar->fetch_array()){
-      $rows[]=$row;
-  }
 
-  $booleana=0;
-
-  foreach($rows as $row){
-    if($row['dni']==$dni && $userEdit['dni']!=$dni){
-      $booleana=1;
-    }
-  }unset($rows);
-  if($booleana==1){
-    echo "<script>alert('Este Usuario ha sido registrado.')</script>";
-  }else{
-    $update1=mysqli_query($conect, "UPDATE usuario SET foto='$f', nombre='$n', clave='$p', apellido='$ap', correo='$c', dni='$dni', rol='$r', edad='$edad', estado='$est' WHERE idusuario='$idUsuarioEdit'");
-    if($_FILES['fotoUsuario']['name']!=""){
-      $arch1=move_uploaded_file($_FILES['fotoUsuario']['tmp_name'],"../../img/imgUsuarios/".$dni.".jpg");
-    }
-    header("Location:gestionUsuarios.php");
-  }
-}
 
 
 ?>
@@ -265,14 +223,7 @@ if(isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])){
                       <input disabled type="text" class="form-control" placeholder="Ingrese su apellido..."
                         aria-describedby="basic-addon1" name="apellido" value="<?php echo $userEdit['apellido']; ?>">
                     </div>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1"
-                          title="Documento de identidad">Edad</span>
-                      </div>
-                      <input disabled type="number" class="form-control" placeholder="Ingrese su edad..."
-                        aria-describedby="basic-addon1" name="edad" value="<?php echo $userEdit['edad']; ?>">
-                    </div>
+                    
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1"

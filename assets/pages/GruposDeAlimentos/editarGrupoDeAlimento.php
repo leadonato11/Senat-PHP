@@ -1,63 +1,65 @@
-<?php 
+<?php
 include("../../../includes/conectar.php");
 session_start();
-if(!isset($_SESSION['user'])){
-    header("Location:index.php");
+if (!isset($_SESSION['user'])) {
+  header("Location:index.php");
 }
 date_default_timezone_set("America/Argentina/Buenos_Aires");
-$fechaActual=Date("Y-m-d H:i:s");
-$u=$_SESSION['user'];
-$c=mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
-$a=mysqli_fetch_assoc($c);
+$fechaActual = Date("Y-m-d H:i:s");
+$u = $_SESSION['user'];
+$c = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
+$a = mysqli_fetch_assoc($c);
 
 //Editar  
-if(isset($_REQUEST['editarGrupo']) && !empty($_REQUEST['editarGrupo'])){
-  $_SESSION['editarGrupo']=$_REQUEST['editarGrupo'];
+if (isset($_REQUEST['editarGrupo']) && !empty($_REQUEST['editarGrupo'])) {
+  $_SESSION['editarGrupo'] = $_REQUEST['editarGrupo'];
 }
-$idGrupo=$_SESSION['editarGrupo'];
+$idGrupo = $_SESSION['editarGrupo'];
 //Grupo
-$grupoQuery=mysqli_query($conect, "SELECT * FROM grupos WHERE idgrupos='$idGrupo'");
-$grupo=mysqli_fetch_assoc($grupoQuery);
+$grupoQuery = mysqli_query($conect, "SELECT * FROM grupos WHERE idgrupos='$idGrupo'");
+$grupo = mysqli_fetch_assoc($grupoQuery);
+$nombreGrupo=$grupo['nombres'];
 //TABLA grupos (ALL)-> gdbs[]
-$gquery=mysqli_query($conect, "SELECT * FROM grupos ");
-while($gdb=$gquery->fetch_array()){
-    $gdbs[]=$gdb;
+$gquery = mysqli_query($conect, "SELECT * FROM grupos ");
+while ($gdb = $gquery->fetch_array()) {
+  $gdbs[] = $gdb;
 }
 //Edicion VALIDADA	
-if(isset($_REQUEST['nombreGrupo']) && !empty($_REQUEST['nombreGrupo'])){
-    $n=$_REQUEST['nombreGrupo'];
-	
-    $validar=true;
+if (isset($_REQUEST['nombreGrupo']) && !empty($_REQUEST['nombreGrupo'])) {
+  $n = $_REQUEST['nombreGrupo'];
 
-    foreach($gdbs as $gdb){
-		if($gdb['nombres']==$n){
-			$validar=false;
-		}
-	}unset($gbds);
-	
-	//carga
-if($validar==false){
-	echo "<script>alert('Ya se registro un grupo con este nombre.')</script>";
-}else{
-    $insert=mysqli_query($conect, "UPDATE grupos SET nombres='$n' WHERE idgrupos='$idGrupo'");
-	if($insert==1){
-		header("Location:gestionGrupoDeAlimentos.php?editarNuevoGrupo=Exitosa");
-    }else{
-		header("Location:gestionGrupoDeAlimentos.php?editarNuevoGrupo=HuboUnError".$n.$idGrupo);
-	}
-	}
+  $validar = true;
+
+  foreach ($gdbs as $gdb) {
+    if (strcasecmp($n, $gdb['nombres'])==0 && strcasecmp($n, $nombreGrupo)!=0) {
+      $validar = false;
+    }
+  }
+  unset($gbds);
+
+  //carga
+  if ($validar == false) {
+    echo "<script>alert('Ya se registro un grupo con este nombre.')</script>";
+  } else {
+    $insert = mysqli_query($conect, "UPDATE grupos SET nombres='$n' WHERE idgrupos='$idGrupo'");
+    if ($insert == 1) {
+      header("Location:gestionGrupoDeAlimentos.php?editarNuevoGrupo=Exitosa");
+    } else {
+      header("Location:gestionGrupoDeAlimentos.php?editarNuevoGrupo=HuboUnError" . $n . $idGrupo);
+    }
+  }
 }
 
 //BAJA (Sólo de la tabla Grupos)
- if(isset($_REQUEST['e'])){  
-    mysqli_query($conect, "DELETE FROM grupos WHERE idgrupos='".$_REQUEST['e']."'");
-    header("Location:grupos.php");
-    }    
-   
-       
-if(isset($_REQUEST['cerrar'])){
-    session_destroy();
-    header("Location:index.php");
+if (isset($_REQUEST['e'])) {
+  mysqli_query($conect, "DELETE FROM grupos WHERE idgrupos='" . $_REQUEST['e'] . "'");
+  header("Location:grupos.php");
+}
+
+
+if (isset($_REQUEST['cerrar'])) {
+  session_destroy();
+  header("Location:index.php");
 }
 ?>
 
@@ -71,9 +73,7 @@ if(isset($_REQUEST['cerrar'])){
   <meta name="description" content="">
   <meta name="author" content="">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.css" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/estilos.css">
   <title>SENAT | Crear grupo de alimentos</title>
@@ -102,8 +102,7 @@ if(isset($_REQUEST['cerrar'])){
         Interface
       </div>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
-          aria-controls="collapseUsers">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
           <i class="fas fa-users"></i>
           <span>Usuarios</span>
         </a>
@@ -116,8 +115,7 @@ if(isset($_REQUEST['cerrar'])){
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true"
-          aria-controls="collapseFoods">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true" aria-controls="collapseFoods">
           <i class="fas fa-apple-alt"></i>
           <span>Alimentos</span>
         </a>
@@ -129,13 +127,11 @@ if(isset($_REQUEST['cerrar'])){
           </div>
         </div>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups"
-          aria-expanded="true" aria-controls="collapseFoodGroups">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
           <i class="fas fa-database"></i>
           <span>GruposDeAlimentos</span>
         </a>
-        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities"
-          data-parent="#accordionSidebar">
+        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menú grupo alimentos:</h6>
             <a class="collapse-item" href="../GruposDeAlimentos/gestionGrupoDeAlimentos.html">Gestionar grupos</a>
@@ -143,8 +139,7 @@ if(isset($_REQUEST['cerrar'])){
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys"
-          aria-expanded="true" aria-controls="collapseSurveys">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys" aria-expanded="true" aria-controls="collapseSurveys">
           <i class="fas fa-poll"></i>
           <span>Encuestas</span>
         </a>
@@ -158,8 +153,7 @@ if(isset($_REQUEST['cerrar'])){
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports"
-          aria-expanded="true" aria-controls="collapseReports">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports" aria-expanded="true" aria-controls="collapseReports">
           <i class="fas fa-file-excel"></i>
           <span>Reportes</span>
         </a>
@@ -190,8 +184,7 @@ if(isset($_REQUEST['cerrar'])){
           <ul class="navbar-nav ml-auto">
             <div class="topbar-divider d-none d-sm-block"></div>
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cecilia Torrent</span>
                 <img class="img-profile rounded-circle" src="../../img/undraw_profile_1.svg">
               </a>
@@ -229,15 +222,13 @@ if(isset($_REQUEST['cerrar'])){
             <div class="row m-3 justify-content-center">
               <div class="col-lg-8 col-md-4 col-sm-12">
                 <div class="alimento__dataInicial">
-                  <h3>Datos del grupo de alimentos</h3>
-                  <form action="editarGrupoDeAlimento.php" class="form-inline d-flex flex-column align-items-center">
+                    <form action="editarGrupoDeAlimento.php" class="form-inline d-flex flex-column align-items-center">
+                    <h3>Datos del grupo de alimentos</h3>
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text bg-dark text-light labelMacroMicroNut"
-                          id="basic-addon1">Nombre</span>
+                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Nombre</span>
                       </div>
-                      <input type="text" name="nombreGrupo" class="form-control" placeholder="Nombre del grupo..."
-                        aria-label="nombreAlimento" aria-describedby="basic-addon1" value="<?php echo $grupo['nombres']; ?>">
+                      <input type="text" name="nombreGrupo" class="form-control" placeholder="Nombre del grupo..." aria-label="nombreAlimento" aria-describedby="basic-addon1" value="<?php echo $grupo['nombres']; ?>">
                     </div>
                   </div>
                 </div>
@@ -247,7 +238,7 @@ if(isset($_REQUEST['cerrar'])){
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="buttons__AlimentoAlta">
                     <a class="btn btn-outline-danger m-2" href="gestionGrupoDeAlimentos.php">Cancelar</a>
-                    <button class="btn btn-success m-2">Guardar grupo de alimentos</button>
+                    <button class="btn btn-success m-2">Guardar cambios</button>
                   </div>
                 </div>
               </div> <!-- Fin Botonera -->
@@ -274,8 +265,7 @@ if(isset($_REQUEST['cerrar'])){
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

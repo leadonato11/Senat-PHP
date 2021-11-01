@@ -37,23 +37,44 @@ while ($gdb = $gquery->fetch_array()) {
   $gdbs[] = $gdb;
 }
 
+//Aviso de reiteración de nombre
+if (isset($_REQUEST['cargaAlimento']) && !empty($_REQUEST['cargaAlimento'])) {
+  if($_REQUEST['cargaAlimento']=='yaExiste'){
+    echo '<script>alert("Ya existe un alimento con ese nombre. Por favor verifique.")</script>';
+  }
+}
+
 //LECTURA, VALIDACION Y CARGA (FORMULARIO)	
 if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   //Nombre, Grupo, Cantidad de referencia y Unidad de Medida:
-
-  //nombre
-  $nombre = $_REQUEST['nombre'];
-
-  //Validacion contra base de datos (Tabla Alimentos): nombre debe ser unico.
-  $validar = true;
-  if($validarCant){
-  foreach ($dbs as $db) {
-    if ($nombre == $db['nombre']) {
-      $validar = false;
-    }
+ //nombre
+ $nombre = $_REQUEST['nombre'];
+ 
+  //Base de datos Alimento
+  $dbquery2 = mysqli_query($conect, "SELECT * FROM alimentos");
+  $numQueryAlim2=mysqli_num_rows($dbquery2);
+  if($numQueryAlim2!=0){
+    $validarCant2=true;
+  }else{
+    $validarCant2=false;  
   }
-  unset($dbs);
-  } 
+  if($validarCant2){
+    while ($db2 = $dbquery2->fetch_assoc()) {
+        $db2s[] = $db2;
+    }
+  //Validacion contra base de datos (Tabla Alimentos): nombre debe ser unico.
+    $validar = true;
+ 
+    foreach ($db2s as $db2) {
+      $dbNombre=$db2['nombre'];
+      
+      if (strcasecmp($nombre, $dbNombre)==0) {
+        $validar = false;
+      }
+ 
+    }
+    unset($db2s);
+  }
   //grupo
   $idgrupos = $_REQUEST['grupo'];
   //Datos del Grupo desde Tabla grupos a traves de idgrupos -> grupodb
@@ -105,15 +126,15 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
       $arch3 = move_uploaded_file($_FILES['fotoporcion3']['tmp_name'], "../../img/ImgPorciones/" . $name3 . ".jpg");
       $arch4 = move_uploaded_file($_FILES['fotoporcion4']['tmp_name'], "../../img/ImgPorciones/" . $name4 . ".jpg");
       if ($arch1 == 1 && $arch2 == 1 && $arch3 == 1 && $arch4 == 1 && $archf == 1) {
-        header("Location:gestionAlimentos.php?carga=exitosa");
+        header("Location:gestionAlimentos.php?cargaAlimento=exitosa");
       } else {
-        header("Location:gestionAlimentos.php?carga=exitosaSinArchivos");
+        header("Location:gestionAlimentos.php?cargaAlimento=exitosaSinArchivos");
       }
     } else {
-      header("Location:gestionAlimentos.php?carga=fallida");
+      header("Location:gestionAlimentos.php?cargaAlimento=fallida");
     }
-  } else {
-    header("Location:gestionAlimentos.php?carga=yaExiste");
+  } else { 
+    header("Location:crearAlimento.php?cargaAlimento=yaExiste");
   }
 }
 
@@ -312,15 +333,15 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Nombre</span>
                       </div>
-                      <input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento..." aria-label="nombreAlimento" aria-describedby="basic-addon1" id="nombreAlimento">
+                      <input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento..." aria-label="nombreAlimento" aria-describedby="basic-addon1" id="nombreAlimento" required>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Cantidad</span>
                       </div>
-                      <input type="number" step="any" min="0" class="form-control inputCantGeneral" name="cant" placeholder="Cantidad porción gral..." aria-label="cantidadAlimento" aria-describedby="basic-addon1" title="Cantidad porción gral...">
-                      <select class="custom-select" name="umedida" id="inputGroupSelect01" title="Unidad de medida">
-                        <option selected disabled>Unidad de medida</option>
+                      <input type="number" step="any" min="0" class="form-control inputCantGeneral" name="cant" placeholder="Cantidad porción gral..." aria-label="cantidadAlimento" aria-describedby="basic-addon1" title="Cantidad porción gral..." required>
+                      <select class="custom-select" name="umedida" id="inputGroupSelect01" title="Unidad de medida" required>
+                        <option value="">Unidad de medida</option>
                         <option value="gr">gr</option>
                         <option value="cc">cc</option>
                       </select>
@@ -329,8 +350,8 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Grupo</span>
                       </div>
-                      <select class="custom-select" name="grupo" id="inputGroupSelect01">
-                        <option selected disabled>Seleccionar...</option>
+                      <select class="custom-select" name="grupo" id="inputGroupSelect01" required>
+                        <option value="">Seleccionar...</option>
                         <?php
                         foreach ($gdbs as $gdb) {
                           echo '<option value="' . $gdb["idgrupos"] . '">' . $gdb["nombres"] . '</option>';
@@ -353,24 +374,24 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1" required>
                             <label class="custom-file-label" for="inputGroupFile01">Porción
                               01</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" step="any" min="0" class="form-control" name="porcion1" placeholder="Peso/Volumen porción 01" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                            <input type="number" step="any" min="0" class="form-control" name="porcion1" placeholder="Peso/Volumen porción 01" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
                           </div>
                         </div>
                       </div>
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02">
+                            <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02" required>
                             <label class="custom-file-label" for="inputGroupFile02">Porción
                               02</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" step="any" min="0" class="form-control" name="porcion2" placeholder="Peso/Volumen porción 02" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                            <input type="number" step="any" min="0" class="form-control" name="porcion2" placeholder="Peso/Volumen porción 02" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
                           </div>
                         </div>
                       </div>
@@ -411,7 +432,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                           <div class="input-group-prepend">
                             <span class="input-group-text labelMacroNut bg-dark text-light" id="basic-addon1">Energía</span>
                           </div>
-                          <input type="number" step="any" min="0" id="cant1" name="1" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                          <input type="number" step="any" min="0" id="cant1" name="1" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
                           <div class="input-group-prepend">
                             <span class="input-group-text labelUnidMed bg-dark text-light" id="basic-addon1">kcal</span>
                           </div>
@@ -420,7 +441,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                           <div class="input-group-prepend">
                             <span class="input-group-text labelMacroNut bg-dark text-light" id="basic-addon1">Grasa</span>
                           </div>
-                          <input type="number" step="any" min="0" id="cant2" name="2" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                          <input type="number" step="any" min="0" id="cant2" name="2" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
                           <div class="input-group-prepend">
                             <span class="input-group-text labelUnidMed bg-dark text-light" id="basic-addon1">g</span>
                           </div>
@@ -430,7 +451,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                             <span class="input-group-text labelMacroNut bg-dark text-light" id="basic-addon1">H.
                               Carb.</span>
                           </div>
-                          <input type="number" step="any" min="0" id="cant3" name="3" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                          <input type="number" step="any" min="0" id="cant3" name="3" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
                           <div class="input-group-prepend">
                             <span class="input-group-text labelUnidMed bg-dark text-light" id="basic-addon1">g</span>
                           </div>
@@ -439,7 +460,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                           <div class="input-group-prepend">
                             <span class="input-group-text labelMacroNut bg-dark text-light" id="basic-addon1">Proteína</span>
                           </div>
-                          <input type="number" step="any" min="0" id="cant4" name="4" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                          <input type="number" step="any" min="0" id="cant4" name="4" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
                           <div class="input-group-prepend">
                             <span class="input-group-text labelUnidMed bg-dark text-light" id="basic-addon1">g</span>
                           </div>
@@ -882,6 +903,8 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
   <!-- Helpers scripts-->
   <!-- <script src="../../../js/helpers.js"></script> -->
+
+
 
 </body>
 
