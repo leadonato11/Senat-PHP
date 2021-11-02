@@ -1,6 +1,11 @@
 <?php
 include("../../../includes/conectar.php");
-session_start();
+include("../../../utils/menu.php");
+include("../../../utils/navbar.php");
+include("../../../utils/scrollToTopButton.php");
+include("../../../utils/modalEndSession.php");
+include("../../../utils/footer.php");
+
 if (!isset($_SESSION['user'])) {
   header("Location:index.php");
 }
@@ -15,21 +20,21 @@ $dbUser = mysqli_fetch_assoc($c);
 
 //Tabla alimentos(ALL) -> dbs[]
 $dbquery = mysqli_query($conect, "SELECT * FROM alimentos");
-$numQueryAlim=mysqli_num_rows($dbquery);
-if($numQueryAlim!=0){
-  $validarCant=true;
-}else{
-  $validarCant=false;
+$numQueryAlim = mysqli_num_rows($dbquery);
+if ($numQueryAlim != 0) {
+  $validarCant = true;
+} else {
+  $validarCant = false;
 }
-if($validarCant){
-while ($db = $dbquery->fetch_array()) {
-  $dbs[] = $db;
-}
-foreach ($dbs as $db) {
+if ($validarCant) {
+  while ($db = $dbquery->fetch_array()) {
+    $dbs[] = $db;
+  }
+  foreach ($dbs as $db) {
 
-  $validarConJS[] = $db['nombre'];
-}
-unset($dbs);
+    $validarConJS[] = $db['nombre'];
+  }
+  unset($dbs);
 }
 //TABLA grupos (ALL)-> gdbs[]
 $gquery = mysqli_query($conect, "SELECT * FROM grupos ");
@@ -39,7 +44,7 @@ while ($gdb = $gquery->fetch_array()) {
 
 //Aviso de reiteración de nombre
 if (isset($_REQUEST['cargaAlimento']) && !empty($_REQUEST['cargaAlimento'])) {
-  if($_REQUEST['cargaAlimento']=='yaExiste'){
+  if ($_REQUEST['cargaAlimento'] == 'yaExiste') {
     echo '<script>alert("Ya existe un alimento con ese nombre. Por favor verifique.")</script>';
   }
 }
@@ -47,31 +52,30 @@ if (isset($_REQUEST['cargaAlimento']) && !empty($_REQUEST['cargaAlimento'])) {
 //LECTURA, VALIDACION Y CARGA (FORMULARIO)	
 if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   //Nombre, Grupo, Cantidad de referencia y Unidad de Medida:
- //nombre
- $nombre = $_REQUEST['nombre'];
- 
+  //nombre
+  $nombre = $_REQUEST['nombre'];
+
   //Base de datos Alimento
   $dbquery2 = mysqli_query($conect, "SELECT * FROM alimentos");
-  $numQueryAlim2=mysqli_num_rows($dbquery2);
-  if($numQueryAlim2!=0){
-    $validarCant2=true;
-  }else{
-    $validarCant2=false;  
+  $numQueryAlim2 = mysqli_num_rows($dbquery2);
+  if ($numQueryAlim2 != 0) {
+    $validarCant2 = true;
+  } else {
+    $validarCant2 = false;
   }
-  if($validarCant2){
+  if ($validarCant2) {
     while ($db2 = $dbquery2->fetch_assoc()) {
-        $db2s[] = $db2;
+      $db2s[] = $db2;
     }
-  //Validacion contra base de datos (Tabla Alimentos): nombre debe ser unico.
+    //Validacion contra base de datos (Tabla Alimentos): nombre debe ser unico.
     $validar = true;
- 
+
     foreach ($db2s as $db2) {
-      $dbNombre=$db2['nombre'];
-      
-      if (strcasecmp($nombre, $dbNombre)==0) {
+      $dbNombre = $db2['nombre'];
+
+      if (strcasecmp($nombre, $dbNombre) == 0) {
         $validar = false;
       }
- 
     }
     unset($db2s);
   }
@@ -133,7 +137,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
     } else {
       header("Location:gestionAlimentos.php?cargaAlimento=fallida");
     }
-  } else { 
+  } else {
     header("Location:crearAlimento.php?cargaAlimento=yaExiste");
   }
 }
@@ -185,128 +189,26 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   <div id="wrapper">
 
     <!-- Sidebar Index -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../Dashboard/dashboard.php">
-        <div class="sidebar-brand-icon">
-          <img class="sidebar__logo" src="../../img/Logos/logo_senat_letrasBlancas.png" alt="Logo SENAT">
-        </div>
-      </a>
-      <hr class="sidebar-divider my-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="../Dashboard/dashboard.php">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-      <hr class="sidebar-divider">
-      <div class="sidebar-heading">
-        Interface
-      </div>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
-          <i class="fas fa-users"></i>
-          <span>Usuarios</span>
-        </a>
-        <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú usuarios:</h6>
-            <a class="collapse-item" href="../Usuarios/crearUsuario.php">Agregar nuevo</a>
-            <a class="collapse-item" href="../Usuarios/gestionUsuarios.php">Gestionar usuarios</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true" aria-controls="collapseFoods">
-          <i class="fas fa-apple-alt"></i>
-          <span>Alimentos</span>
-        </a>
-        <div id="collapseFoods" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú alimentos:</h6>
-            <a class="collapse-item" href="../Alimentos/crearAlimento.php">Agregar nuevo</a>
-            <a class="collapse-item" href="../Alimentos/gestionAlimentos.php">Gestionar alimentos</a>
-          </div>
-        </div>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
-          <i class="fas fa-database"></i>
-          <span>Grupo de alimentos</span>
-        </a>
-        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú grupo alimentos:</h6>
-            <a class="collapse-item" href="../GruposDeAlimentos/gestionGrupoDeAlimentos.php">Gestionar
-              grupos</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys" aria-expanded="true" aria-controls="collapseSurveys">
-          <i class="fas fa-poll"></i>
-          <span>Encuestas</span>
-        </a>
-        <div id="collapseSurveys" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú encuestas:</h6>
-            <a class="collapse-item" href="../Encuestas/crearEncuesta.php">Crear nueva encuesta</a>
-            <a class="collapse-item" href="../Encuestas/gestionDeEncuestas.php">Gestión de encuestas</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports" aria-expanded="true" aria-controls="collapseReports">
-          <i class="fas fa-file-excel"></i>
-          <span>Reportes</span>
-        </a>
-        <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Reportes:</h6>
-            <a class="collapse-item" href="../Reportes/reportes.php">Ver reportes</a>
-          </div>
-        </div>
-      </li>
-      <hr class="sidebar-divider">
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-    </ul>
+    <?php
+    echo $menuAlimentos;
+    ?>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <!-- Main Content -->
       <div id="content">
         <!-- Navbar Index -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-          <ul class="navbar-nav ml-auto">
-            <div class="topbar-divider d-none d-sm-block"></div>
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $dbUser['nombre'] . ' ' . $dbUser['apellido']; ?></span>
-                <img class="img-profile rounded-circle" src="assets/img/undraw_profile_2.svg">
-              </a>
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Ver Perfil
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar sesión
-                </a>
-              </div>
-            </li>
-          </ul>
-        </nav>
+        <?php
+        echo $navbar;
+        ?>
 
         <!-- Contenido de la section -->
         <div class="container-fluid">
 
           <!-- Cabecera de la section -->
           <h1 class="h3 mb-2 text-gray-800">Agregar nuevo alimento</h1>
-          <p class="mb-4">Rellena los campos de abajo con la información del alimento</p>
+          <p class="mb-4">Rellena los campos de abajo con la información del alimento. Si desea más información puede
+            ver las <a target="_blank" href="#">instrucciones de uso</a>.</p>
 
           <!-- Tabla Alimentos -->
           <div class="card shadow mb-4">
@@ -341,7 +243,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       </div>
                       <input type="number" step="any" min="0" class="form-control inputCantGeneral" name="cant" placeholder="Cantidad porción gral..." aria-label="cantidadAlimento" aria-describedby="basic-addon1" title="Cantidad porción gral..." required>
                       <select class="custom-select" name="umedida" id="inputGroupSelect01" title="Unidad de medida" required>
-                        <option value="">Unidad de medida</option>
+                        <option selected disabled value="">Unidad de medida</option>
                         <option value="gr">gr</option>
                         <option value="cc">cc</option>
                       </select>
@@ -351,7 +253,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Grupo</span>
                       </div>
                       <select class="custom-select" name="grupo" id="inputGroupSelect01" required>
-                        <option value="">Seleccionar...</option>
+                        <option selected disabled value="">Seleccionar...</option>
                         <?php
                         foreach ($gdbs as $gdb) {
                           echo '<option value="' . $gdb["idgrupos"] . '">' . $gdb["nombres"] . '</option>';
@@ -791,7 +693,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       </div>
                       <div class="input-group">
                         <div class="input-group-prepend">
-                           <spanclass="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Niacina</span>
+                          <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Niacina</span>
                         </div>
                         <input type="number" step="any" min="0" id="cant33" name="33" class="form-control" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
@@ -852,14 +754,9 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
         </div>
       </div>
       <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Desarrollado para UCEL por Leandro Donato, Sebastián Meza y Hernán Sosa &copy; Ingeniería en Sistemas
-              UCEL</span>
-          </div>
-        </div>
-      </footer>
+      <?php
+      echo $footer;
+      ?>
       <!-- End of Footer -->
     </div>
   </div> <!-- Fin Contenedor principal -->
@@ -867,28 +764,14 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
 
   <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+  <?php
+  echo $scrollToTopButton;
+  ?>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Estás por cerrar tu sesión</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Para finalizar, hacé click en el botón "Cerrar sesión".</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-danger" href="assets/pages/Login/login.html">Cerrar sesión</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php
+  echo $logoutModal;
+  ?>
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../../vendor/jquery/jquery.min.js"></script>
@@ -896,15 +779,9 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
   <!-- Core plugin JavaScript-->
   <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
-  <!-- <script src="../../../js/helpers.js"></script> -->
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
-
-  <!-- Helpers scripts-->
-  <!-- <script src="../../../js/helpers.js"></script> -->
-
-
 
 </body>
 
