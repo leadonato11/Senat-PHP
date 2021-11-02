@@ -44,7 +44,7 @@ $menuAlimentos= '
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
       <i class="fas fa-database"></i>
-      <span>GruposDeAlimentos</span>
+      <span>Grupos de Alimentos</span>
     </a>
     <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
@@ -130,7 +130,7 @@ $menuUsuarios= '
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
       <i class="fas fa-database"></i>
-      <span>GruposDeAlimentos</span>
+      <span>Grupos de Alimentos</span>
     </a>
     <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
@@ -216,7 +216,7 @@ $menuGrupoDeAlimentos= '
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
       <i class="fas fa-database"></i>
-      <span>GruposDeAlimentos</span>
+      <span>Grupos de Alimentos</span>
     </a>
     <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
@@ -302,7 +302,7 @@ $menuEncuestas= '
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
       <i class="fas fa-database"></i>
-      <span>GruposDeAlimentos</span>
+      <span>Grupos de Alimentos</span>
     </a>
     <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
@@ -388,7 +388,7 @@ $menuReportes= '
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
       <i class="fas fa-database"></i>
-      <span>GruposDeAlimentos</span>
+      <span>Grupos de Alimentos</span>
     </a>
     <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
