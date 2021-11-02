@@ -196,15 +196,15 @@ if ($db[2] != 0) {
 <html lang="es">
 
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
+  <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <link href="../../../css/sb-admin-2.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../../css/estilos.css">
+  <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../../../css/estilos.css" rel="stylesheet">
   <title>SENAT | Visualizar alimento</title>
   <script type='text/javascript'>
     function borrarAlimento() {
