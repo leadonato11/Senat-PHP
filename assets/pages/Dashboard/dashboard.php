@@ -1,6 +1,11 @@
 <?php
 include("../../../includes/conectar.php");
-session_start();
+include("../../../utils/menu.php");
+include("../../../utils/navbar.php");
+include("../../../utils/scrollToTopButton.php");
+include("../../../utils/modalEndSession.php");
+include("../../../utils/footer.php");
+
 if (!isset($_SESSION['user'])) {
   header("Location:../../../index.php");
 }
@@ -42,125 +47,26 @@ if (isset($_REQUEST['cerrar'])) {
   <div id="wrapper">
 
     <!-- Sidebar Index -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
-        <div class="sidebar-brand-icon">
-          <img class="sidebar__logo" src="../../img/Logos/logo_senat_letrasBlancas.png" alt="Logo SENAT">
-        </div>
-      </a>
-      <hr class="sidebar-divider my-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="dashboard.php">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-      <hr class="sidebar-divider">
-      <div class="sidebar-heading">
-        Interface
-      </div>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
-          <i class="fas fa-users"></i>
-          <span>Usuarios</span>
-        </a>
-        <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú usuarios:</h6>
-            <a class="collapse-item" href="../Usuarios/crearUsuario.php">Agregar nuevo</a>
-            <a class="collapse-item" href="../Usuarios/gestionUsuarios.php">Gestionar usuarios</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true" aria-controls="collapseFoods">
-          <i class="fas fa-apple-alt"></i>
-          <span>Alimentos</span>
-        </a>
-        <div id="collapseFoods" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú alimentos:</h6>
-            <a class="collapse-item" href="../Alimentos/crearAlimento.php">Agregar nuevo</a>
-            <a class="collapse-item" href="../Alimentos/gestionAlimentos.php">Gestionar alimentos</a>
-          </div>
-        </div>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
-          <i class="fas fa-database"></i>
-          <span>Grupo de alimentos</span>
-        </a>
-        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú grupo alimentos:</h6>
-            <a class="collapse-item" href="../GruposDeAlimentos/gestionGrupoDeAlimentos.php">Gestionar
-              grupos</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys" aria-expanded="true" aria-controls="collapseSurveys">
-          <i class="fas fa-poll"></i>
-          <span>Encuestas</span>
-        </a>
-        <div id="collapseSurveys" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú encuestas:</h6>
-            <a class="collapse-item" href="../Encuestas/crearEncuesta.php">Crear nueva encuesta</a>
-            <a class="collapse-item" href="../Encuestas/gestionDeEncuestas.php">Gestión de encuestas</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports" aria-expanded="true" aria-controls="collapseReports">
-          <i class="fas fa-file-excel"></i>
-          <span>Reportes</span>
-        </a>
-        <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Reportes:</h6>
-            <a class="collapse-item" href="../Reportes/reportes.php">Ver reportes</a>
-          </div>
-        </div>
-      </li>
-      <hr class="sidebar-divider">
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-    </ul>
+    <?php
+    echo $dashboard;
+    ?>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <!-- Main Content -->
       <div id="content">
         <!-- Navbar Index -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-          <ul class="navbar-nav ml-auto">
-            <div class="topbar-divider d-none d-sm-block"></div>
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $dbUser['nombre'] . ' ' . $dbUser['apellido']; ?></span>
-                <img class="img-profile rounded-circle" src="assets/img/undraw_profile_2.svg">
-              </a>
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Ver Perfil
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar sesión
-                </a>
-              </div>
-            </li>
-          </ul>
-        </nav>
+        <?php
+        echo $navbar;
+        ?>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
+          <div class="titlePrincipal">
+            <h1 class="titleBienvenidos">Bienvenido al sistema SENAT</h1>
+            <p class="parrafoPrincipal">Sistema de evaluación de nutricional asistido por tecnología</p>
+            <hr class="sidebar-divider my-0">
+          </div>
           <div class="row">
 
             <!-- Area Panel de usuarios -->
@@ -213,12 +119,6 @@ if (isset($_REQUEST['cerrar'])) {
                           <td class="text-center">Nutricionista</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <tr>
-                          <td colspan="4" class="text-center font-weight-lighter">Última Actualización 24/05/2021 a las
-                            23:11 pm.</td>
-                        </tr>
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -271,7 +171,7 @@ if (isset($_REQUEST['cerrar'])) {
                 <!-- Card Body panel de alimentos -->
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                       <thead>
                         <tr>
                           <th class="text-center">Nombre</th>
@@ -303,11 +203,6 @@ if (isset($_REQUEST['cerrar'])) {
                           <td class="text-center">3,2919</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <tr>
-                          <td class="text-center" colspan="7">Última actualización el 24/05/2021 a las 23:11 pm.</td>
-                        </tr>
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -340,7 +235,7 @@ if (isset($_REQUEST['cerrar'])) {
                 <!-- Card Body panel de alimentos -->
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                       <thead>
                         <tr>
                           <th class="text-center">Nombre encuesta</th>
@@ -373,11 +268,6 @@ if (isset($_REQUEST['cerrar'])) {
                           <td class="text-center text-danger">Finalizada</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <tr>
-                          <td class="text-center" colspan="7">Última actualización el 30/06/2021 a las 23:45 pm.</td>
-                        </tr>
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -391,51 +281,32 @@ if (isset($_REQUEST['cerrar'])) {
       </div>
       <!-- End content -->
       <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Desarrollado para UCEL por Leandro Donato, Sebastián Meza y Hernán Sosa &copy; Ingeniería en Sistemas
-              UCEL</span>
-          </div>
-        </div>
-      </footer>
+      <?php
+      echo $footer;
+      ?>
       <!-- End of Footer -->
     </div>
+  </div>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
+  <!-- Scroll to Top Button-->
+  <?php
+  echo $scrollToTopButton;
+  ?>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Estás por cerrar tu sesión</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Para finalizar, hacé click en el botón "Cerrar sesión".</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-danger" href="../../../index.php">Cerrar sesión</a>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- Logout Modal-->
+  <?php
+  echo $logoutModal;
+  ?>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../../../vendor/jquery/jquery.min.js"></script>
-    <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="../../../vendor/jquery/jquery.min.js"></script>
+  <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../../../js/sb-admin-2.min.js"></script>
-
+  <!-- Custom scripts for all pages-->
+  <script src="../../../js/sb-admin-2.min.js"></script>
 
 </body>
 

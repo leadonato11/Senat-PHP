@@ -12,6 +12,20 @@ p {
   width: 80px;
 }
 
+.titlePrincipal {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.titleBienvenidos {
+  margin: 0;
+  color: #4e73df;
+}
+
+.parrafoPrincipal {
+  padding-bottom: 20px;
+}
+
 .alimento__fotoPrincipal {
   display: flex;
   flex-direction: column;

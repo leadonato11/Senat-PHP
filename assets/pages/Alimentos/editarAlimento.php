@@ -179,7 +179,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
           <!-- Cabecera de la section -->
           <h1 class="h3 mb-2 text-gray-800">Editar alimento</h1>
-          <p class="mb-4">Rellena los campos de abajo con la información del alimento. Si desea más información puede
+          <p class="mb-4">Edite los campos de abajo con la información del alimento. Si desea más información puede
             ver las <a target="_blank" href="#">instrucciones de uso</a>.</p>
 
           <!-- Tabla Alimentos -->
