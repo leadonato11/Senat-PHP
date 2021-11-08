@@ -226,10 +226,12 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Grupo</span>
                       </div>
                       <select class="custom-select" name="grupo" id="inputGroupSelect01">
-                        <option selected><?php echo $db['grupo'] ?></option>
+                        <option selected disabled><?php echo $db['grupo']; ?></option>
                         <?php
                         foreach ($gdbs as $gdb) {
-                          echo '<option value="' . $gdb["nombres"] . '">' . $gdb["nombres"] . '</option>';
+                          if($gdb['nombres']!=$db['grupo']){
+                            echo '<option value="' . $gdb["nombres"] . '">' . $gdb["nombres"] . '</option>';
+                          }
                         }
                         unset($gdbs);
                         ?>

@@ -225,7 +225,7 @@ if (isset($_REQUEST['cerrar'])) {
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <a class="dropdown-item" href="../Encuestas/gestionDeEncuestas.php">Ver panel de
+                      <a class="dropdown-item" href="../Encuestas/gestionEncuestas.php">Ver panel de
                         encuestas</a>
                     </div>
                   </div>

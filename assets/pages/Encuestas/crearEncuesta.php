@@ -1,3 +1,62 @@
+<?php
+include("../../../includes/conectar.php");
+include("../../../utils/menu.php");
+include("../../../utils/navbar.php");
+include("../../../utils/scrollToTopButton.php");
+include("../../../utils/modalEndSession.php");
+include("../../../utils/footer.php");
+
+if (!isset($_SESSION['user'])) {
+  header("Location:index.php");
+}
+date_default_timezone_set("America/Argentina/Buenos_Aires");
+$fechaActual = Date("Y-m-d H:i:s");
+$u = $_SESSION['user'];
+$c = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
+$a = mysqli_fetch_assoc($c);
+$idUser = $a['idusuario'];
+
+if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
+  $nombre = $_REQUEST['nombre'];
+  $descripcion = $_REQUEST['descripcion'];
+  //estados: borrador: 0; Activa: 1; Finalizada: 2.
+  $estado = 0;
+  $createEncuesta = mysqli_query($conect, "INSERT INTO encuesta VALUES(NULL, '$idUser', '$nombre', '$descripcion', '$estado', '$fechaActual', '$fechaActual')");
+  if ($createEncuesta) {
+    $queryLastEncuesta = mysqli_query($conect, "SELECT MAX(idencuesta) FROM encuesta ");
+    $rowE = mysqli_fetch_row($queryLastEncuesta);
+    $idLastEncuesta = $rowE[0];
+    //Carga frecuencias
+    for ($i = 1; $i <= 7; $i++) {
+      if (isset($_REQUEST['frecuencia'.$i]) && !empty($_REQUEST['frecuencia'.$i])) {
+        $idFrec = $i;
+        mysqli_query($conect, "INSERT INTO encuestafrecuencia VALUES(NULL, '$idFrec', '$idLastEncuesta') ");
+      }
+    }
+    //Carga de alimentos
+    $queryA=mysqli_query($conect, "SELECT * FROM alimentos");
+    $cantAlimentos=mysqli_num_rows($queryA);
+    if($cantAlimentos>0){
+      while($dbA=$queryA->fetch_assoc()){
+        $dbAs[]=$dbA;      
+      }
+      foreach($dbAs as $dbA){
+        $idA=$dbA['idalimentos'];
+        if (isset($_REQUEST['alimento'.$idA]) && !empty($_REQUEST['alimento'.$idA])) {
+          mysqli_query($conect, "INSERT INTO alimentoencuesta VALUES(NULL, '$idLastEncuesta', '$idA') ");
+        }
+      }unset($dbAs);
+    }
+  }
+  header("Location:gestionEncuestas.php?idEnc=".$idLastEncuesta);
+}
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,8 +68,8 @@
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <link href="../../../css/sb-admin-2.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../../css/estilos.css">
+  <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../../../css/estilos.css" rel="stylesheet">
   <title>SENAT | Crear encuesta</title>
 </head>
 
@@ -20,124 +79,18 @@
   <div id="wrapper">
 
     <!-- Sidebar Index -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon">
-          <img class="sidebar__logo" src="assets/img/Logos/logo_senat_letrasBlancas.png" alt="Logo SENAT">
-        </div>
-      </a>
-      <hr class="sidebar-divider my-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-      <hr class="sidebar-divider">
-      <div class="sidebar-heading">
-        Interface
-      </div>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
-          <i class="fas fa-users"></i>
-          <span>Usuarios</span>
-        </a>
-        <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú usuarios:</h6>
-            <a class="collapse-item" href="assets/pages/Usuarios/crearUsuario.html">Agregar nuevo</a>
-            <a class="collapse-item" href="assets/pages/Usuarios/gestionUsuarios.html">Gestionar usuarios</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoods" aria-expanded="true" aria-controls="collapseFoods">
-          <i class="fas fa-apple-alt"></i>
-          <span>Alimentos</span>
-        </a>
-        <div id="collapseFoods" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú alimentos:</h6>
-            <a class="collapse-item" href="assets/pages/Alimentos/crearAlimento.html">Agregar nuevo</a>
-            <a class="collapse-item" href="assets/pages/Alimentos/gestionAlimentos.html">Gestionar alimentos</a>
-          </div>
-        </div>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFoodGroups" aria-expanded="true" aria-controls="collapseFoodGroups">
-          <i class="fas fa-database"></i>
-          <span>GruposDeAlimentos</span>
-        </a>
-        <div id="collapseFoodGroups" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú grupo alimentos:</h6>
-            <a class="collapse-item" href="assets/pages/GruposDeAlimentos/gestionAlimentos.html">Gestionar grupos</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSurveys" aria-expanded="true" aria-controls="collapseSurveys">
-          <i class="fas fa-poll"></i>
-          <span>Encuestas</span>
-        </a>
-        <div id="collapseSurveys" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menú encuestas:</h6>
-            <a class="collapse-item" href="assets/pages/Encuestas/crearEncuesta.html">Crear nueva encuesta</a>
-            <a class="collapse-item" href="assets/pages/Encuestas/encuestasActivas.html">Encuestas activas</a>
-            <a class="collapse-item" href="assets/pages/Encuestas/encuestasFinalizadas.html">Encuestas finalizadas</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports" aria-expanded="true" aria-controls="collapseReports">
-          <i class="fas fa-file-excel"></i>
-          <span>Reportes</span>
-        </a>
-        <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Reportes:</h6>
-            <a class="collapse-item" href="assets/pages/Reportes/gestionAlimentos.html">Ver reportes</a>
-          </div>
-        </div>
-      </li>
-      <hr class="sidebar-divider">
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-    </ul>
+    <?php
+    echo $menuEncuestas;
+    ?>
+
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <!-- Main Content -->
       <div id="content">
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-          <ul class="navbar-nav ml-auto">
-            <div class="topbar-divider d-none d-sm-block"></div>
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cecilia Torrent</span>
-                <img class="img-profile rounded-circle" src="assets/img/undraw_profile_1.svg">
-              </a>
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Ver Perfil
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Opciones
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar sesión
-                </a>
-              </div>
-            </li>
-          </ul>
-        </nav>
+        <?php
+        echo $navbar;
+        ?>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -155,18 +108,18 @@
               <div class="col-lg-8 col-md-4 col-sm-12">
                 <div class="alimento__dataInicial">
                   <h3>Datos de la encuesta</h3>
-                  <form class="form-inline d-flex flex-column align-items-center">
+                  <form class="form-inline d-flex flex-column align-items-center" action="crearEncuesta.php" metodh="POST">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Nombre</span>
                       </div>
-                      <input type="text" class="form-control" placeholder="Nombre de la encuesta..." aria-label="nombreAlimento" aria-describedby="basic-addon1">
+                      <input type="text" class="form-control" placeholder="Nombre de la encuesta..." aria-label="nombreAlimento" aria-describedby="basic-addon1" name="nombre" required>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Descripción</span>
                       </div>
-                      <textarea class="form-control" aria-label="descripcionEncuesta" aria-describedby="basic-addon1" name="descripcionEncuesta" id="" cols="20" rows="5" placeholder="Descripción de la encuesta..."></textarea>
+                      <textarea class="form-control" aria-label="descripcionEncuesta" aria-describedby="basic-addon1" name="descripcion" id="" cols="20" rows="5" name="descripcion" placeholder="Descripción de la encuesta..." required></textarea>
                     </div>
                 </div>
               </div>
@@ -180,49 +133,43 @@
                   <p>Indique qué frecuencias desea que figuren en el cuestionario (2 como mínimo)</p>
                   <div id="checkbox_frec" class="text-left">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="frec_nunca">
+                      <input class="form-check-input" name="frecuencia1" type="checkbox" value="1" id="frec_nunca">
                       <label class="form-check-label" for="frec_nunca">
                         Nunca
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="frec_menosUnaVezPorSemana">
+                      <input class="form-check-input" name="frecuencia2" type="checkbox" value="2" id="frec_menosUnaVezPorSemana">
                       <label class="form-check-label" for="frec_menosUnaVezPorSemana">
                         Menos de 1 vez por semana
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="frec_unaVezPorSemana">
+                      <input class="form-check-input" name="frecuencia3" type="checkbox" value="3" id="frec_unaVezPorSemana">
                       <label class="form-check-label" for="frec_unaVezPorSemana">
                         1 vez por semana
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="frec_dosTresVecesPorSemana">
+                      <input class="form-check-input" name="frecuencia4" type="checkbox" value="4" id="frec_dosTresVecesPorSemana">
                       <label class="form-check-label" for="frec_dosTresVecesPorSemana">
                         2-3 veces por semana
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="frec_cuatroSeisVecesPorSemana">
+                      <input class="form-check-input" name="frecuencia5" type="checkbox" value="5" id="frec_cuatroSeisVecesPorSemana">
                       <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
                         4-6 veces por semana
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="frec_diariamente">
+                      <input class="form-check-input" name="frecuencia6" type="checkbox" value="6" id="frec_diariamente">
                       <label class="form-check-label" for="frec_diariamente">
                         Diariamente
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="frec_unaVezPorSemana">
-                      <label class="form-check-label" for="frec_unaVezPorSemana">
-                        1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="frec_masDeUnaVezAlDia">
+                      <input class="form-check-input" name="frecuencia7" type="checkbox" value="7" id="frec_masDeUnaVezAlDia">
                       <label class="form-check-label" for="frec_masDeUnaVezAlDia">
                         Más de una vez al día
                       </label>
@@ -240,39 +187,12 @@
                   <div class="text-left">
                     <div class="card-body">
                       <div class="table-responsive">
-                        <!-- <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
-                          <thead class="thead-light">
-                            <tr>
-                              <th class="text-center">Nombre</th>
-                              <th class="text-center">Grupo</th>
-                              <th class="text-center">Seleccionar</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            
-                            <tr>
-                              <td class="text-center">Mango</td>
-                              <td class="text-center">Frutas</td>
-                              <td class="text-center">
-                                <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                          <tfoot>
-                            <tr>
-                              <th class="text-center" colspan="7">Última actualización:</th>
-                            </tr>
-                          </tfoot>
-                        </table> -->
-
                         <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
                           <thead class="thead-light">
                             <tr>
                               <th class="text-center">Nombre</th>
                               <th class="text-center">Grupo</th>
-                              <th class="text-center">Acciones</th>
+                              <th class="text-center">Seleccionar</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -286,28 +206,34 @@
                               }
 
                               foreach ($dbs as $db) {
-                                echo '<tr>
-                                        <td class="text-center">' . $db['nombre'] . '</td>
-                                        <td class="text-center">' . $db['grupo'] . '</td>
-                                        <td class="text-center">
-                                          <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="">
-                                          </div>
-                                        </td>
-                                      /tr>';
+                              
+                                echo '<div><tr>';
+                                  echo '<td class="text-center">'.$db['nombre'].'</td>
+                                  <td class="text-center">'.$db['grupo'].'</td>
+                                  <td class="text-center">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="alimento'.$db['idalimentos'].'" value="'.$db['idalimentos'].'">
+                                    </div>
+                                  </td>';
+                                echo '</tr></div>';
                               }
                               unset($dbs);
                             }
                             ?>
+                            
                           </tbody>
                         </table>
 
                       </div> <!-- End Table -->
+
+                      <!-- Divider -->
+                      <hr class="sidebar-divider my-0">
+
                       <!-- Botonera -->
                       <div class="row m-3 justify-content-center">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                           <div class="buttons__AlimentoAlta">
-                            <a class="btn btn-outline-danger m-2" href="gestionDeEncuestas.php">Cancelar</a>
+                            <a href="gestionEncuestas.php" id="salirDeCrearEncuestaModal" class="btn btn-outline-danger m-2" data-toggle="modal" data-target="#salirCrearEncuestaModal" role="button">Cancelar</a>
                             <a href="#" id="guardarEncuesta" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarEncuestaModal" role="button">Guardar encuesta</a>
                           </div>
                         </div>
@@ -325,12 +251,33 @@
                             </div>
                             <div class="modal-body">Estás seguro?</div>
                             <div class="modal-footer">
-                              <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                              <a class="btn btn-secondary" 1 data-dismiss="modal">Cancelar</a>
                               <button class="btn btn-success">Si, guardar encuesta</button>
                             </div>
                           </div>
                         </div>
                       </div>
+
+                      <!-- Salir de crear encuesta Modal-->
+                      <div class="modal fade" id="salirCrearEncuestaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos de la encuesta creada</h5>
+                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">Estás seguro?</div>
+                            <div class="modal-footer">
+                              <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                              <a href="gestionEncuestas.php" class="btn btn-danger" role="button">Si, volver</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
                       </form>
                     </div> <!-- End Card body -->
                   </div> <!-- End content -->
@@ -340,43 +287,23 @@
           </div>
         </div>
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Desarrollado para UCEL por Leandro Donato, Sebastián Meza y Hernán Sosa &copy; Ingeniería en Sistemas
-                UCEL</span>
-            </div>
-          </div>
-        </footer> <!-- End of Footer -->
+        <?php
+        echo $footer;
+        ?>
+        <!-- End of Footer -->
       </div>
     </div> <!-- Fin alta de encuesta -->
   </div> <!-- End wrapper -->
 
   <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+  <?php
+  echo $scrollToTopButton;
+  ?>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current
-          session.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php
+  echo $logoutModal;
+  ?>
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../../vendor/jquery/jquery.min.js"></script>
@@ -384,7 +311,6 @@
 
   <!-- Core plugin JavaScript-->
   <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="../../../js/helpers.js"></script>
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>

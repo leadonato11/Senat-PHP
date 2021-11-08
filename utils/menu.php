@@ -62,7 +62,7 @@ $menuAlimentos= '
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Menú encuestas:</h6>
         <a class="collapse-item" href="../Encuestas/crearEncuesta.php">Crear nueva encuesta</a>
-        <a class="collapse-item" href="../Encuestas/gestionDeEncuestas.php">Gestión de encuestas</a>
+        <a class="collapse-item" href="../Encuestas/gestionEncuestas.php">Gestión de encuestas</a>
       </div>
     </div>
   </li>
@@ -74,7 +74,7 @@ $menuAlimentos= '
     <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Reportes:</h6>
-        <a class="collapse-item" href="../Reportes/Reportes.php">Ver reportes</a>
+        <a class="collapse-item" href="../Reportes/gestionReportes.php">Ver reportes</a>
       </div>
     </div>
   </li>
@@ -148,7 +148,7 @@ $menuUsuarios= '
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Menú encuestas:</h6>
         <a class="collapse-item" href="../Encuestas/crearEncuesta.php">Crear nueva encuesta</a>
-        <a class="collapse-item" href="../Encuestas/gestionDeEncuestas.php">Gestión de encuestas</a>
+        <a class="collapse-item" href="../Encuestas/gestionEncuestas.php">Gestión de encuestas</a>
       </div>
     </div>
   </li>
@@ -160,7 +160,7 @@ $menuUsuarios= '
     <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Reportes:</h6>
-        <a class="collapse-item" href="../Reportes/Reportes.php">Ver reportes</a>
+        <a class="collapse-item" href="../Reportes/gestionReportes.php">Ver reportes</a>
       </div>
     </div>
   </li>
@@ -234,7 +234,7 @@ $menuGrupoDeAlimentos= '
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Menú encuestas:</h6>
         <a class="collapse-item" href="../Encuestas/crearEncuesta.php">Crear nueva encuesta</a>
-        <a class="collapse-item" href="../Encuestas/gestionDeEncuestas.php">Gestión de encuestas</a>
+        <a class="collapse-item" href="../Encuestas/gestionEncuestas.php">Gestión de encuestas</a>
       </div>
     </div>
   </li>
@@ -246,7 +246,7 @@ $menuGrupoDeAlimentos= '
     <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Reportes:</h6>
-        <a class="collapse-item" href="../Reportes/Reportes.php">Ver reportes</a>
+        <a class="collapse-item" href="../Reportes/gestionReportes.php">Ver reportes</a>
       </div>
     </div>
   </li>
@@ -320,7 +320,7 @@ $menuEncuestas= '
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Menú encuestas:</h6>
         <a class="collapse-item" href="crearEncuesta.php">Crear nueva encuesta</a>
-        <a class="collapse-item" href="gestionDeEncuestas.php">Gestión de encuestas</a>
+        <a class="collapse-item" href="gestionEncuestas.php">Gestión de encuestas</a>
       </div>
     </div>
   </li>
@@ -332,7 +332,7 @@ $menuEncuestas= '
     <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Reportes:</h6>
-        <a class="collapse-item" href="../Reportes/Reportes.php">Ver reportes</a>
+        <a class="collapse-item" href="../Reportes/gestionReportes.php">Ver reportes</a>
       </div>
     </div>
   </li>
@@ -406,7 +406,7 @@ $menuReportes='
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Menú encuestas:</h6>
         <a class="collapse-item" href="../Encuestas/crearEncuesta.php">Crear nueva encuesta</a>
-        <a class="collapse-item" href="../Encuestas/gestionDeEncuestas.php">Gestión de encuestas</a>
+        <a class="collapse-item" href="../Encuestas/gestionEncuestas.php">Gestión de encuestas</a>
       </div>
     </div>
   </li>
@@ -418,7 +418,7 @@ $menuReportes='
     <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Reportes:</h6>
-        <a class="collapse-item" href="Reportes.php">Ver reportes</a>
+        <a class="collapse-item" href="gestionReportes.php">Ver reportes</a>
       </div>
     </div>
   </li>
@@ -492,7 +492,7 @@ $dashboard='
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Menú encuestas:</h6>
         <a class="collapse-item" href="../Encuestas/crearEncuesta.php">Crear nueva encuesta</a>
-        <a class="collapse-item" href="../Encuestas/gestionDeEncuestas.php">Gestión de encuestas</a>
+        <a class="collapse-item" href="../Encuestas/gestionEncuestas.php">Gestión de encuestas</a>
       </div>
     </div>
   </li>
@@ -504,7 +504,7 @@ $dashboard='
     <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Reportes:</h6>
-        <a class="collapse-item" href="../Reportes/Reportes.php">Ver reportes</a>
+        <a class="collapse-item" href="../Reportes/gestionReportes.php">Ver reportes</a>
       </div>
     </div>
   </li>

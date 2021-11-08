@@ -38,7 +38,7 @@ if (isset($_REQUEST['eliminarUsuario'])) {
   $idUserEliminar = $_REQUEST['eliminarUsuario'];
   $update = mysqli_query($conect, "UPDATE usuario SET estado='0' WHERE idusuario='$idUserEliminar' ");
   if ($update) {
-    header("Location:gestionUsuarios.php?BajadeUsuario=" . $idUserEliminar . "Exitoso");
+    header("Location:gestionUsuarios.php?BajadeUsuario=" . $idUserEliminar .$idUserEliminar. "Exitoso");
   } else {
     header("Location:gestionUsuarios.php?BajadeUsuario=" . $idUserEliminar . "Fallido");
   }
@@ -175,6 +175,26 @@ if (isset($_REQUEST['eliminarUsuario'])) {
                   </div>
                 </div>
               </div>
+              <!-- deleteUser Modal -->
+              <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteGroupLabel">Eliminar usuario</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      ¿Está seguro que desea eliminar el usuario seleccionado?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <a type="button" class="btn btn-danger" href="gestionUsuarios.php?eliminarUsuario=<?php echo $userEdit['idusuario']; ?>">Borrar usuario</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
         </form>
@@ -189,27 +209,7 @@ if (isset($_REQUEST['eliminarUsuario'])) {
     </div>
   </div>
 
-  <!-- deleteUser Modal -->
-  <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteGroupLabel">Eliminar usuario</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ¿Está seguro que desea eliminar el usuario seleccionado?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <a type="button" class="btn btn-danger" href="gestionUsuarios.php?eliminarUsuario=<?php $userEdit['idusuario']; ?>">Borrar usuario</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  ';
+
 
   <!-- Scroll to Top Button-->
   <?php
@@ -227,7 +227,6 @@ if (isset($_REQUEST['eliminarUsuario'])) {
 
   <!-- Core plugin JavaScript-->
   <script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="../../../js/helpers.js"></script>
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
