@@ -37,15 +37,30 @@ if (isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento']
   $idAlimentoEliminar = $_REQUEST['eliminarAlimento'];
   $queryAlimentoBorrar = mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idalimentos'");
   $dbAliBorrar = mysqli_fetch_assoc($queryAlimentoBorrar);
-  $nombre = $$dbALiBorrar['nombre'];
-  $nombrePerfil = $nombre . 'falimento.jpg';
-  $nombreP1 = $nombre . 'porcion1.jpg';
-  $nombreP2 = $nombre . 'porcion2.jpg';
-  $nombreP3 = $nombre . 'porcion3.jpg';
-  $nombreP4 = $nombre . 'porcion4.jpg';
-
-  mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos  ='$idAlimentoEliminar'");
-  header("Location:gestionAlimentos.php?eliminar=" . $idAlimentoEliminar . "exitoso");
+  $nombre = $$dbAliBorrar['nombre'];
+  $nombrePerfil = $nombre . "falimento.jpg";
+  $nombreP1 = $nombre . "porcion1.jpg";
+  $nombreP2 = $nombre . "porcion2.jpg";
+  $nombreP3 = $nombre . "porcion3.jpg";
+  $nombreP4 = $nombre . "porcion4.jpg";
+  $archFotoA="../../img/ImgAlimentos/".$nombrePerfil;
+  $archFotoP1="../../img/ImgAlimentos/".$nombreP1;
+  $archFotoP2="../../img/ImgAlimentos/".$nombreP2;
+  $archFotoP3="../../img/ImgAlimentos/".$nombreP3;
+  $archFotoP4="../../img/ImgAlimentos/".$nombreP4;
+  //Eliminar alimento
+  $deleteAlimento=mysqli_query($conect, "DELETE FROM alimentos WHERE idalimentos  ='$idAlimentoEliminar'");
+  //Eliminar fotos
+  unlink($archFotoA);
+  unlink($archFotoP1);
+  unlink($archFotoP2);
+  unlink($archFotoP3);
+  unlink($archFotoP4);
+  if($deleteAlimento){
+    header("Location:gestionAlimentos.php?eliminar=" . $idAlimentoEliminar . "exitoso");
+  }else{
+    header("Location:gestionAlimentos.php?eliminar=" . $idAlimentoEliminar . "Fallido");
+  }
 }
 ?>
 

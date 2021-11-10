@@ -207,22 +207,20 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
                               foreach ($dbs as $db) {
                               
-                                /* echo '
+                                echo '
                                 <div class="row">
                                   <div class="col-5">'.$db['nombre'].'</div>
                                   <div class="col-2"> 
                                     <input class="form-check-input" type="checkbox" name="alimento'.$db['idalimentos'].'" value="'.$db['idalimentos'].'">
                                   </div>
                                 </div><hr>
-                                '; */
-                                  echo '<tr><td class="text-center">'.$db['nombre'].'</td>
+                                ';
+                                  /* echo '<td class="text-center">'.$db['nombre'].'</td>
                                   <td class="text-center">'.$db['grupo'].'</td>
                                   <td class="text-center">
                                     <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="alimento'.$db['idalimentos'].'" value="'.$db['idalimentos'].'">
-
                                     </div>
-                                  </td></tr>';
+                                  </td>'; */
                                 
                               }
                               unset($dbs);
@@ -326,7 +324,6 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   <!-- Page level plugins -->
   <script src="../../../vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="../../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
 
   <!-- Page level custom scripts -->
   <script src="../../../js/demo/datatables-demo.js"></script>

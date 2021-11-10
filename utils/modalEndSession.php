@@ -13,7 +13,7 @@ $logoutModal='
       <div class="modal-body">Para finalizar, hacé click en el botón "Cerrar sesión".</div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-        <a class="btn btn-danger" href="index.php">Cerrar sesión</a>
+        <a class="btn btn-danger" href="../../../index.php?cerrarSession=ok">Cerrar sesión</a>
       </div>
     </div>
   </div>

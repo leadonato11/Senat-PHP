@@ -94,40 +94,42 @@ if ($numEnc > 0) {
                   <tbody>
 
                     <?php
-                    foreach ($dbEs as $dbE) {
-                      $idCreador=$dbE['idusuario'];
-                      $creadorquery=mysqli_query($conect, "SELECT * FROM usuario WHERE idusuario='$idCreador'");
-                      $dbCreador=mysqli_fetch_assoc($creadorquery);
-                      $nombreC=$dbCreador['nombre'];
-                      $apellidoC=$dbCreador['apellido'];
-                      if($dbE['estado']==0){
-                        $estado='Borrador';
+                    if($numEnc > 0){
+                      foreach ($dbEs as $dbE) {
+                        $idCreador=$dbE['idusuario'];
+                        $creadorquery=mysqli_query($conect, "SELECT * FROM usuario WHERE idusuario='$idCreador'");
+                        $dbCreador=mysqli_fetch_assoc($creadorquery);
+                        $nombreC=$dbCreador['nombre'];
+                        $apellidoC=$dbCreador['apellido'];
+                        if($dbE['estado']==0){
+                          $estado='Borrador';
+                        }
+                        if($dbE['estado']==1){
+                          $estado='Activa';
+                        }  
+                        if($dbE['estado']==2){
+                          $estado='Finalizada';
+                        }      
+                        echo '
+                      
+                      <tr>
+                        <td class="text-center">' . $dbE['nombre'] . '</td>
+                        <td class="text-center">' . $dbE['descripcion'] . '</td>
+                        <td class="text-center">' . $dbE['fechacreacion'] . '</td>
+                        <td class="text-center">' . $dbE['fechaumod'] . '</td>
+                        <td class="text-center">' . $nombreC .' '.$apellidoC.'</td>
+                        <td class="text-center">' . $estado . '</td>
+                        <td class="text-center">
+                            <a title="Pasar a estado Activa" class="btn btn-success btn-sm" href="gestionEncuestas.php?activar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-check"></i></a>
+                            <a title="Editar" class="btn btn-info btn-sm" href="editarEncuesta.php?editarEncuesta='.$dbE['idencuesta'].'" role="button"><i class="fas fa-edit"></i></a>
+                            <a title="Comenzar encuesta" class="btn btn-primary btn-sm" href="visualizacionEncuesta.php?idEncuesta='.$dbE['idencuesta'].'" role="button"><i class="fas fa-external-link-square-alt"></i></a>
+                            <a title="Pasar a estado Finalizada" class="btn btn-warning btn-sm" href="gestionEncuestas.php?finalizar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-file-archive"></i></a>
+                            <button title="Eliminar encuesta" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#borrarAlimentoModal' . $dbE['idencuesta'] . '" ><i class="fas fa-trash"></i></button>
+                          </td>
+                      </tr>';
                       }
-                      if($dbE['estado']==1){
-                        $estado='Activa';
-                      }  
-                      if($dbE['estado']==2){
-                        $estado='Finalizada';
-                      }      
-                      echo '
-                    
-                    <tr>
-                      <td class="text-center">' . $dbE['nombre'] . '</td>
-                      <td class="text-center">' . $dbE['descripcion'] . '</td>
-                      <td class="text-center">' . $dbE['fechacreacion'] . '</td>
-                      <td class="text-center">' . $dbE['fechaumod'] . '</td>
-                      <td class="text-center">' . $nombreC .' '.$apellidoC.'</td>
-                      <td class="text-center">' . $estado . '</td>
-                      <td class="text-center">
-                          <a title="Pasar a estado Activa" class="btn btn-primary btn-sm" href="gestionEncuestas.php?activar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-external-link-square-alt"></i></a>
-                          <a title="Editar" class="btn btn-info btn-sm" href="editarEncuesta.php?editarEncuesta='.$dbE['idencuesta'].'" role="button"><i class="fas fa-edit"></i></a>
-                          <a title="Comenzar encuesta" class="btn btn-info btn-sm" href="gestionEncuestas.php?idEncuesta='.$dbE['idencuesta'].'" role="button"><i class="fas fa-edit"></i></a>
-                          <a title="Pasar a estado Finalizada" class="btn btn-info btn-sm" href="gestionEncuestas.php?finalizar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-edit"></i></a>
-                          <button title="Eliminar encuesta" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#borrarAlimentoModal' . $dbE['idencuesta'] . '" ><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>';
+                      unset($dbEs);
                     }
-                    unset($dbEs);
                     ?>
                   </tbody>
                   <tfoot>

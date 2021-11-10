@@ -8,16 +8,18 @@ if (isset($_REQUEST['u']) && !empty($_REQUEST['u'])) {
   if (mysqli_num_rows($res) == 1) {
     $a = mysqli_fetch_assoc($res);
     $_SESSION['user'] = $u;
-    if ($a['rol'] == 1) {
-      header("Location:assets/pages/Dashboard/dashboard.php");
-    }
-    if ($a['rol'] == 2) {
-      header("Location:assets/pages/Dashboard/dashboard.php");
-    }
-  } else {
-    echo "<script>confirm('Usuario o contraseña incorrecto')</script>";
+    header("Location:assets/pages/Dashboard/dashboard.php");
+  }else{
+    echo "<script>alert('Usuario o contraseña incorrecto')</script>";
   }
+
 }
+if(isset($_REQUEST['cerrarSession'])){
+  
+  session_destroy();
+  header("Location:index.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

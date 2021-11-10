@@ -17,7 +17,12 @@ $u = $_SESSION['user'];
 $queryUser = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $dbUser = mysqli_fetch_assoc($queryUser);
 
-
+if (isset($_REQUEST['idEncuesta']) && !empty($_REQUEST['idEncuesta'])) {
+  $_SESSION['idEncuesta']=$_REQUEST['idEncuesta'];
+}else{
+  header("gestionEncuestas.php");
+}
+$idEncuesta=$_SESSION['idEncuesta'];
 ?>
 
 <!DOCTYPE html>
@@ -113,17 +118,18 @@ $dbUser = mysqli_fetch_assoc($queryUser);
                     <h1 class="tituloEncuestaCuestionario">NOMBRE ALIMENTO</h1>
                   </div>
 
+
                   <div class="seleccionPorciones">
-                    <!-- <div class="porcSel">
+                    <div class="porcSel">
                       <input type="radio" id="porcNro1" name="porcionEncuesta" value="Porcion1">
                       <label for="porcNro1">
                         <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
                           <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
                         </a>
                       </label>
-                    </div> -->
+                    </div>
 
-                    
+                  <!--   
 
                     <div class="porcSel">
                       <label for="porcNro2">
@@ -152,7 +158,7 @@ $dbUser = mysqli_fetch_assoc($queryUser);
                         </a>
                       </label>
                       <input type="radio" id="porcNro4" name="porcionEncuesta" value="Porcion4">
-                    </div>
+                    </div> -->
 
                   </div>
                 </div>

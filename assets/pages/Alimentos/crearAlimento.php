@@ -62,6 +62,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
     $validarCant2 = true;
   } else {
     $validarCant2 = false;
+    
   }
   if ($validarCant2) {
     while ($db2 = $dbquery2->fetch_assoc()) {
@@ -78,6 +79,8 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
       }
     }
     unset($db2s);
+  }else{
+    $validar=true;
   }
   //grupo
   $idgrupos = $_REQUEST['grupo'];
