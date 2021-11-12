@@ -23,6 +23,25 @@ if (isset($_REQUEST['idEncuesta']) && !empty($_REQUEST['idEncuesta'])) {
   header("gestionEncuestas.php");
 }
 $idEncuesta=$_SESSION['idEncuesta'];
+//Tabla encuesta-frecuencia
+$queryFrecEnc=mysqli_query($conect,"SELECT * FROM encuestafrecuencia WHERE idencuesta='$idEncuesta'");
+$cantFrecEnc=mysqli_num_rows($queryFrecEnc);
+if($cantFrecEnc!=0){
+  while($dbFrecEnc=$queryFrecEnc->fetch_assoc()){
+    $dbFrecEncS[]=$dbFrecEnc;
+  }
+}
+//Tabla alimento-encuesta
+$queryAliEnc=mysqli_query($conect,"SELECT * FROM alimentoencuesta WHERE idencuesta='$idEncuesta'");
+$cantAliEnc=mysqli_num_rows($queryAliEnc);
+if($cantAliEnc!=0){
+  while($dbAliEnc=$queryAliEnc->fetch_assoc()){
+    $dbAliEncS[]=$dbAliEnc;
+  }
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -114,12 +133,47 @@ $idEncuesta=$_SESSION['idEncuesta'];
               <div class="row m-3 justify-content-center">
 
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                  <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                    <h1 class="tituloEncuestaCuestionario">NOMBRE ALIMENTO</h1>
-                  </div>
+                  
+                  <?php
+                  
+                  if($cantAliEnc!=0){
+                    
+                   foreach($dbAliEncS as $dbAliEnc){
+                     $idAlimento=$dbAliEnc['idalimento'];
+                     $queryAli=mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idAlimento'");
+                     $dbAlimento=mysqli_fetch_assoc($queryAli);
+                     $nombreAli=$dbAlimento['nombre'];
+                    echo '
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                      <h1 class="tituloEncuestaCuestionario">'.$nombreAli.'</h1>
+                    </div>';
+                    for($i=1; $i<=4; $i++){
+                      $porcion='porcion'.$i;
+                      $dbAlimento[$porcion];
+                      if($dbAlimento[$porcion]!=0){
+                      $fotoPorcion='../../img/ImgPorciones/'.$dbAlimento['nombre'].$porcion.'.jpg';
+                      $valuePorcion=$dbAlimento[$porcion];
+                     
+                      echo '
+                      <div class="seleccionPorciones">
+                      <div class="porcSel">
+                        <input type="radio" id="porcNro1" name="porcion1" value="'.$valuePorcion.'">
+                        <label for="porcNro1">
+                          <a href="'.$fotoPorcion.'" data-lightbox="photos">
+                            <img class="imgPorcSel" src="'.$fotoPorcion.'" alt="foodImage">
+                          </a>
+                        </label>
+                      </div>
+                      ';
+                      }
+                    }
+                    
+                  }unset($dbAliEncS); 
+                   
 
-
-                  <div class="seleccionPorciones">
+                  }
+                  ?>
+                  <!-- <div class="seleccionPorciones">
                     <div class="porcSel">
                       <input type="radio" id="porcNro1" name="porcionEncuesta" value="Porcion1">
                       <label for="porcNro1">
@@ -127,7 +181,7 @@ $idEncuesta=$_SESSION['idEncuesta'];
                           <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
                         </a>
                       </label>
-                    </div>
+                    </div> -->
 
                   <!--   
 

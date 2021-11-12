@@ -51,10 +51,11 @@ if (isset($_REQUEST['cargaAlimento']) && !empty($_REQUEST['cargaAlimento'])) {
 
 //LECTURA, VALIDACION Y CARGA (FORMULARIO)	
 if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
-  //Nombre, Grupo, Cantidad de referencia y Unidad de Medida:
+  //Nombre, Grupo, Cantidad de referencia y Unidad de Medida, estado:
   //nombre
   $nombre = $_REQUEST['nombre'];
-
+  //Estado
+  $estado=1;
   //Base de datos Alimento
   $dbquery2 = mysqli_query($conect, "SELECT * FROM alimentos");
   $numQueryAlim2 = mysqli_num_rows($dbquery2);
@@ -123,7 +124,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   //CARGA VALIDADA. 
 
   if ($validar == True) {
-    $insert = mysqli_query($conect, "INSERT INTO alimentos VALUES (NULL, '$nombre', '$cant', '$umedida', '$porcion1', '$porcion2', '$porcion3', '$porcion4', '$grupo', '$nutrientes[1]', '$nutrientes[2]', '$nutrientes[3]', '$nutrientes[4]', '$nutrientes[5]', '$nutrientes[6]', '$nutrientes[7]', '$nutrientes[8]', '$nutrientes[9]', '$nutrientes[10]', '$nutrientes[11]', '$nutrientes[12]', '$nutrientes[13]', '$nutrientes[14]', '$nutrientes[15]', '$nutrientes[16]', '$nutrientes[17]', '$nutrientes[18]', '$nutrientes[19]', '$nutrientes[20]', '$nutrientes[21]', '$nutrientes[22]', '$nutrientes[23]', '$nutrientes[24]', '$nutrientes[25]', '$nutrientes[26]', '$nutrientes[27]', '$nutrientes[28]', '$nutrientes[29]', '$nutrientes[30]', '$nutrientes[31]', '$nutrientes[32]', '$nutrientes[33]', '$nutrientes[34]', '$nutrientes[35]', '$nutrientes[36]', '$nutrientes[37]', '$nutrientes[38]', '$nutrientes[39]', '$nutrientes[40]', '$fechaActual')");
+    $insert = mysqli_query($conect, "INSERT INTO alimentos VALUES (NULL, '$nombre', '$cant', '$umedida', '$porcion1', '$porcion2', '$porcion3', '$porcion4', '$grupo', '$nutrientes[1]', '$nutrientes[2]', '$nutrientes[3]', '$nutrientes[4]', '$nutrientes[5]', '$nutrientes[6]', '$nutrientes[7]', '$nutrientes[8]', '$nutrientes[9]', '$nutrientes[10]', '$nutrientes[11]', '$nutrientes[12]', '$nutrientes[13]', '$nutrientes[14]', '$nutrientes[15]', '$nutrientes[16]', '$nutrientes[17]', '$nutrientes[18]', '$nutrientes[19]', '$nutrientes[20]', '$nutrientes[21]', '$nutrientes[22]', '$nutrientes[23]', '$nutrientes[24]', '$nutrientes[25]', '$nutrientes[26]', '$nutrientes[27]', '$nutrientes[28]', '$nutrientes[29]', '$nutrientes[30]', '$nutrientes[31]', '$nutrientes[32]', '$nutrientes[33]', '$nutrientes[34]', '$nutrientes[35]', '$nutrientes[36]', '$nutrientes[37]', '$nutrientes[38]', '$nutrientes[39]', '$nutrientes[40]', '$estado')");
     if ($insert == 1) {
 
       mysqli_query($conect, "INSERT INTO lastupdate VALUES ('$fechaActual')");

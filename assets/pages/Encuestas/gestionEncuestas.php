@@ -24,6 +24,43 @@ if ($numEnc > 0) {
     $dbEs[] = $dbE;
   }
 }
+
+//Activación encuesta
+if (isset($_REQUEST['activar']) && !empty($_REQUEST['activar'])) {
+  $idEncuestaActivar=$_REQUEST['activar'];
+  $estadoActivo=1;
+  $updateEstadoE=mysqli_query($conect, "UPDATE encuesta SET estado='$estadoActivo' WHERE idencuesta='$idEncuestaActivar' ");
+  if($updateEstadoE){
+    header("Location:gestionEncuestas.php?activada=".$idEncuestaActivar);
+  }else{
+    header("Location:gestionEncuestas.php?Falla-al-activar=".$idEncuestaActivar);
+  }
+
+}
+
+//Finalizar encuesta
+if (isset($_REQUEST['finalizar']) && !empty($_REQUEST['finalizar'])) {
+  $idEncuestaFinalizar=$_REQUEST['finalizar'];
+  $estadoFinalizado=2;
+  $updateEstadoF=mysqli_query($conect, "UPDATE encuesta SET estado='$estadoFinalizado' WHERE idencuesta='$idEncuestaFinalizar' ");
+  if($updateEstadoF){
+    header("Location:gestionEncuestas.php?activada=".$idEncuestaFinalizar);
+  }else{
+    header("Location:gestionEncuestas.php?Falla-al-finalizar=".$idEncuestaFinalizar);
+  }
+
+}
+
+if (isset($_REQUEST['eliminarEncuesta']) && !empty($_REQUEST['eliminarEncuesta'])) {
+  $idEncuestaEliminar=$_REQUEST['eliminarEncuesta'];
+  $eliminarEncuesta=mysqli_query($conect, "DELETE FROM encuesta WHERE idencuesta='$idEncuestaEliminar' ");
+  if($eliminarEncuesta){
+    header("Location:gestionEncuestas.php?eliminada=".$idEncuestaEliminar);
+  }else{
+    header("Location:gestionEncuestas.php?Falla-al-eliminar=".$idEncuestaEliminar);
+  }
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +113,14 @@ if ($numEnc > 0) {
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Gestión de encuestas</h6>
             </div>
-
+            <div class="row">
+              <div class="col">
+                <div class="navbar justify-content-start">
+                  <a class="btn btn-success" href="crearEncuesta.php" role="button"><i class="fas fa-plus"></i> Crear
+                    encuesta</a>
+                </div>
+              </div>
+            </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
@@ -109,9 +153,30 @@ if ($numEnc > 0) {
                         }  
                         if($dbE['estado']==2){
                           $estado='Finalizada';
-                        }      
+                        }
+
+                        $botonesAcciones = '';
+
+                        if($dbE['estado']==0){
+                          $botonesAcciones = '
+                          <a title="Pasar a estado Activa" class="btn btn-success btn-sm" href="gestionEncuestas.php?activar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-check"></i></a>
+                          <a title="Editar" class="btn btn-info btn-sm" href="editarEncuesta.php?editarEncuesta='.$dbE['idencuesta'].'" role="button"><i class="fas fa-edit"></i></a>
+                          ';
+                        }
+                        if($dbE['estado']==1){
+                          $botonesAcciones = '
+                          <a title="Comenzar encuesta" class="btn btn-primary btn-sm" href="visualizacionEncuesta.php?idEncuesta='.$dbE['idencuesta'].'" role="button"><i class="fas fa-external-link-square-alt"></i></a>
+                          <a title="Pasar a estado Finalizada" class="btn btn-warning btn-sm" href="gestionEncuestas.php?finalizar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-file-archive"></i></a>
+                          ';
+                        }
+
+                        if($dbE['estado']==2){
+                          $botonesAcciones = '
+                          <a title="Volver a estado Activa" class="btn btn-success btn-sm" href="gestionEncuestas.php?activar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-check"></i></a>
+                          ';
+                        }
+
                         echo '
-                      
                       <tr>
                         <td class="text-center">' . $dbE['nombre'] . '</td>
                         <td class="text-center">' . $dbE['descripcion'] . '</td>
@@ -120,13 +185,30 @@ if ($numEnc > 0) {
                         <td class="text-center">' . $nombreC .' '.$apellidoC.'</td>
                         <td class="text-center">' . $estado . '</td>
                         <td class="text-center">
-                            <a title="Pasar a estado Activa" class="btn btn-success btn-sm" href="gestionEncuestas.php?activar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-check"></i></a>
-                            <a title="Editar" class="btn btn-info btn-sm" href="editarEncuesta.php?editarEncuesta='.$dbE['idencuesta'].'" role="button"><i class="fas fa-edit"></i></a>
-                            <a title="Comenzar encuesta" class="btn btn-primary btn-sm" href="visualizacionEncuesta.php?idEncuesta='.$dbE['idencuesta'].'" role="button"><i class="fas fa-external-link-square-alt"></i></a>
-                            <a title="Pasar a estado Finalizada" class="btn btn-warning btn-sm" href="gestionEncuestas.php?finalizar='.$dbE['idencuesta'].'" role="button"><i class="fas fa-file-archive"></i></a>
-                            <button title="Eliminar encuesta" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#borrarAlimentoModal' . $dbE['idencuesta'] . '" ><i class="fas fa-trash"></i></button>
+                            '.$botonesAcciones.'
+                            <button title="Eliminar encuesta" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#borrarEncuestaModal' . $dbE['idencuesta'] . '" ><i class="fas fa-trash"></i></button>
                           </td>
                       </tr>';
+                      echo '<!-- Borrar encuesta Modal-->
+                      <div class="modal fade" id="borrarEncuestaModal' . $dbE['idencuesta'] . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                       aria-hidden="true">
+                       <div class="modal-dialog" role="document">
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <h5 class="modal-title" id="exampleModalLabel">Estás por borrar la encuesta</h5>
+                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">×</span>
+                             </button>
+                           </div>
+                           <div class="modal-body">Estás seguro que deseas borrar la encuesta: <b>'.$dbE['nombre'].'</b>?</div>
+                           <div class="modal-footer">
+                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                             <a class="btn btn-danger" href="gestionEncuestas.php?eliminarEncuesta=' . $dbE['idencuesta'] . '">Estoy seguro, borralo</a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   ';
                       }
                       unset($dbEs);
                     }

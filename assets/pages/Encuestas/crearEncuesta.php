@@ -19,6 +19,7 @@ $idUser = $a['idusuario'];
 if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   $nombre = $_REQUEST['nombre'];
   $descripcion = $_REQUEST['descripcion'];
+
   //estados: borrador: 0; Activa: 1; Finalizada: 2.
   $estado = 0;
   $createEncuesta = mysqli_query($conect, "INSERT INTO encuesta VALUES(NULL, '$idUser', '$nombre', '$descripcion', '$estado', '$fechaActual', '$fechaActual')");
@@ -26,29 +27,32 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
     $queryLastEncuesta = mysqli_query($conect, "SELECT MAX(idencuesta) FROM encuesta ");
     $rowE = mysqli_fetch_row($queryLastEncuesta);
     $idLastEncuesta = $rowE[0];
+
     //Carga frecuencias
     for ($i = 1; $i <= 7; $i++) {
-      if (isset($_REQUEST['frecuencia'.$i]) && !empty($_REQUEST['frecuencia'.$i])) {
+      if (isset($_REQUEST['frecuencia' . $i]) && !empty($_REQUEST['frecuencia' . $i])) {
         $idFrec = $i;
         mysqli_query($conect, "INSERT INTO encuestafrecuencia VALUES(NULL, '$idFrec', '$idLastEncuesta') ");
       }
     }
+
     //Carga de alimentos
-    $queryA=mysqli_query($conect, "SELECT * FROM alimentos");
-    $cantAlimentos=mysqli_num_rows($queryA);
-    if($cantAlimentos>0){
-      while($dbA=$queryA->fetch_assoc()){
-        $dbAs[]=$dbA;      
+    $queryA = mysqli_query($conect, "SELECT * FROM alimentos");
+    $cantAlimentos = mysqli_num_rows($queryA);
+    if ($cantAlimentos > 0) {
+      while ($dbA = $queryA->fetch_assoc()) {
+        $dbAs[] = $dbA;
       }
-      foreach($dbAs as $dbA){
-        $idA=$dbA['idalimentos'];
-        if (isset($_REQUEST['alimento'.$idA]) && !empty($_REQUEST['alimento'.$idA])) {
+      foreach ($dbAs as $dbA) {
+        $idA = $dbA['idalimentos'];
+        if (isset($_REQUEST['alimento' . $idA]) && !empty($_REQUEST['alimento' . $idA])) {
           mysqli_query($conect, "INSERT INTO alimentoencuesta VALUES(NULL, '$idLastEncuesta', '$idA') ");
         }
-      }unset($dbAs);
+      }
+      unset($dbAs);
     }
   }
-  header("Location:gestionEncuestas.php?idEnc=".$idLastEncuesta);
+  header("Location:gestionEncuestas.php?idEnc=" . $idLastEncuesta);
 }
 
 
@@ -104,11 +108,11 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Crear nueva encuesta</h6>
             </div>
-            <div class="row m-3 justify-content-center">
-              <div class="col-lg-8 col-md-4 col-sm-12">
-                <div class="alimento__dataInicial">
-                  <h3>Datos de la encuesta</h3>
-                  <form class="form-inline d-flex flex-column align-items-center">
+            <form>
+              <div class="row m-3 justify-content-center">
+                <div class="col-lg-8 col-md-4 col-sm-12">
+                  <div class="alimento__dataInicial">
+                    <h3>Datos de la encuesta</h3>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Nombre</span>
@@ -121,93 +125,93 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       </div>
                       <textarea class="form-control" aria-label="descripcionEncuesta" aria-describedby="basic-addon1" name="descripcion" id="" cols="20" rows="5" name="descripcion" placeholder="Descripción de la encuesta..." required></textarea>
                     </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="row m-3 justify-content-center">
-              <div class="col-lg-8 col-md-4 col-sm-12">
-                <div class="alimento__dataInicial">
-                  <h3>Información para el cuestionario</h3>
-                  <h4>Selector de frecuencia</h4>
-                  <p>Indique qué frecuencias desea que figuren en el cuestionario (2 como mínimo)</p>
-                  <div id="checkbox_frec" class="text-left">
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecuencia1" type="checkbox" value="1" id="frec_nunca">
-                      <label class="form-check-label" for="frec_nunca">
-                        Nunca
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecuencia2" type="checkbox" value="2" id="frec_menosUnaVezPorSemana">
-                      <label class="form-check-label" for="frec_menosUnaVezPorSemana">
-                        Menos de 1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecuencia3" type="checkbox" value="3" id="frec_unaVezPorSemana">
-                      <label class="form-check-label" for="frec_unaVezPorSemana">
-                        1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecuencia4" type="checkbox" value="4" id="frec_dosTresVecesPorSemana">
-                      <label class="form-check-label" for="frec_dosTresVecesPorSemana">
-                        2-3 veces por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecuencia5" type="checkbox" value="5" id="frec_cuatroSeisVecesPorSemana">
-                      <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
-                        4-6 veces por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecuencia6" type="checkbox" value="6" id="frec_diariamente">
-                      <label class="form-check-label" for="frec_diariamente">
-                        Diariamente
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecuencia7" type="checkbox" value="7" id="frec_masDeUnaVezAlDia">
-                      <label class="form-check-label" for="frec_masDeUnaVezAlDia">
-                        Más de una vez al día
-                      </label>
+              <div class="row m-3 justify-content-center">
+                <div class="col-lg-8 col-md-4 col-sm-12">
+                  <div class="alimento__dataInicial">
+                    <h3>Información para el cuestionario</h3>
+                    <h4>Selector de frecuencia</h4>
+                    <p>Indique qué frecuencias desea que figuren en el cuestionario (2 como mínimo)</p>
+                    <div id="checkbox_frec" class="text-left">
+                      <div class="form-check">
+                        <input class="form-check-input" name="frecuencia1" type="checkbox" value="1" id="frec_nunca">
+                        <label class="form-check-label" for="frec_nunca">
+                          Nunca
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" name="frecuencia2" type="checkbox" value="2" id="frec_menosUnaVezPorSemana">
+                        <label class="form-check-label" for="frec_menosUnaVezPorSemana">
+                          Menos de 1 vez por semana
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" name="frecuencia3" type="checkbox" value="3" id="frec_unaVezPorSemana">
+                        <label class="form-check-label" for="frec_unaVezPorSemana">
+                          1 vez por semana
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" name="frecuencia4" type="checkbox" value="4" id="frec_dosTresVecesPorSemana">
+                        <label class="form-check-label" for="frec_dosTresVecesPorSemana">
+                          2-3 veces por semana
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" name="frecuencia5" type="checkbox" value="5" id="frec_cuatroSeisVecesPorSemana">
+                        <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
+                          4-6 veces por semana
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" name="frecuencia6" type="checkbox" value="6" id="frec_diariamente">
+                        <label class="form-check-label" for="frec_diariamente">
+                          Diariamente
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" name="frecuencia7" type="checkbox" value="7" id="frec_masDeUnaVezAlDia">
+                        <label class="form-check-label" for="frec_masDeUnaVezAlDia">
+                          Más de una vez al día
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="row m-3 justify-content-center">
-              <div class="col-lg-8 col-md-4 col-sm-12">
-                <div class="alimento__dataInicial">
-                  <h3>Alimentos para el cuestionario</h3>
-                  <p>Indique qué alimentos formarán parte del cuestionario (2 como mínimo)</p>
-                  <div class="text-left">
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
-                          <thead class="thead-light">
-                            <tr>
-                              <th class="text-center">Nombre</th>
-                              <th class="text-center">Grupo</th>
-                              <th class="text-center">Seleccionar</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php
-                            //Tabla alimentos(ALL) -> dbs[]
-                            $dbquery = mysqli_query($conect, "SELECT * FROM alimentos");
-                            $cantA = mysqli_num_rows($dbquery);
-                            if ($cantA > 0) {
-                              while ($db = $dbquery->fetch_array()) {
-                                $dbs[] = $db;
-                              }
+              <div class="row m-3 justify-content-center">
+                <div class="col-lg-8 col-md-4 col-sm-12">
+                  <div class="alimento__dataInicial">
+                    <h3>Alimentos para el cuestionario</h3>
+                    <p>Indique qué alimentos formarán parte del cuestionario (2 como mínimo)</p>
+                    <div class="text-left">
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered" id="dataTableAlimentos" width="100%" cellspacing="0">
+                            <thead class="thead-light">
+                              <tr>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Grupo</th>
+                                <th class="text-center">Seleccionar</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php
+                              //Tabla alimentos(ALL) -> dbs[]
+                              $dbquery = mysqli_query($conect, "SELECT * FROM alimentos");
+                              $cantA = mysqli_num_rows($dbquery);
+                              if ($cantA > 0) {
+                                while ($db = $dbquery->fetch_array()) {
+                                  $dbs[] = $db;
+                                }
 
-                              foreach ($dbs as $db) {
-                              
-                                /* echo '
+                                foreach ($dbs as $db) {
+
+                                  /* echo '
                                 <div class="row">
                                   <div class="col-5">'.$db['nombre'].'</div>
                                   <div class="col-2"> 
@@ -215,83 +219,80 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                                   </div>
                                 </div><hr>
                                 '; */
-                                  echo '<tr><td class="text-center">'.$db['nombre'].'</td>
-                                  <td class="text-center">'.$db['grupo'].'</td>
+                                  echo '<tr><td class="text-center">' . $db['nombre'] . '</td>
+                                  <td class="text-center">' . $db['grupo'] . '</td>
                                   <td class="text-center">
                                     <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="alimento'.$db['idalimentos'].'" value="'.$db['idalimentos'].'">
+                                    <input class="form-check-input" type="checkbox" name="alimento' . $db['idalimentos'] . '" value="' . $db['idalimentos'] . '">
 
                                     </div>
                                   </td></tr>';
-                                
+                                }
+                                unset($dbs);
                               }
-                              unset($dbs);
-                            }
-                            ?>
-                            
-                          </tbody>
-                        </table>
+                              ?>
 
-                      </div> <!-- End Table -->
+                            </tbody>
+                          </table>
 
-                      <!-- Divider -->
-                      <hr class="sidebar-divider my-0">
+                        </div> <!-- End Table -->
 
-                      <!-- Botonera -->
-                      <div class="row m-3 justify-content-center">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                          <div class="buttons__AlimentoAlta">
-                            <a href="gestionEncuestas.php" id="salirDeCrearEncuestaModal" class="btn btn-outline-danger m-2" data-toggle="modal" data-target="#salirCrearEncuestaModal" role="button">Cancelar</a>
-                            <a href="#" id="guardarEncuesta" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarEncuestaModal" role="button">Guardar encuesta</a>
-                          </div>
-                        </div>
-                      </div> <!-- Fin Botonera -->
+                        <!-- Divider -->
+                        <hr class="sidebar-divider my-0">
 
-                      <!-- Guardar alimento Modal-->
-                      <div class="modal fade" id="guardarEncuestaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos de la encuesta</h5>
-                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">Estás seguro?</div>
-                            <div class="modal-footer">
-                              <a class="btn btn-secondary" 1 data-dismiss="modal">Cancelar</a>
-                              <button class="btn btn-success">Si, guardar encuesta</button>
+                        <!-- Botonera -->
+                        <div class="row m-3 justify-content-center">
+                          <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="buttons__AlimentoAlta">
+                              <a href="gestionEncuestas.php" id="salirDeCrearEncuestaModal" class="btn btn-outline-danger m-2" data-toggle="modal" data-target="#salirCrearEncuestaModal" role="button">Cancelar</a>
+                              <a href="#" id="guardarEncuesta" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarEncuestaModal" role="button">Guardar encuesta</a>
                             </div>
                           </div>
-                        </div>
-                      </div>
+                        </div> <!-- Fin Botonera -->
 
-                      <!-- Salir de crear encuesta Modal-->
-                      <div class="modal fade" id="salirCrearEncuestaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos de la encuesta creada</h5>
-                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">Estás seguro?</div>
-                            <div class="modal-footer">
-                              <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                              <a href="gestionEncuestas.php" class="btn btn-danger" role="button">Si, volver</a>
+                        <!-- Guardar alimento Modal-->
+                        <div class="modal fade" id="guardarEncuestaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos de la encuesta</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">Estás seguro?</div>
+                              <div class="modal-footer">
+                                <a class="btn btn-secondary" 1 data-dismiss="modal">Cancelar</a>
+                                <button type="submit" class="btn btn-success">Si, guardar encuesta</button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-
-                      </form>
-                    </div> <!-- End Card body -->
-                  </div> <!-- End content -->
+                        <!-- Salir de crear encuesta Modal-->
+                        <div class="modal fade" id="salirCrearEncuestaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos de la encuesta creada</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">Estás seguro?</div>
+                              <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <a href="gestionEncuestas.php" class="btn btn-danger" role="button">Si, volver</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> <!-- End Card body -->
+                    </div> <!-- End content -->
+                  </div>
                 </div>
-              </div>
-            </div> <!-- End row -->
+              </div> <!-- End row -->
+            </form>
           </div>
         </div>
         <!-- Footer -->
