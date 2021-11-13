@@ -46,8 +46,9 @@ if(isset($_REQUEST['cerrarSession'])){
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 d-none d-lg-block">
-                <img src="assets/img/Logos/logo_senat_letrasNegras_Login.png" alt="Logo Senat" class="bgLogin" width="100%">
+              <div class="col-lg-6 d-none d-lg-block imgLoginSenat">
+                <img src="assets/img/Logos/logo_senat_letrasNegras_LoginNB.png" alt="Logo Senat" class="bgLogin">
+                <p class="sloganSenat">Sistema de Evaluación Nutricional Asistido por Tecnología</p>
               </div>
               <div class="col-lg-6">
                 <div class="p-5">
