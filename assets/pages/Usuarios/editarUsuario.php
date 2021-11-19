@@ -220,19 +220,19 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                   </div>
                 </div>
               </div>
+            </form> <!-- Carga usuarios End -->
           </div>
         </div>
-        </form>
-        <!-- Carga usuarios End -->
-        <!-- End content -->
-      </div>
-      <!-- Footer -->
-      <?php
-      echo $footer;
-      ?>
-      <!-- End of Footer -->
+      </div> <!-- End content -->
     </div>
   </div>
+  
+  </div>
+  <!-- Footer -->
+  <?php
+  echo $footer;
+  ?>
+  <!-- End of Footer -->
 
   <!-- Scroll to Top Button-->
   <?php

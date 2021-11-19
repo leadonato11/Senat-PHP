@@ -15,26 +15,140 @@ $u = $_SESSION['user'];
 $c = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $a = mysqli_fetch_assoc($c);
 $idUser = $a['idusuario'];
+if (isset($_REQUEST['editarEncuesta']) && !empty($_REQUEST['editarEncuesta'])) {
+  $_SESSION['editarEncuesta']=$_REQUEST['editarEncuesta'];
+}else{
+  header("gestionEncuestas.php");
+}
+$idEncuesta=$_SESSION['editarEncuesta'];
+//Descripción de la encuesta
+$queryEnc=mysqli_query($conect,"SELECT * FROM encuesta WHERE idencuesta='$idEncuesta'");
+$dbEncuesta=mysqli_fetch_assoc($queryEnc);
+$nombreEncuesta=$dbEncuesta['nombre'];
 
+//Tabla encuesta-frecuencia
+$queryFrecEnc=mysqli_query($conect,"SELECT * FROM encuestafrecuencia WHERE idencuesta='$idEncuesta'");
+$cantFrecEnc=mysqli_num_rows($queryFrecEnc);
+if($cantFrecEnc!=0){
+  while($dbFrecEnc=$queryFrecEnc->fetch_assoc()){
+    $dbFrecEncS[]=$dbFrecEnc;
+  }
+  
+}
+//Tabla alimento-encuesta
+$queryAliEnc=mysqli_query($conect,"SELECT * FROM alimentoencuesta WHERE idencuesta='$idEncuesta'");
+$cantAliEnc=mysqli_num_rows($queryAliEnc);
+if($cantAliEnc!=0){
+  while($dbAliEnc=$queryAliEnc->fetch_assoc()){
+    $dbAliEncS[]=$dbAliEnc;
+  }
+  
+}
+
+
+              //Frecuencias por defecto
+                $nunca='';
+                $menosDeUnaVezSemana='';
+                $unaVezSemana='';
+                $dosAtresVecesSemana='';
+                $cuatroAseisVecesSemana='';
+                $diariamente='';
+                $masDeUnaVezDia='';
+                for ($k = 1; $k <= 7; $k++) {
+                $frec[$k]=0;
+                }
+                foreach($dbFrecEncS as $dbFrecEnc){
+                  if($dbFrecEnc['idfrecuencia']==1){
+                    $nunca='checked';
+                    $frec[1]=1;
+                  }
+                  if($dbFrecEnc['idfrecuencia']==2){
+                    $menosDeUnaVezSemana='checked';
+                    $frec[2]=1;
+                  }
+                  if($dbFrecEnc['idfrecuencia']==3){
+                    $unaVezSemana='checked';
+                    $frec[3]=1;
+                  }
+                  if($dbFrecEnc['idfrecuencia']==4){
+                    $dosAtresVecesSemana='checked';
+                    $frec[4]=1;
+                  }
+                  if($dbFrecEnc['idfrecuencia']==5){
+                    $cuatroAseisVecesSemana='checked';
+                    $frec[5]=1;
+                  }
+                  if($dbFrecEnc['idfrecuencia']==6){
+                    $diariamente='checked';
+                    $frec[6]=1;
+                  }
+                  if($dbFrecEnc['idfrecuencia']==7){
+                    $masDeUnaVezDia='checked';
+                    $frec[7]=1;
+                  }
+                }
+              
 if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   $nombre = $_REQUEST['nombre'];
   $descripcion = $_REQUEST['descripcion'];
 
-  //estados: borrador: 0; Activa: 1; Finalizada: 2.
-  $estado = 0;
-  $createEncuesta = mysqli_query($conect, "INSERT INTO encuesta VALUES(NULL, '$idUser', '$nombre', '$descripcion', '$estado', '$fechaActual', '$fechaActual')");
-  if ($createEncuesta) {
-    $queryLastEncuesta = mysqli_query($conect, "SELECT MAX(idencuesta) FROM encuesta ");
-    $rowE = mysqli_fetch_row($queryLastEncuesta);
-    $idLastEncuesta = $rowE[0];
-
-    //Carga frecuencias
+ //Frecuencias por defecto
+ $nunca='';
+ $menosDeUnaVezSemana='';
+ $unaVezSemana='';
+ $dosAtresVecesSemana='';
+ $cuatroAseisVecesSemana='';
+ $diariamente='';
+ $masDeUnaVezDia='';
+ for ($k = 1; $k <= 7; $k++) {
+ $frec[$k]=0;
+ }
+ foreach($dbFrecEncS as $dbFrecEnc){
+   if($dbFrecEnc['idfrecuencia']==1){
+     $nunca='checked';
+     $frec[1]=1;
+   }
+   if($dbFrecEnc['idfrecuencia']==2){
+     $menosDeUnaVezSemana='checked';
+     $frec[2]=1;
+   }
+   if($dbFrecEnc['idfrecuencia']==3){
+     $unaVezSemana='checked';
+     $frec[3]=1;
+   }
+   if($dbFrecEnc['idfrecuencia']==4){
+     $dosAtresVecesSemana='checked';
+     $frec[4]=1;
+   }
+   if($dbFrecEnc['idfrecuencia']==5){
+     $cuatroAseisVecesSemana='checked';
+     $frec[5]=1;
+   }
+   if($dbFrecEnc['idfrecuencia']==6){
+     $diariamente='checked';
+     $frec[6]=1;
+   }
+   if($dbFrecEnc['idfrecuencia']==7){
+     $masDeUnaVezDia='checked';
+     $frec[7]=1;
+   }
+ }
+  $editarEncuesta = mysqli_query($conect, "UPDATE encuesta SET nombre='$nombre', descripcion='$descripcion' WHERE idencuesta='$idEncuesta'");
+  
+    //Editar frecuencias
     for ($i = 1; $i <= 7; $i++) {
       if (isset($_REQUEST['frecuencia' . $i]) && !empty($_REQUEST['frecuencia' . $i])) {
-        $idFrec = $i;
-        mysqli_query($conect, "INSERT INTO encuestafrecuencia VALUES(NULL, '$idFrec', '$idLastEncuesta') ");
+        if($frec[$i]==0){
+          $idFrec = $i;
+          mysqli_query($conect, "INSERT INTO encuestafrecuencia VALUES(NULL, '$idFrec', '$idEncuesta') ");
+        }
+      }else{
+        if($frec[$i]==1){
+          mysqli_query($conect, "DELETE FROM encuestafrecuencia WHERE idencuesta='$idEncuesta' AND idfrecuencia='$idFrec'");
+        }
       }
     }
+    
 
     //Carga de alimentos
     $queryA = mysqli_query($conect, "SELECT * FROM alimentos");
@@ -44,15 +158,37 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
         $dbAs[] = $dbA;
       }
       foreach ($dbAs as $dbA) {
+        //Tabla alimento-encuesta
+        $queryAliEnc=mysqli_query($conect,"SELECT * FROM alimentoencuesta WHERE idencuesta='$idEncuesta'");
+        $cantAliEnc=mysqli_num_rows($queryAliEnc);
+        if($cantAliEnc!=0){
+        while($dbAliEnc=$queryAliEnc->fetch_assoc()){
+          $dbAliEncS[]=$dbAliEnc;
+        }
         $idA = $dbA['idalimentos'];
+        $alimento[$idA]=0;
+                
+        foreach($dbAliEncS as $dbAliEnc){
+          $idAliEnc=$dbAliEnc['idalimentoencuesta'];
+          if($idA==$dbAliEncS['idalimento']){
+            $alimento[$idA]=1;
+          }
+        }unset($dbAliEncS);
+        } 
         if (isset($_REQUEST['alimento' . $idA]) && !empty($_REQUEST['alimento' . $idA])) {
-          mysqli_query($conect, "INSERT INTO alimentoencuesta VALUES(NULL, '$idLastEncuesta', '$idA') ");
+          if($alimento[$idA]==0){
+           mysqli_query($conect, "INSERT INTO alimentoencuesta VALUES(NULL, '$idEncuesta', '$idA') ");
+          }
+        }else{
+          if($alimento[$idA]==1){
+            mysqli_query($conect, "DELETE FROM alimentoencuesta WHERE idencuesta='$idEncuesta' AND idalimento='$idA'");
+          }
         }
       }
       unset($dbAs);
     }
-  }
-  header("Location:gestionEncuestas.php?idEnc=" . $idLastEncuesta);
+  
+  header("Location:gestionEncuestas.php?idEnc=" . $idEncuesta);
 }
 
 
@@ -117,18 +253,18 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Nombre</span>
                       </div>
-                      <input type="text" class="form-control" placeholder="Nombre de la encuesta..." aria-label="nombreAlimento" aria-describedby="basic-addon1" name="nombre" required>
+                      <input type="text" class="form-control" placeholder="Nombre de la encuesta..." aria-label="nombreAlimento" aria-describedby="basic-addon1" name="nombre" value="<?php echo $nombreEncuesta; ?>" required>
                     </div>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Descripción</span>
                       </div>
-                      <textarea class="form-control" aria-label="descripcionEncuesta" aria-describedby="basic-addon1" name="descripcion" id="" cols="20" rows="5" name="descripcion" placeholder="Descripción de la encuesta..." required></textarea>
+                      <textarea class="form-control" aria-label="descripcionEncuesta" aria-describedby="basic-addon1" name="descripcion" id="" cols="20" rows="5" name="descripcion" placeholder="Descripción de la encuesta..." required><?php echo $dbEncuesta['descripcion']; ?></textarea>
                     </div>
                   </div>
                 </div>
               </div>
-
+              
               <div class="row m-3 justify-content-center">
                 <div class="col-lg-8 col-md-4 col-sm-12">
                   <div class="alimento__dataInicial">
@@ -137,43 +273,43 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     <p>Indique qué frecuencias desea que figuren en el cuestionario (2 como mínimo)</p>
                     <div id="checkbox_frec" class="text-left">
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia1" type="checkbox" value="1" id="frec_nunca">
+                        <input class="form-check-input" name="frecuencia1" type="checkbox" value="1" id="frec_nunca" <?php echo $nunca; ?>>
                         <label class="form-check-label" for="frec_nunca">
                           Nunca
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia2" type="checkbox" value="2" id="frec_menosUnaVezPorSemana">
+                        <input class="form-check-input" name="frecuencia2" type="checkbox" value="2" id="frec_menosUnaVezPorSemana" <?php echo $menosDeUnaVezSemana; ?>>
                         <label class="form-check-label" for="frec_menosUnaVezPorSemana">
                           Menos de 1 vez por semana
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia3" type="checkbox" value="3" id="frec_unaVezPorSemana">
+                        <input class="form-check-input" name="frecuencia3" type="checkbox" value="3" id="frec_unaVezPorSemana" <?php echo $unaVezSemana; ?>>
                         <label class="form-check-label" for="frec_unaVezPorSemana">
                           1 vez por semana
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia4" type="checkbox" value="4" id="frec_dosTresVecesPorSemana">
+                        <input class="form-check-input" name="frecuencia4" type="checkbox" value="4" id="frec_dosTresVecesPorSemana" <?php echo $dosAtresVecesSemana; ?>>
                         <label class="form-check-label" for="frec_dosTresVecesPorSemana">
                           2-3 veces por semana
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia5" type="checkbox" value="5" id="frec_cuatroSeisVecesPorSemana">
+                        <input class="form-check-input" name="frecuencia5" type="checkbox" value="5" id="frec_cuatroSeisVecesPorSemana" <?php echo $cuatroAseisVecesSemana; ?>>
                         <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
                           4-6 veces por semana
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia6" type="checkbox" value="6" id="frec_diariamente">
+                        <input class="form-check-input" name="frecuencia6" type="checkbox" value="6" id="frec_diariamente" <?php echo $diariamente; ?>>
                         <label class="form-check-label" for="frec_diariamente">
                           Diariamente
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia7" type="checkbox" value="7" id="frec_masDeUnaVezAlDia">
+                        <input class="form-check-input" name="frecuencia7" type="checkbox" value="7" id="frec_masDeUnaVezAlDia" <?php echo $masDeUnaVezDia; ?>>
                         <label class="form-check-label" for="frec_masDeUnaVezAlDia">
                           Más de 1 vez al día
                         </label>
@@ -205,25 +341,35 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                               $dbquery = mysqli_query($conect, "SELECT * FROM alimentos");
                               $cantA = mysqli_num_rows($dbquery);
                               if ($cantA > 0) {
+                                
                                 while ($db = $dbquery->fetch_array()) {
                                   $dbs[] = $db;
                                 }
 
                                 foreach ($dbs as $db) {
-
-                                  /* echo '
-                                <div class="row">
-                                  <div class="col-5">'.$db['nombre'].'</div>
-                                  <div class="col-2"> 
-                                    <input class="form-check-input" type="checkbox" name="alimento'.$db['idalimentos'].'" value="'.$db['idalimentos'].'">
-                                  </div>
-                                </div><hr>
-                                '; */
+                                  $id=$db['idalimentos'];
+                                  
+                                    $checked='';
+                                    //Tabla alimento-encuesta
+                                    $queryAliEnc=mysqli_query($conect,"SELECT * FROM alimentoencuesta WHERE idencuesta='$idEncuesta'");
+                                    $cantAliEnc=mysqli_num_rows($queryAliEnc);
+                                    if($cantAliEnc!=0){
+                                      while($dbAliEnc=$queryAliEnc->fetch_assoc()){
+                                        $dbAliEncS[]=$dbAliEnc;
+                                      }
+                                    
+                                      foreach($dbAliEncS as $dbAliEnc){
+                                        if($id==$dbAliEnc['idalimento']){
+                                          $checked='checked';
+                                        }
+                                    }unset($dbAliEncS);
+                                    }
+                                
                                   echo '<tr><td class="text-center">' . $db['nombre'] . '</td>
                                   <td class="text-center">' . $db['grupo'] . '</td>
                                   <td class="text-center">
                                     <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="alimento' . $db['idalimentos'] . '" value="' . $db['idalimentos'] . '">
+                                    <input class="form-check-input" type="checkbox" name="alimento' . $db['idalimentos'] . '" value="' . $db['idalimentos'] . '" '.$checked.'>
 
                                     </div>
                                   </td></tr>';

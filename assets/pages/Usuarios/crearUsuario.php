@@ -28,12 +28,8 @@ if (isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])) {
   $r = $_REQUEST['rol'];
 
   $f = $_FILES['fotoUsuario']['name'];
-  $est = $_REQUEST['estado'];
-  if ($est == '1') {
-    $estInt = 1;
-  } else {
-    $estInt = 0;
-  }
+  $estInt = 1;
+ 
 
   $checcar = mysqli_query($conect, "SELECT dni FROM usuario");
 
@@ -137,9 +133,9 @@ if (isset($_REQUEST['cerrar'])) {
                 <div class="col-lg-4 col-md-4 col-sm-12">
                   <div class="alimento__fotoPrincipal">
                     <h3>Foto de perfil</h3>
-                    <img src="../../img/undraw_profile_2.svg" width="350" class="img-fluid rounded mb-2" alt="foodImage">
+                    <img src="../../img/undraw_profile.svg" width="350" class="img-fluid rounded mb-2" alt="foodImage">
                     <div class="custom-file">
-                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario" required>
+                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario">
                       <label class="custom-file-label" for="imagenUsuario">Imagen Usuario</label>
                     </div>
                   </div>
@@ -188,18 +184,6 @@ if (isset($_REQUEST['cerrar'])) {
                         <option value="1">Administrador</option>
                         <option value="2">Nutricionista</option>
                       </select>
-                    </div>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Estado</span>
-                      </div>
-                      <div>
-                        <select name="estado" class="custom-select inputCantGeneral" id="inputGroupSelect01" required>
-                          <option selected disabled value="">Seleccionar...</option>
-                          <option value="1">Activo</option>
-                          <option value="0">Inactivo</option>
-                        </select>
-                      </div>
                     </div>
                   </div>
                 </div>

@@ -16,13 +16,18 @@ $fechaActual = Date("Y-m-d");
 $u = $_SESSION['user'];
 $queryUser = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $dbUser = mysqli_fetch_assoc($queryUser);
-
+$idUser=$dbUser['idusuario'];
 if (isset($_REQUEST['idEncuesta']) && !empty($_REQUEST['idEncuesta'])) {
   $_SESSION['idEncuesta']=$_REQUEST['idEncuesta'];
 }else{
   header("gestionEncuestas.php");
 }
 $idEncuesta=$_SESSION['idEncuesta'];
+//Descripción de la encuesta
+$queryEnc=mysqli_query($conect,"SELECT * FROM encuesta WHERE idencuesta='$idEncuesta'");
+$dbEncuesta=mysqli_fetch_assoc($queryEnc);
+$nombreEncuesta=$dbEncuesta['nombre'];
+
 //Tabla encuesta-frecuencia
 $queryFrecEnc=mysqli_query($conect,"SELECT * FROM encuestafrecuencia WHERE idencuesta='$idEncuesta'");
 $cantFrecEnc=mysqli_num_rows($queryFrecEnc);
@@ -39,9 +44,44 @@ if($cantAliEnc!=0){
     $dbAliEncS[]=$dbAliEnc;
   }
 }
+//Recepción del formulario de RESPUESTA
+if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {  
+  $edad=$_REQUEST['edad'];
+  $sexo=$_REQUEST['sexo'];
+  $insertEncuestado=mysqli_query($conect, "INSERT INTO encuestado VALUES(NULL, '$idUser', '$idEncuesta', '$edad', '$sexo')");
+  if ($insertEncuestado) {
+    $queryLastEncuestado = mysqli_query($conect, "SELECT MAX(idencuestado) FROM encuestado ");
+    $rowE = mysqli_fetch_row($queryLastEncuestado);
+    $idLastEncuestado = $rowE[0];
+    
+    //Carga de alimentos
+    $queryA = mysqli_query($conect, "SELECT * FROM alimentos");
+    $cantAlimentos = mysqli_num_rows($queryA);
+    if ($cantAlimentos > 0) {
+      while ($dbA = $queryA->fetch_assoc()) {
+        $dbAs[] = $dbA;
+      }
+      foreach ($dbAs as $dbA) {
+        $idA = $dbA['idalimentos'];
+        for($i=1; $i<=4; $i++){
+          $porcion='porcion'.$i;
+          if (isset($_REQUEST[$porcion . $idA]) && !empty($_REQUEST[$porcion . $idA])) {
+            $idporcion=$_REQUEST[$porcion . $idA];
+            $idfrecuencia=$_REQUEST['frecEncuesta'.$idA];
+            $idEncuestado=$idLastEncuestado;
 
-
-
+            mysqli_query($conect, "INSERT INTO respuestas VALUES(NULL, '$idEncuestado', '$idA', '$idfrecuencia', '$idporcion') ");
+          }
+          
+        }
+      
+      }unset($dbAs);
+    }
+  }else{
+    header("Location:gestionEncuestas.php?CargaEncuestado=Fallida");
+  }
+  header("Location:gestionEncuestas.php?CargaEncuestado=".$idLastEncuestado);
+}
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +132,7 @@ if($cantAliEnc!=0){
             <div class="card shadow mb-4">
               <div class="row m-3 justify-content-center">
                 <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                  <h1 class="tituloEncuestaCuestionario">NOMBRE ENCUESTA</h1>
+                  <h1 class="tituloEncuestaCuestionario"><?php echo $nombreEncuesta; ?></h1>
                 </div>
               </div>
             </div>
@@ -157,7 +197,7 @@ if($cantAliEnc!=0){
                       echo '
                       <div class="seleccionPorciones">
                       <div class="porcSel">
-                        <input type="radio" id="porcNro1" name="porcion1" value="'.$valuePorcion.'">
+                        <input type="radio" id="porcNro1" name="'.$porcion.$idAlimento.'" value="'.$valuePorcion.'">
                         <label for="porcNro1">
                           <a href="'.$fotoPorcion.'" data-lightbox="photos">
                             <img class="imgPorcSel" src="'.$fotoPorcion.'" alt="foodImage">
@@ -168,325 +208,44 @@ if($cantAliEnc!=0){
                       }
                     }
                     
-                  }unset($dbAliEncS); 
-                   
-
-                  }
-                  ?>
-                  <!-- <div class="seleccionPorciones">
-                    <div class="porcSel">
-                      <input type="radio" id="porcNro1" name="porcionEncuesta" value="Porcion1">
-                      <label for="porcNro1">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                    </div> -->
-
-                  <!--   
-
-                    <div class="porcSel">
-                      <label for="porcNro2">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                      <div class="d-flex m-3 align-content-center justify-content-center">
-                        <input type="radio" id="porcNro2" name="porcionEncuesta" value="Porcion2">
-                      </div>
+                    
+                    
+                    
+                    echo '
                     </div>
-
-                    <div class="porcSel">
-                      <input type="radio" id="porcNro3" name="porcionEncuesta" value="Porcion3">
-                      <label for="porcNro3">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
                     </div>
-
-                    <div class="porcSel">
-                      <label for="porcNro4">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                      <input type="radio" id="porcNro4" name="porcionEncuesta" value="Porcion4">
-                    </div> -->
-
-                  </div>
-                </div>
-
-                <div class="col-lg-6 col-md-6 col-sm-12 selectorFrecCuestionario">
-                  <div class="alimento__dataInicial">
+                    <div class="col-lg-6 col-md-6 col-sm-12 selectorFrecCuestionario">
+                    <div class="alimento__dataInicial">
                     <h3>Frecuencia de ingesta</h3>
-                  </div>
-                  <div id="radio_frec" class="text-start">
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_nunca">
-                      <label class="form-check-label" for="frec_nunca">
-                        Nunca
-                      </label>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_menosUnaVezPorSemana">
-                      <label class="form-check-label" for="frec_menosUnaVezPorSemana">
-                        Menos de 1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_unaVezPorSemana">
-                      <label class="form-check-label" for="frec_unaVezPorSemana">
-                        1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_dosTresVecesPorSemana">
-                      <label class="form-check-label" for="frec_dosTresVecesPorSemana">
-                        2-3 veces por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_cuatroSeisVecesPorSemana">
-                      <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
-                        4-6 veces por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_diariamente">
-                      <label class="form-check-label" for="frec_diariamente">
-                        Diariamente
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_unaVezPorSemana">
-                      <label class="form-check-label" for="frec_unaVezPorSemana">
-                        1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_masDeUnaVezAlDia">
-                      <label class="form-check-label" for="frec_masDeUnaVezAlDia">
-                        Más de una vez al día
-                      </label>
-                    </div>
-                  </div>
-                </div> <!-- End pregunta -->
-              </div> <!-- End row -->
-
-              <hr> <!-- Separador de alimentos -->
-
-              <div class="row m-3 justify-content-center">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <div class="text-center">
-                    <h3>NOMBRE ALIMENTO</h3>
-                  </div>
-
-                  <div class="seleccionPorciones">
-                    <div class="porcSel">
-                      <input type="radio" id="porcNro1" name="porcionEncuesta" value="Porcion1">
-                      <label for="porcNro1">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                    </div>
-
-                    <div class="porcSel">
-                      <label for="porcNro2">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                      <div class="d-flex m-3 align-content-center justify-content-center">
-                        <input type="radio" id="porcNro2" name="porcionEncuesta" value="Porcion2">
-                      </div>
-                    </div>
-
-                    <div class="porcSel">
-                      <input type="radio" id="porcNro3" name="porcionEncuesta" value="Porcion3">
-                      <label for="porcNro3">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                    </div>
-
-                    <div class="porcSel">
-                      <label for="porcNro4">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                      <input type="radio" id="porcNro4" name="porcionEncuesta" value="Porcion4">
-                    </div>
-
-                  </div>
+                <div id="radio_frec" class="text-start">';
+                
+                foreach($dbFrecEncS as $dbFrecEnc){
+                  $idFrec=$dbFrecEnc['idfrecuencia'];
+                  $queryFrec=mysqli_query($conect, "SELECT * FROM frecuencias WHERE idfrecuencia='$idFrec'");
+                  $dbFrec=mysqli_fetch_assoc($queryFrec);  
+                  
+                  echo '
+                  <div class="form-check">
+                  <input class="form-check-input" name="frecEncuesta'.$idAlimento.'" type="radio" value="'.$dbFrec['valorfrec'].'" id="frec_nunca">
+                  <label class="form-check-label" for="frec_nunca">
+                  '.$dbFrec['nombrefrec'].'
+                  </label>
+                  </div>';
+                }
+                
+                echo '    
+                
                 </div>
-
-                <div class="col-lg-6 col-md-6 col-sm-12 selectorFrecCuestionario">
-                  <div class="alimento__dataInicial">
-                    <h3>Frecuencia de ingesta</h3>
-                  </div>
-                  <div id="radio_frec" class="text-start">
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_nunca">
-                      <label class="form-check-label" for="frec_nunca">
-                        Nunca
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_menosUnaVezPorSemana">
-                      <label class="form-check-label" for="frec_menosUnaVezPorSemana">
-                        Menos de 1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_unaVezPorSemana">
-                      <label class="form-check-label" for="frec_unaVezPorSemana">
-                        1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_dosTresVecesPorSemana">
-                      <label class="form-check-label" for="frec_dosTresVecesPorSemana">
-                        2-3 veces por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_cuatroSeisVecesPorSemana">
-                      <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
-                        4-6 veces por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_diariamente">
-                      <label class="form-check-label" for="frec_diariamente">
-                        Diariamente
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_unaVezPorSemana">
-                      <label class="form-check-label" for="frec_unaVezPorSemana">
-                        1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_masDeUnaVezAlDia">
-                      <label class="form-check-label" for="frec_masDeUnaVezAlDia">
-                        Más de una vez al día
-                      </label>
-                    </div>
-                  </div>
                 </div> <!-- End pregunta -->
-              </div> <!-- End row -->
-
-              <hr> <!-- Separador de alimentos -->
-
-              <div class="row m-3 justify-content-center">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <div class="text-center">
-                    <h3>NOMBRE ALIMENTO</h3>
-                  </div>
-
-                  <div class="seleccionPorciones">
-                    <div class="porcSel">
-                      <input type="radio" id="porcNro1" name="porcionEncuesta" value="Porcion1">
-                      <label for="porcNro1">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                    </div>
-
-                    <div class="porcSel">
-                      <label for="porcNro2">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                      <div class="d-flex m-3 align-content-center justify-content-center">
-                        <input type="radio" id="porcNro2" name="porcionEncuesta" value="Porcion2">
-                      </div>
-                    </div>
-
-                    <div class="porcSel">
-                      <input type="radio" id="porcNro3" name="porcionEncuesta" value="Porcion3">
-                      <label for="porcNro3">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                    </div>
-
-                    <div class="porcSel">
-                      <label for="porcNro4">
-                        <a href="../../img/ImgPorciones/Milanesaporcion1.jpg" data-lightbox="photos">
-                          <img class="imgPorcSel" src="../../img/ImgPorciones/Milanesaporcion1.jpg" alt="foodImage">
-                        </a>
-                      </label>
-                      <input type="radio" id="porcNro4" name="porcionEncuesta" value="Porcion4">
-                    </div>
-
-                  </div>
-                </div>
-
-                <div class="col-lg-6 col-md-6 col-sm-12 selectorFrecCuestionario">
-                  <div class="alimento__dataInicial">
-                    <h3>Frecuencia de ingesta</h3>
-                  </div>
-                  <div id="radio_frec" class="text-start">
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_nunca">
-                      <label class="form-check-label" for="frec_nunca">
-                        Nunca
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_menosUnaVezPorSemana">
-                      <label class="form-check-label" for="frec_menosUnaVezPorSemana">
-                        Menos de 1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_unaVezPorSemana">
-                      <label class="form-check-label" for="frec_unaVezPorSemana">
-                        1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_dosTresVecesPorSemana">
-                      <label class="form-check-label" for="frec_dosTresVecesPorSemana">
-                        2-3 veces por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_cuatroSeisVecesPorSemana">
-                      <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
-                        4-6 veces por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_diariamente">
-                      <label class="form-check-label" for="frec_diariamente">
-                        Diariamente
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_unaVezPorSemana">
-                      <label class="form-check-label" for="frec_unaVezPorSemana">
-                        1 vez por semana
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" name="frecEncuesta" type="radio" value="" id="frec_masDeUnaVezAlDia">
-                      <label class="form-check-label" for="frec_masDeUnaVezAlDia">
-                        Más de una vez al día
-                      </label>
-                    </div>
-                  </div>
-                </div> <!-- End pregunta -->
-              </div>
+                </div> <!-- End row -->
+                
+                <hr> <!-- Separador de alimentos -->
+                
+                ';
+              }unset($dbAliEncS); 
+            }
+            ?>
               <!-- Botonera -->
               <div class="row m-3 justify-content-center">
                 <div class="col-lg-12 col-md-12 col-sm-12">
