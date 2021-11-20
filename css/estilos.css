@@ -257,3 +257,17 @@ textarea {
 .tituloEncuestaCuestionario {
   margin-bottom: 0;
 }
+
+.estadoEncuestaBorrador {
+  color: lightgray;
+}
+
+.estadoEncuestaActiva {
+  font-weight: bold;
+  color: red;
+}
+
+.estadoEncuestaFinalizada {
+  font-weight: bold;
+  color: green;
+}

@@ -163,7 +163,7 @@ if (isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento']
                                <span aria-hidden="true">×</span>
                              </button>
                            </div>
-                           <div class="modal-body">Estás seguro?</div>
+                           <div class="modal-body">Estás seguro que deseas borrar el alimento: <b>' . $db['nombre'] .'</b>?</div>
                            <div class="modal-footer">
                              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
                              <a class="btn btn-danger" onclick="borrarAlimento()" href="gestionAlimentos.php?eliminarAlimento=' . $db['idalimentos'] . '">Estoy seguro, borralo</a>

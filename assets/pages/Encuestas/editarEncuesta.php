@@ -86,7 +86,7 @@ if($cantAliEnc!=0){
                     $masDeUnaVezDia='checked';
                     $frec[7]=1;
                   }
-                }
+                }unset($dbFrecEncS);
               
 if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   $nombre = $_REQUEST['nombre'];
@@ -103,6 +103,14 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
  for ($k = 1; $k <= 7; $k++) {
  $frec[$k]=0;
  }
+ $queryFrecEnc=mysqli_query($conect,"SELECT * FROM encuestafrecuencia WHERE idencuesta='$idEncuesta'");
+$cantFrecEnc=mysqli_num_rows($queryFrecEnc);
+if($cantFrecEnc!=0){
+  while($dbFrecEnc=$queryFrecEnc->fetch_assoc()){
+    $dbFrecEncS[]=$dbFrecEnc;
+  }
+  
+
  foreach($dbFrecEncS as $dbFrecEnc){
    if($dbFrecEnc['idfrecuencia']==1){
      $nunca='checked';
@@ -132,7 +140,8 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
      $masDeUnaVezDia='checked';
      $frec[7]=1;
    }
- }
+ }unset($dbFrecEncS);
+}
   $editarEncuesta = mysqli_query($conect, "UPDATE encuesta SET nombre='$nombre', descripcion='$descripcion' WHERE idencuesta='$idEncuesta'");
   
     //Editar frecuencias
@@ -144,6 +153,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
         }
       }else{
         if($frec[$i]==1){
+          $idFrec = $i;
           mysqli_query($conect, "DELETE FROM encuestafrecuencia WHERE idencuesta='$idEncuesta' AND idfrecuencia='$idFrec'");
         }
       }
@@ -170,7 +180,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                 
         foreach($dbAliEncS as $dbAliEnc){
           $idAliEnc=$dbAliEnc['idalimentoencuesta'];
-          if($idA==$dbAliEncS['idalimento']){
+          if($idA==$dbAliEnc['idalimento']){
             $alimento[$idA]=1;
           }
         }unset($dbAliEncS);

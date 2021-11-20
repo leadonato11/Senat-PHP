@@ -147,12 +147,15 @@ if (isset($_REQUEST['eliminarEncuesta']) && !empty($_REQUEST['eliminarEncuesta']
                         $apellidoC=$dbCreador['apellido'];
                         if($dbE['estado']==0){
                           $estado='Borrador';
+                          $formatoEstado='estadoEncuestaBorrador';
                         }
                         if($dbE['estado']==1){
                           $estado='Activa';
+                          $formatoEstado='estadoEncuestaActiva';
                         }  
                         if($dbE['estado']==2){
                           $estado='Finalizada';
+                          $formatoEstado='estadoEncuestaFinalizada';
                         }
 
                         $botonesAcciones = '';
@@ -183,7 +186,7 @@ if (isset($_REQUEST['eliminarEncuesta']) && !empty($_REQUEST['eliminarEncuesta']
                         <td class="text-center">' . $dbE['fechacreacion'] . '</td>
                         <td class="text-center">' . $dbE['fechaumod'] . '</td>
                         <td class="text-center">' . $nombreC .' '.$apellidoC.'</td>
-                        <td class="text-center">' . $estado . '</td>
+                        <td class="text-center '.$formatoEstado.'">' . $estado . '</td>
                         <td class="text-center">
                             '.$botonesAcciones.'
                             <button title="Eliminar encuesta" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#borrarEncuestaModal' . $dbE['idencuesta'] . '" ><i class="fas fa-trash"></i></button>
