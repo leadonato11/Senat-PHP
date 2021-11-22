@@ -55,7 +55,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   //nombre
   $nombre = $_REQUEST['nombre'];
   //Estado
-  $estado=1;
+  $estado = 1;
   //Base de datos Alimento
   $dbquery2 = mysqli_query($conect, "SELECT * FROM alimentos");
   $numQueryAlim2 = mysqli_num_rows($dbquery2);
@@ -63,7 +63,6 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
     $validarCant2 = true;
   } else {
     $validarCant2 = false;
-    
   }
   if ($validarCant2) {
     while ($db2 = $dbquery2->fetch_assoc()) {
@@ -80,8 +79,8 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
       }
     }
     unset($db2s);
-  }else{
-    $validar=true;
+  } else {
+    $validar = true;
   }
   //grupo
   $idgrupos = $_REQUEST['grupo'];
@@ -224,10 +223,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                 <div class="col-lg-6 col-md-4 col-sm-12">
                   <div class="alimento__fotoPrincipal">
                     <h3>Imagen representativa</h3>
-                    <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="https://www.eluniversal.com.mx/sites/default/files/2016/09/07/manzana.jpg" alt="foodImage">
+                    <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="imagePreview" src="https://www.eluniversal.com.mx/sites/default/files/2016/09/07/manzana.jpg" alt="foodImage">
                     <div class="custom-file">
-                      <input type="file" name="fotoalimento" class="custom-file-input" id="imagenAlimento">
-                      <label class="custom-file-label justify-content-start" for="imagenAlimento">Imagen
+                      <input type="file" name="fotoalimento" class="custom-file-input" id="imagenAlimento" accept="image/png, image/gif, image/jpeg">
+                      <label class="custom-file-label justify-content-start" for="imagenAlimento" id="imagenLabel">Imagen
                         alimento</label>
                     </div>
                   </div>
@@ -786,6 +785,48 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
+  <script>
+    $("#imagenAlimento").on("change", function(e) {
+      const filepath = e.target.value
+      const pathsplit = filepath.split(/[\\\/]/)
+
+      const filename = pathsplit[pathsplit.length - 1]
+      $("#imagenLabel").text(filename)
+      $("#imagePreview").attr("src", filepath)
+
+
+      const srcImage = URL.createObjectURL(e.target.files[0]);
+      $("#imagePreview").attr("src", srcImage)
+
+    })
+  </script>
+
+  <!-- 
+    Ezequiel Barrales18:24
+https://assets.justinmind.com/wp-content/uploads/2020/05/testing-radio-buttons-ui-design.png
+https://cdn.dribbble.com/users/404524/screenshots/9890260/card_switcher.png?compress=1&resize=400x300
+Ezequiel Barrales18:25
+https://cdn.dribbble.com/users/267552/screenshots/6546524/select_reward_4x.png?compress=1&resize=400x300
+https://i.pinimg.com/originals/c2/53/ae/c253aeff04b83da8e2fac892831c0800.png
+https://assets.justinmind.com/wp-content/uploads/2020/05/drop-down-list-design-multi-select.png
+Ezequiel Barrales18:34
+https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
+Ezequiel Barrales18:47
+https://codepen.io/
+Ezequiel Barrales18:52
+https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onbeforeunload
+Ezequiel Barrales19:20
+ [\\\/]
+Ezequiel Barrales19:23
+accept="image/png, image/gif, image/jpeg"
+Ezequiel Barrales19:29
+const [file] = imgInp.files
+  if (file) {
+    blah.src = URL.createObjectURL(file)
+  }
+Ezequiel Barrales19:40
+const filePath = URL.createObjectURL(e.target.files[0]);
+   -->
 
 </body>
 
