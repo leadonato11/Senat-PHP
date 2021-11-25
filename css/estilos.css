@@ -110,7 +110,7 @@ background-color: #d8cccc;
 
 .input-group {
   margin: 10px;
-  width: 100%;
+  width: auto;
 }
 
 .buttons__AlimentoAlta {
@@ -255,7 +255,62 @@ textarea {
 }
 
 .tituloEncuestaCuestionario {
-  margin-bottom: 0;
+  margin: 20px 10px;
+  text-align: center;
+}
+
+.imgPorcionesEnEncuesta {
+  max-width: 200px;
+  width: 100%;
+  padding: 20px;
+  margin: 10px;
+  border: 2px solid #355ccc8a;
+  border-radius: 10px;
+}
+
+.dividerPorcFrec {
+  text-align: center;
+  border: 3px solid #355ccc8a;
+  border-radius: 5px;
+  width: 50%;
+}
+
+.contenedorImagenesPorciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  width: auto;
+}
+
+.selectorYfrecuencias {
+  margin: 50px;
+  display: flex;
+  justify-content: center;
+  padding: 0 50px;
+}
+
+.contenedorSelectorPorciones{
+  padding: 20px;
+  margin: 0 20px;
+}
+
+.contenedorFrecuenciasPorciones {
+padding: 20px;
+margin: 0 20px;
+}
+
+.selectorPorciones {
+  padding: 10px;
+  width: 225px;
+	height: 60px;
+	cursor: pointer;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+	background-color: #345BCB;
+	box-shadow: 0 2px 0 white;
+	border-radius: 2px;
 }
 
 .estadoEncuestaBorrador {
@@ -270,4 +325,18 @@ textarea {
 .estadoEncuestaFinalizada {
   font-weight: bold;
   color: green;
+}
+
+/* #outputPorc01, #outputPorc02, #outputPorc03, #outputPorc04 {
+  display: none;
+} */
+
+.noGroup {
+  font-weight: bold;
+  color: red;
+}
+
+.sexSelect {
+  border-start-start-radius: 0;
+  border-bottom-left-radius: 0;
 }

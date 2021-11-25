@@ -197,7 +197,7 @@ if($cantFrecEnc!=0){
       }
       unset($dbAs);
     }
-  
+  mysqli_query($conect, "UPDATE lastupdate SET encuestas='$fechaActual' WHERE idlastupdate=1");
   header("Location:gestionEncuestas.php?idEnc=" . $idEncuesta);
 }
 

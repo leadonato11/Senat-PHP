@@ -50,6 +50,8 @@ if (isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])) {
   } else {
     $insert = mysqli_query($conect, "INSERT INTO usuario VALUES (NULL, '$u', '$p', '$n', '$ap', '$r', '$c', '$f', '$estInt')");
     if ($insert == 1) {
+     mysqli_query($conect, "UPDATE lastupdate SET usuarios='$fechaActual'");
+
       $arch = move_uploaded_file($_FILES['fotoUsuario']['tmp_name'], "../../img/ImgUsuarios/" . $u . ".jpg");
       if ($arch) {
         header("Location:gestionUsuarios.php?Carga=exitosa");

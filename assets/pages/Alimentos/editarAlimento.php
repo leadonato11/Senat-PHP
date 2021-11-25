@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])) {
   header("Location:../../../index.php");
 }
 date_default_timezone_set("America/Argentina/Buenos_Aires");
-$fechaActual = Date("Y-m-d");
+$fechaActual = Date("Y-m-d H:i:s");
 
 //Datos del usuario desde Tabla usuarios a traves de dni(Variable de Session) -> a
 $u = $_SESSION['user'];
@@ -90,7 +90,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
     $update = mysqli_query($conect, "UPDATE alimentos SET nombre='$nombre', cant='$cant', umedida='$umedida', porcion1='$porcion1', porcion2='$porcion2', porcion3='$porcion3', porcion4='$porcion4', grupo='$grupo', energia='$nutrientes[1]', grasa='$nutrientes[2]', hcarbono='$nutrientes[3]', proteina='$nutrientes[4]', colesterol='$nutrientes[5]', falimentaria='$nutrientes[6]', sodio='$nutrientes[7]', agua='$nutrientes[8]', vitaminaa='$nutrientes[9]', vitaminab6='$nutrientes[10]', vitaminab12='$nutrientes[11]', vitaminac='$nutrientes[12]', vitaminad='$nutrientes[13]', vitaminae='$nutrientes[14]', vitaminak='$nutrientes[15]', almidon='$nutrientes[16]', lactosa='$nutrientes[17]', alcohol='$nutrientes[18]', cafeina='$nutrientes[19]', azucares='$nutrientes[20]', calcio='$nutrientes[21]', hierro='$nutrientes[22]', magnesio='$nutrientes[23]', fosforo='$nutrientes[24]', cinc='$nutrientes[25]', cobre='$nutrientes[26]', fluor='$nutrientes[27]', manganeso='$nutrientes[28]', selenio='$nutrientes[29]', tiamina='$nutrientes[30]', acpant='$nutrientes[31]', riboflavina='$nutrientes[32]', niacina='$nutrientes[33]', folato='$nutrientes[34]', acfolico='$nutrientes[35]', grasast='$nutrientes[36]', grasasmi='$nutrientes[37]', grasaspi='$nutrientes[38]', cloruro='$nutrientes[39]', caroteno='$nutrientes[40]' WHERE idalimentos='$idalimentos'");
 
-
+    mysqli_query($conect, "UPDATE lastupdate SET alimentos='$fechaActual' WHERE idlastupdate=1");
 
     if ($_FILES['fotoalimento']['name'] != "") {
 
@@ -192,10 +192,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                 <div class="col-lg-6 col-md-4 col-sm-12">
                   <div class="alimento__fotoPrincipal">
                     <h3>Imagen representativa</h3>
-                    <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgAlimentos/<?php echo $db['nombre'] ?>falimento.jpg" alt="foodImage">
+                    <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="imagePreview" accept="image/png, image/gif, image/jpeg" src="../../img/imgAlimentos/<?php echo $db['nombre'] ?>falimento.jpg" alt="foodImage">
                     <div class="custom-file">
                       <input type="file" name="fotoalimento" class="custom-file-input" id="imagenAlimento">
-                      <label class="custom-file-label justify-content-start" for="imagenAlimento">Imagen
+                      <label class="custom-file-label justify-content-start" for="imagenAlimento" id="imagePreview">Imagen
                         alimento</label>
                     </div>
                   </div>
@@ -226,7 +226,27 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Grupo</span>
                       </div>
                       <select class="custom-select" name="grupo" id="inputGroupSelect01">
-                        <option selected disabled><?php echo $db['grupo']; ?></option>
+                        
+                          <?php 
+                          $queryGrupoElim=mysqli_query($conect, "SELECT * FROM grupos");
+                          $validarGrupoElim=false;
+                          if(mysqli_num_rows($queryGrupoElim)!=0){
+                            while($dbGrupoElim=$queryGrupoElim->fetch_assoc()){
+                              if($db['grupo']==$dbGrupoElim['nombres']){
+                                $validarGrupoElim=true;
+                              } 
+                            }
+                          }
+                          if($validarGrupoElim){
+                            echo '
+                            <option disabled value="">Seleccione...</option>
+                            <option selected value="'.$db['grupo'].'">'.$db['grupo'] ;
+                          }else{
+                            echo '<option selected disabled> Sin Grupo' ;
+                          } 
+                            
+                          ?>
+                        </option>
                         <?php
                         foreach ($gdbs as $gdb) {
                           if($gdb['nombres']!=$db['grupo']){
@@ -252,12 +272,12 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <div class="porcion">
                           <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion1.jpg" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1" accept="image/png, image/gif, image/jpeg">
                             <label class="custom-file-label" for="inputGroupFile01">Porción
                               01</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" step="any" min="0" value="<?php echo $db['porcion1']; ?>" class="form-control" name="porcion2" value="" placeholder="Peso/Volumen porción 01" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                            <input type="number" step="any" min="0" value="<?php echo $db['porcion1']; ?>" class="form-control" name="porcion1" value="" placeholder="Peso/Volumen porción 01" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                           </div>
                         </div>
                       </div>
@@ -265,7 +285,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <div class="porcion">
                           <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion2.jpg" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02">
+                            <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02" accept="image/png, image/gif, image/jpeg">
                             <label class="custom-file-label" for="inputGroupFile02">Porción
                               02</label>
                           </div>
@@ -278,7 +298,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <div class="porcion">
                           <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion3.jpg" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile03" name="fotoporcion3">
+                            <input type="file" class="custom-file-input" id="inputGroupFile03" name="fotoporcion3" accept="image/png, image/gif, image/jpeg">
                             <label class="custom-file-label" for="inputGroupFile03">Porción
                               03</label>
                           </div>
@@ -291,7 +311,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <div class="porcion">
                           <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion4.jpg" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04">
+                            <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04" accept="image/png, image/gif, image/jpeg">
                             <label class="custom-file-label" for="inputGroupFile04">Porción
                               04</label>
                           </div>
@@ -763,6 +783,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
+  <!-- <script src="../../../js/helper.js"></script> -->
 
 
 </body>

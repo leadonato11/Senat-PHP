@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])) {
   header("Location:index.php");
 }
 date_default_timezone_set("America/Argentina/Buenos_Aires");
-$fechaActual = Date("Y-m-d");
+$fechaActual = Date("Y-m-d H:i:s");
 $u = $_SESSION['user'];
 $c = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $a = mysqli_fetch_assoc($c);
@@ -72,7 +72,9 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
     echo "<script>alert('Este Usuario ha sido registrado.')</script>";
   } else {
     $update1 = mysqli_query($conect, "UPDATE usuario SET foto='$f', nombre='$n', clave='$p', apellido='$ap', correo='$c', dni='$dni', rol='$r', estado='$est' WHERE idusuario='$idUsuarioEdit'");
+    mysqli_query($conect, "UPDATE lastupdate SET usuarios='$fechaActual' WHERE idlastupdate=1");
     if ($_FILES['fotoUsuario']['name'] != "") {
+      
       $arch1 = move_uploaded_file($_FILES['fotoUsuario']['tmp_name'], "../../img/imgUsuarios/" . $dni . ".jpg");
     }
     header("Location:gestionUsuarios.php");

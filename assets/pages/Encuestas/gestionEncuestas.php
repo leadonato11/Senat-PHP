@@ -131,6 +131,7 @@ if (isset($_REQUEST['eliminarEncuesta']) && !empty($_REQUEST['eliminarEncuesta']
                       <th class="text-center">Fecha de creación</th>
                       <th class="text-center">Fecha últ. modif.</th>
                       <th class="text-center">Creado por</th>
+                      <th class="text-center">Entradas</th>
                       <th class="text-center">Estado</th>
                       <th class="text-center">Acciones</th>
                     </tr>
@@ -140,6 +141,9 @@ if (isset($_REQUEST['eliminarEncuesta']) && !empty($_REQUEST['eliminarEncuesta']
                     <?php
                     if($numEnc > 0){
                       foreach ($dbEs as $dbE) {
+                        $idEnc = $dbE['idencuesta'];
+                        $queryRep = mysqli_query($conect, "SELECT * FROM encuestado WHERE idencuesta='$idEnc'");
+                        $contResp = mysqli_num_rows($queryRep);
                         $idCreador=$dbE['idusuario'];
                         $creadorquery=mysqli_query($conect, "SELECT * FROM usuario WHERE idusuario='$idCreador'");
                         $dbCreador=mysqli_fetch_assoc($creadorquery);
@@ -183,9 +187,10 @@ if (isset($_REQUEST['eliminarEncuesta']) && !empty($_REQUEST['eliminarEncuesta']
                       <tr>
                         <td class="text-center">' . $dbE['nombre'] . '</td>
                         <td class="text-center">' . $dbE['descripcion'] . '</td>
-                        <td class="text-center">' . $dbE['fechacreacion'] . '</td>
-                        <td class="text-center">' . $dbE['fechaumod'] . '</td>
+                        <td class="text-center">' . date("d/m/Y", strtotime($dbE['fechacreacion'])) . '</td>
+                        <td class="text-center">' . date("d/m/Y", strtotime($dbE['fechaumod'])) . '</td>
                         <td class="text-center">' . $nombreC .' '.$apellidoC.'</td>
+                        <td class="text-center">' . $contResp. '</td>
                         <td class="text-center '.$formatoEstado.'">' . $estado . '</td>
                         <td class="text-center">
                             '.$botonesAcciones.'

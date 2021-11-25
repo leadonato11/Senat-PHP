@@ -34,7 +34,7 @@ $hojaDeReporte = $documento->getActiveSheet();
 $hojaDeReporte->setTitle("Productos");
 
 # Encabezado de los productos
-$encabezado = ["Identificación del Encuestado", "Nombre y Apellido Encuestador", "Sexo Encuestado", "Edad Encuestado"];
+$encabezado = ["Nombre y Apellido Encuestador", "Identificación del Encuestado", "Edad Encuestado", "Sexo Encuestado", "Alimento", "NroPorcion", "Frecuencia", "Peso Asociado", "Unidad de medida", "Energia", "Grasas", "Hidratos de carbono", "Proteínas"];
 # El último argumento es por defecto A1
 $hojaDeReporte->fromArray($encabezado, null, 'A1');
 /* 
@@ -61,11 +61,44 @@ if(mysqli_num_rows($queryEncuestado)!=0){
       $dbReportesS[]=$dbReportes;
     }
     foreach($dbReportesS as $dbReportes){
-    $hojaDeReporte->setCellValueByColumnAndRow(1, $numeroDeFila, $idEncuestado);
-    $hojaDeReporte->setCellValueByColumnAndRow(2, $numeroDeFila, $idUsuario);
-    $hojaDeReporte->setCellValueByColumnAndRow(3, $numeroDeFila, $dbReportes['idalimento']);
-    $hojaDeReporte->setCellValueByColumnAndRow(4, $numeroDeFila, $dbReportes['idfrecuencia']);
-    $hojaDeReporte->setCellValueByColumnAndRow(5, $numeroDeFila, $dbReportes['idporcion']);
+    //datosAlimentos
+    $idAlimReport=$dbReportes['idalimento'];
+    $queryAlimReport=mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idAlimReport'");
+    $dbAlimReport=mysqli_fetch_assoc($queryAlimReport);
+    //frecuencia
+    $idFrecReport=$dbReportes['idfrecuencia'];
+    $queryFrecReport=mysqli_query($conect, "SELECT * FROM frecuencias WHERE idfrecuencia='$idFrecReport'");
+    $dbFrecReport=mysqli_fetch_assoc($queryFrecReport);
+    //Encuestador
+    $idUserReport=$dbEncuestado['idusuario'];
+    $queryUserReport=mysqli_query($conect, "SELECT * FROM usuario WHERE idusuario='$idUserReport'");
+    $dbUserReport=mysqli_fetch_assoc($queryUserReport);
+    $usuarioReport=$dbUserReport['apellido'];
+    $hojaDeReporte->setCellValueByColumnAndRow(1, $numeroDeFila, $usuarioReport);//encuestador
+    $hojaDeReporte->setCellValueByColumnAndRow(2, $numeroDeFila, $idEncuestado);//idEncuestado
+    $hojaDeReporte->setCellValueByColumnAndRow(3, $numeroDeFila, $dbEncuestado['edad']);//edad
+    $hojaDeReporte->setCellValueByColumnAndRow(4, $numeroDeFila, $dbEncuestado['sexo']);//sexo
+    $hojaDeReporte->setCellValueByColumnAndRow(5, $numeroDeFila, $dbAlimReport['nombre']);//Alimento
+    $porcionReport=$dbReportes['idporcion'];
+    if($porcionReport!=0){
+    $porcion='porcion'.$porcionReport;
+    $pesoPorcionReport=$dbAlimReport[$porcion];
+    }else{
+      $pesoPorcionReport=0;
+    }
+    $hojaDeReporte->setCellValueByColumnAndRow(6, $numeroDeFila, $dbReportes['idporcion']);//numero de Porcion
+    $hojaDeReporte->setCellValueByColumnAndRow(7, $numeroDeFila, $dbFrecReport['nombrefrec']);//Frecuencia
+    $hojaDeReporte->setCellValueByColumnAndRow(8, $numeroDeFila, $pesoPorcionReport);//Peso Asociado
+    $hojaDeReporte->setCellValueByColumnAndRow(9, $numeroDeFila, $dbAlimReport['umedida']);//unidad de medida
+    $queryAlimReport2=mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idAlimReport'");
+    $nutrientesReport=mysqli_fetch_array($queryAlimReport2);
+    for($k=9; $k<=48; $k++){
+      $j=$k+1;
+      $nutrientesCantidad=(($pesoPorcionReport/$dbAlimReport['cant'])*$nutrientesReport[$k])*$dbFrecReport['valorfrec'];
+      $hojaDeReporte->setCellValueByColumnAndRow($j, $numeroDeFila, $nutrientesCantidad);//Nutriente $k-ésimo(de 9 a 48)
+    }
+
+
     $numeroDeFila = $numeroDeFila + 1;
     }unset($dbReportesS);
     }

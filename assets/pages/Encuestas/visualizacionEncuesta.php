@@ -16,44 +16,44 @@ $fechaActual = Date("Y-m-d");
 $u = $_SESSION['user'];
 $queryUser = mysqli_query($conect, "SELECT * FROM usuario WHERE dni='$u'");
 $dbUser = mysqli_fetch_assoc($queryUser);
-$idUser=$dbUser['idusuario'];
+$idUser = $dbUser['idusuario'];
 if (isset($_REQUEST['idEncuesta']) && !empty($_REQUEST['idEncuesta'])) {
-  $_SESSION['idEncuesta']=$_REQUEST['idEncuesta'];
-}else{
+  $_SESSION['idEncuesta'] = $_REQUEST['idEncuesta'];
+} else {
   header("gestionEncuestas.php");
 }
-$idEncuesta=$_SESSION['idEncuesta'];
+$idEncuesta = $_SESSION['idEncuesta'];
 //Descripción de la encuesta
-$queryEnc=mysqli_query($conect,"SELECT * FROM encuesta WHERE idencuesta='$idEncuesta'");
-$dbEncuesta=mysqli_fetch_assoc($queryEnc);
-$nombreEncuesta=$dbEncuesta['nombre'];
+$queryEnc = mysqli_query($conect, "SELECT * FROM encuesta WHERE idencuesta='$idEncuesta'");
+$dbEncuesta = mysqli_fetch_assoc($queryEnc);
+$nombreEncuesta = $dbEncuesta['nombre'];
 
 //Tabla encuesta-frecuencia
-$queryFrecEnc=mysqli_query($conect,"SELECT * FROM encuestafrecuencia WHERE idencuesta='$idEncuesta'");
-$cantFrecEnc=mysqli_num_rows($queryFrecEnc);
-if($cantFrecEnc!=0){
-  while($dbFrecEnc=$queryFrecEnc->fetch_assoc()){
-    $dbFrecEncS[]=$dbFrecEnc;
+$queryFrecEnc = mysqli_query($conect, "SELECT * FROM encuestafrecuencia WHERE idencuesta='$idEncuesta'");
+$cantFrecEnc = mysqli_num_rows($queryFrecEnc);
+if ($cantFrecEnc != 0) {
+  while ($dbFrecEnc = $queryFrecEnc->fetch_assoc()) {
+    $dbFrecEncS[] = $dbFrecEnc;
   }
 }
 //Tabla alimento-encuesta
-$queryAliEnc=mysqli_query($conect,"SELECT * FROM alimentoencuesta WHERE idencuesta='$idEncuesta'");
-$cantAliEnc=mysqli_num_rows($queryAliEnc);
-if($cantAliEnc!=0){
-  while($dbAliEnc=$queryAliEnc->fetch_assoc()){
-    $dbAliEncS[]=$dbAliEnc;
+$queryAliEnc = mysqli_query($conect, "SELECT * FROM alimentoencuesta WHERE idencuesta='$idEncuesta'");
+$cantAliEnc = mysqli_num_rows($queryAliEnc);
+if ($cantAliEnc != 0) {
+  while ($dbAliEnc = $queryAliEnc->fetch_assoc()) {
+    $dbAliEncS[] = $dbAliEnc;
   }
 }
 //Recepción del formulario de RESPUESTA
-if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {  
-  $edad=$_REQUEST['edad'];
-  $sexo=$_REQUEST['sexo'];
-  $insertEncuestado=mysqli_query($conect, "INSERT INTO encuestado VALUES(NULL, '$idUser', '$idEncuesta', '$edad', '$sexo')");
+if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
+  $edad = $_REQUEST['edad'];
+  $sexo = $_REQUEST['sexo'];
+  $insertEncuestado = mysqli_query($conect, "INSERT INTO encuestado VALUES(NULL, '$idUser', '$idEncuesta', '$edad', '$sexo')");
   if ($insertEncuestado) {
     $queryLastEncuestado = mysqli_query($conect, "SELECT MAX(idencuestado) FROM encuestado ");
     $rowE = mysqli_fetch_row($queryLastEncuestado);
     $idLastEncuestado = $rowE[0];
-    
+
     //Carga de alimentos
     $queryA = mysqli_query($conect, "SELECT * FROM alimentos");
     $cantAlimentos = mysqli_num_rows($queryA);
@@ -63,24 +63,27 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
       }
       foreach ($dbAs as $dbA) {
         $idA = $dbA['idalimentos'];
-        for($i=1; $i<=4; $i++){
-          $porcion='porcion'.$i;
+        for ($i = 1; $i <= 4; $i++) {
+          $porcion = 'porcion' . $i;
           if (isset($_REQUEST[$porcion . $idA]) && !empty($_REQUEST[$porcion . $idA])) {
-            $idporcion=$_REQUEST[$porcion . $idA];
-            $idfrecuencia=$_REQUEST['frecEncuesta'.$idA];
-            $idEncuestado=$idLastEncuestado;
+            $idporcion = $_REQUEST[$porcion . $idA];
+            $idfrecuencia = $_REQUEST['frecEncuesta' . $idA];
+            if ($idfrecuencia == 0) {
+              $idporcion = 0;
+            }
+            $idEncuestado = $idLastEncuestado;
 
             mysqli_query($conect, "INSERT INTO respuestas VALUES(NULL, '$idEncuestado', '$idA', '$idfrecuencia', '$idporcion') ");
+            mysqli_query($conect, "UPDATE encuesta SET fechaumod='$fechaActual' WHERE idencuesta='$idEncuesta'");
           }
-          
         }
-      
-      }unset($dbAs);
+      }
+      unset($dbAs);
     }
-  }else{
+  } else {
     header("Location:gestionEncuestas.php?CargaEncuestado=Fallida");
   }
-  header("Location:gestionEncuestas.php?CargaEncuestado=".$idLastEncuestado);
+  header("Location:gestionEncuestas.php?CargaEncuestado=" . $idLastEncuestado);
 }
 ?>
 
@@ -97,6 +100,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
   <link href="../../../css/estilos.css" rel="stylesheet">
+  <link href="../../../css/lightbox.css" rel="stylesheet" />
   <title>SENAT | Encuesta Activa</title>
 </head>
 
@@ -142,7 +146,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
                 <h6 class="m-0 font-weight-bold text-primary">Datos del encuestado</h6>
               </div>
               <div class="row m-3 justify-content-center">
-                <div class="col-lg-3">
+                <div class="col-lg-6">
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Edad</span>
@@ -154,7 +158,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
                       <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Sexo</span>
                     </div>
                     <div>
-                      <select class="custom-select" name="sexo" id="inputGroupSelect01" title="Sexo" required>
+                      <select class="custom-select sexSelect" name="sexo" id="inputGroupSelect01" title="Sexo" required>
                         <option selected disabled value="">Elija sexo...</option>
                         <option value="femenino">Femenino</option>
                         <option value="masculino">Masculino</option>
@@ -165,96 +169,174 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
               </div>
             </div>
 
+            <?php
+
+            if ($cantAliEnc != 0) {
+
+            foreach ($dbAliEncS as $dbAliEnc) {
+            $idAlimento = $dbAliEnc['idalimento'];
+            $queryAli = mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idAlimento'");
+            $dbAlimento = mysqli_fetch_assoc($queryAli);
+            $nombreAli = $dbAlimento['nombre'];
+
+            echo '
+
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Encuesta en curso |'. $nombreAli .' </h6>
+              </div>
+              <div class="row m-3 justify-content-center">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <h1 class="tituloEncuestaCuestionario">'. $nombreAli .'</h1>';
+
+                  for ($i = 1; $i <= 4; $i++) {
+                    $porcion = 'porcion' . $i;
+
+                    if ($dbAlimento[$porcion] != 0) {
+                      $fotoPorcion = '../../img/ImgPorciones/' . $dbAlimento['nombre'] . $porcion . '.jpg';
+                      $valuePorcion = $i;
+
+                      echo '
+                  <div class="contenedorImagenesPorciones">
+                    <a href="../../img/ImgAlimentos/Mandarinafalimento.jpg" alt="" data-lightbox="alimento1">
+                      <img class="imgPorcionesEnEncuesta" src="../../img/ImgAlimentos/Mandarinafalimento.jpg" alt="">
+                    </a>
+                    <a href="../../img/ImgAlimentos/Bananafalimento.jpg" alt="" data-lightbox="alimento1">
+                      <img class="imgPorcionesEnEncuesta" src="../../img/ImgAlimentos/Bananafalimento.jpg" alt="">
+                    </a>
+                    <a href="../../img/ImgAlimentos/Lechugafalimento.jpg" alt="" data-lightbox="alimento1">
+                      <img class="imgPorcionesEnEncuesta" src="../../img/ImgAlimentos/Lechugafalimento.jpg" alt="">
+                    </a>
+                    <a href="../../img/ImgAlimentos/Pruebafalimento.jpg" alt="" data-lightbox="alimento1">
+                      <img class="imgPorcionesEnEncuesta" src="../../img/ImgAlimentos/Pruebafalimento.jpg" alt="">
+                    </a>
+                  </div>
+
+                  <hr class="dividerPorcFrec">
+
+                  <div class="selectorYfrecuencias">
+                    <div class="contenedorSelectorPorciones">
+                      <h4>Selector de porciones</h4>
+                      <select class="selectorPorciones">
+                        <option value="0">Ninguna</option>
+                        <option value="1">Porción 1</option>
+                        <option value="2">Porción 2</option>
+                        <option value="3">Porción 3</option>
+                        <option value="4">Porción 4</option>
+                      </select>
+                    </div>
+
+                    <div class="contenedorFrecuenciasPorciones">
+                      <h4>Selector de frecuencias</h4>
+                      <div id="radio_frec" class="text-start">
+                        <div class="form-check">
+                          <input class="form-check-input" name="frecEncuesta" type="radio" value="1" id="frec_nunca">
+                          <label class="form-check-label" for="frec_nunca">Nunca</label>
+                        </div>
+
+                        <div class="form-check">
+                          <input class="form-check-input" name="frecEncuesta" type="radio" value="2" id="frec_menosUnaVezPorSemana">
+                          <label class="form-check-label" for="frec_menosUnaVezPorSemana">
+                            Menos de 1 vez por semana
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" name="frecEncuesta" type="radio" value="3" id="frec_unaVezPorSemana">
+                          <label class="form-check-label" for="frec_unaVezPorSemana">
+                            1 vez por semana
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" name="frecEncuesta" type="radio" value="4" id="frec_dosTresVecesPorSemana">
+                          <label class="form-check-label" for="frec_dosTresVecesPorSemana">
+                            2-3 veces por semana
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" name="frecEncuesta" type="radio" value="5" id="frec_cuatroSeisVecesPorSemana">
+                          <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
+                            4-6 veces por semana
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" name="frecEncuesta" type="radio" value="6" id="frec_diariamente">
+                          <label class="form-check-label" for="frec_diariamente">
+                            Diariamente
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" name="frecEncuesta" type="radio" value="7" id="frec_masDeUnaVezAlDia">
+                          <label class="form-check-label" for="frec_masDeUnaVezAlDia">
+                            Más de 1 vez al día
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div> /* fin selectorYfrecuencias */
+                </div> /* fin col */
+
+              </div> /* fin row */
+            </div> /* fin card alimento */';
+
+            ?>
+
+
             <!-- Cuestionario -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Encuesta en curso</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Finalizar encuesta</h6>
               </div>
               <div class="row m-3 justify-content-center">
-
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  
-                  <?php
-                  
-                  if($cantAliEnc!=0){
-                    
-                   foreach($dbAliEncS as $dbAliEnc){
-                     $idAlimento=$dbAliEnc['idalimento'];
-                     $queryAli=mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idAlimento'");
-                     $dbAlimento=mysqli_fetch_assoc($queryAli);
-                     $nombreAli=$dbAlimento['nombre'];
-                    echo '
-                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                      <h1 class="tituloEncuestaCuestionario">'.$nombreAli.'</h1>
-                    </div>';
-                    for($i=1; $i<=4; $i++){
-                      $porcion='porcion'.$i;
-                      $dbAlimento[$porcion];
-                      if($dbAlimento[$porcion]!=0){
-                      $fotoPorcion='../../img/ImgPorciones/'.$dbAlimento['nombre'].$porcion.'.jpg';
-                      $valuePorcion=$dbAlimento[$porcion];
-                     
-                      echo '
-                      <div class="seleccionPorciones">
-                      <div class="porcSel">
-                        <input type="radio" id="porcNro1" name="'.$porcion.$idAlimento.'" value="'.$valuePorcion.'">
-                        <label for="porcNro1">
-                          <a href="'.$fotoPorcion.'" data-lightbox="photos">
-                            <img class="imgPorcSel" src="'.$fotoPorcion.'" alt="foodImage">
-                          </a>
-                        </label>
-                      </div>
-                      ';
-                      }
-                    }
-                    
-                    
-                    
-                    
-                    echo '
+                <!-- Botonera -->
+                <div class="row m-3 justify-content-center">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="buttons__AlimentoAlta">
+                      <a class="btn btn-outline-danger m-2" href="gestionEncuestas.php" data-toggle="modal" data-target="#cancelarCuestionarioModal" role="button">Cancelar</a>
+                      <a href="#" id="guardarCuestionario" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarCuestionarioModal" role="button">Guardar cuestionario</a>
                     </div>
+                  </div>
+                </div> <!-- Fin Botonera -->
+              </div> <!-- Fin Cuestionario -->
+              <!-- Guardar Cuestionario Modal-->
+              <div class="modal fade" id="guardarCuestionarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos de la encuesta realizada</h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 selectorFrecCuestionario">
-                    <div class="alimento__dataInicial">
-                    <h3>Frecuencia de ingesta</h3>
+                    <div class="modal-body">Estás seguro?</div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button class="btn btn-success">Si, guardar</button>
                     </div>
-                <div id="radio_frec" class="text-start">';
-                
-                foreach($dbFrecEncS as $dbFrecEnc){
-                  $idFrec=$dbFrecEnc['idfrecuencia'];
-                  $queryFrec=mysqli_query($conect, "SELECT * FROM frecuencias WHERE idfrecuencia='$idFrec'");
-                  $dbFrec=mysqli_fetch_assoc($queryFrec);  
-                  
-                  echo '
-                  <div class="form-check">
-                  <input class="form-check-input" name="frecEncuesta'.$idAlimento.'" type="radio" value="'.$dbFrec['valorfrec'].'" id="frec_nunca">
-                  <label class="form-check-label" for="frec_nunca">
-                  '.$dbFrec['nombrefrec'].'
-                  </label>
-                  </div>';
-                }
-                
-                echo '    
-                
-                </div>
-                </div> <!-- End pregunta -->
-                </div> <!-- End row -->
-                
-                <hr> <!-- Separador de alimentos -->
-                
-                ';
-              }unset($dbAliEncS); 
-            }
-            ?>
-              <!-- Botonera -->
-              <div class="row m-3 justify-content-center">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <div class="buttons__AlimentoAlta">
-                    <a class="btn btn-outline-danger m-2" href="gestionEncuestas.php">Cancelar</a>
-                    <a href="#" id="guardarCuestionario" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarCuestionarioModal" role="button">Guardar cuestionario</a>
                   </div>
                 </div>
-              </div> <!-- Fin Botonera -->
+              </div>
+              <!-- Cancelar Cuestionario Modal-->
+              <div class="modal fade" id="cancelarCuestionarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos de la encuesta realizada</h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">Estás seguro? Los datos no guardados se perderán.</div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button class="btn btn-danger">Si, estoy seguro</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div> <!-- Fin Cuestionario -->
             <!-- Guardar Cuestionario Modal-->
             <div class="modal fade" id="guardarCuestionarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -328,7 +410,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
+  <script src="../../../js/lightbox.js"></script>
 
 </body>
 

@@ -52,6 +52,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
       unset($dbAs);
     }
   }
+  mysqli_query($conect, "UPDATE lastupdate SET encuestas='$fechaActual' WHERE idlastupdate=1");
   header("Location:gestionEncuestas.php?idEnc=" . $idLastEncuesta);
 }
 

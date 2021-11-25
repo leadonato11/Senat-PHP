@@ -280,7 +280,25 @@ if ($db[2] != 0) {
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Grupo</span>
                       </div>
                       <select class="custom-select" id="inputGroupSelect01" disabled>
-                        <option selected disabled><?php echo $db['grupo'] ?></option>
+                        <option selected disabled>
+                          <?php 
+                            $queryGrupoElim=mysqli_query($conect, "SELECT * FROM grupos");
+                            $validarGrupoElim=false;
+                            if(mysqli_num_rows($queryGrupoElim)!=0){
+                              while($dbGrupoElim=$queryGrupoElim->fetch_assoc()){
+                                if($db['grupo']==$dbGrupoElim['nombres']){
+                                  $validarGrupoElim=true;
+                                } 
+                              }
+                            }
+                            if($validarGrupoElim){
+                              $nombreGrupoElim=$db['grupo'] ;
+                            }else{
+                              $nombreGrupoElim='Sin Grupo';
+                            }
+                            echo  $nombreGrupoElim;
+                          ?>
+                        </option>
                       </select>
                     </div>
                   </form>

@@ -133,11 +133,24 @@ if (isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento']
 
                       foreach ($dbs as $db) {
                         if($db['estado']==1){
-
+                        $queryGrupoElim=mysqli_query($conect, "SELECT * FROM grupos");
+                        $validarGrupoElim=false;
+                        if(mysqli_num_rows($queryGrupoElim)!=0){
+                          while($dbGrupoElim=$queryGrupoElim->fetch_assoc()){
+                            if($db['grupo']==$dbGrupoElim['nombres']){
+                              $validarGrupoElim=true;
+                            } 
+                          }
+                        }
+                        if($validarGrupoElim){
+                          $nombreGrupoElim=$db['grupo'] ;
+                        }else{
+                          $nombreGrupoElim='<span class="noGroup">Sin Grupo</span>';
+                        }  
                         
                         echo '<tr>
                         <td class="text-center">' . $db['nombre'] . '</td>
-                        <td class="text-center">' . $db['grupo'] . '</td>
+                        <td class="text-center">' . $nombreGrupoElim. '</td>
                         <td class="text-center">' . $db['energia'] . '</td>
                         <td class="text-center">' . $db['grasa'] . '</td>
                         <td class="text-center">' . $db['hcarbono'] . '</td>
@@ -178,11 +191,6 @@ if (isset($_REQUEST['eliminarAlimento']) && !empty($_REQUEST['eliminarAlimento']
                     }
                     ?>
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <th class="text-center" colspan="7">Última actualización:</th>
-                    </tr>
-                  </tfoot>
                 </table>
               </div>
             </div>

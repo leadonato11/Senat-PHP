@@ -24,6 +24,9 @@ if (isset($_REQUEST['cerrar'])) {
   header("Location:../../../index.php");
 }
 
+//LastUpdate
+$queryLast=mysqli_query($conect, "SELECT * FROM lastupdate WHERE idlastupdate=1");
+$dbLastUpdate=mysqli_fetch_assoc($queryLast);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -100,25 +103,29 @@ if (isset($_REQUEST['cerrar'])) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td class="text-center">36426466</td>
-                          <td class="text-center">Hernán</td>
-                          <td class="text-center">Sosa</td>
-                          <td class="text-center">Nutricionista</td>
-                        </tr>
-                        <tr>
-                          <td class="text-center">34466919</td>
-                          <td class="text-center">Leandro</td>
-                          <td class="text-center">Donato</td>
-                          <td class="text-center">Administrador</td>
-                        </tr>
-                        <tr>
-                          <td class="text-center">22658894</td>
-                          <td class="text-center">Luciano</td>
-                          <td class="text-center">Ripani</td>
-                          <td class="text-center">Nutricionista</td>
-                        </tr>
+                        <?php
+                        $contU = 0;
+                        $queryUserTotal = mysqli_query($conect, "SELECT * FROM usuario ORDER BY idusuario DESC");
+                        while ($dbUsuariosTotal = $queryUserTotal->fetch_assoc()) {
+                          $contU = $contU+1;
+                          if ($contU <= 5) {
+                            echo '
+                            <tr>
+                              <td class="text-center">' . $dbUsuariosTotal['dni'] . '</td>
+                              <td class="text-center">' . $dbUsuariosTotal['nombre'] . '</td>
+                              <td class="text-center">' . $dbUsuariosTotal['apellido'] . '</td>
+                              <td class="text-center">' . $dbUsuariosTotal['rol'] . '</td>
+                            </tr>';
+                          }
+                        }
+                        ?>
+
                       </tbody>
+                      <tfoot>
+                        <tr>
+                          <th class="text-center" colspan="4">Última actualización: <?php echo $dbLastUpdate['usuarios'];?></th>
+                        </tr>
+                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -176,7 +183,6 @@ if (isset($_REQUEST['cerrar'])) {
                         <tr>
                           <th class="text-center">Nombre</th>
                           <th class="text-center">Grupo</th>
-                          <th class="text-center">Fuente</th>
                           <th class="text-center">Energía (kcal)</th>
                           <th class="text-center">Grasa (g)</th>
                           <th class="text-center">H. Carbono (g)</th>
@@ -184,24 +190,29 @@ if (isset($_REQUEST['cerrar'])) {
                         </tr>
                       </thead>
                       <tbody>
+                        <?php
+                        $contA = 0;
+                        $queryAliTotal = mysqli_query($conect, "SELECT * FROM alimentos ORDER BY idalimentos DESC");
+                        while ($dbAlimentosTotal = $queryAliTotal->fetch_assoc()) {
+                          $contA = $contA+1;
+                          if ($contA <= 5) {
+                            echo '
+                              <tr>
+                                <td class="text-center">' . $dbAlimentosTotal['nombre'] . '</td>
+                                <td class="text-center">' . $dbAlimentosTotal['grupo'] . '</td>
+                                <td class="text-center">' . $dbAlimentosTotal['energia'] . '</td>
+                                <td class="text-center">' . $dbAlimentosTotal['grasa'] . '</td>
+                                <td class="text-center">' . $dbAlimentosTotal['hcarbono'] . '</td>
+                                <td class="text-center">' . $dbAlimentosTotal['proteina'] . '</td>
+                              </tr>';
+                          }
+                        }
+                        ?>
+                      <tfoot>
                         <tr>
-                          <td class="text-center">Manzana</td>
-                          <td class="text-center">Frutas</td>
-                          <td class="text-center">UCEL</td>
-                          <td class="text-center">51,887</td>
-                          <td class="text-center">0,1887</td>
-                          <td class="text-center">13,868</td>
-                          <td class="text-center">0,283</td>
+                          <th class="text-center" colspan="6">Última actualización: <?php echo $dbLastUpdate['alimentos'];?></th>
                         </tr>
-                        <tr>
-                          <td class="text-center">Leche</td>
-                          <td class="text-center">Productos lácteos</td>
-                          <td class="text-center">UCEL</td>
-                          <td class="text-center">61,6716</td>
-                          <td class="text-center">3,3336</td>
-                          <td class="text-center">4,667</td>
-                          <td class="text-center">3,2919</td>
-                        </tr>
+                      </tfoot>
                       </tbody>
                     </table>
                   </div>
@@ -246,28 +257,43 @@ if (isset($_REQUEST['cerrar'])) {
                         </tr>
                       </thead>
                       <tbody>
+                      <?php
+                      
+                        $contE = 0;
+                        $queryEncTotal = mysqli_query($conect, "SELECT * FROM encuesta ORDER BY idencuesta DESC");
+                        while ($dbEncTotal = $queryEncTotal->fetch_assoc()) {
+                          if($dbEncTotal['estado']==0){
+                            $estado='Borrador';
+                            $formatoEstado='estadoEncuestaBorrador';
+                          }
+                          if($dbEncTotal['estado']==1){
+                            $estado='Activa';
+                            $formatoEstado='estadoEncuestaActiva';
+                          }  
+                          if($dbEncTotal['estado']==2){
+                            $estado='Finalizada';
+                            $formatoEstado='estadoEncuestaFinalizada';
+                          }
+                          $contE = $contE+1;
+                          if ($contE <= 5) {
+                            echo '
                         <tr>
-                          <td class="text-center">Lácteos</td>
-                          <td class="text-center">Ingesta de calcio - Invierno 2021</td>
-                          <td class="text-center">29/06/2021</td>
-                          <td class="text-center">30/06/2021</td>
-                          <td class="text-center text-success">Activa</td>
-                        </tr>
-                        <tr>
-                          <td class="text-center">Frutas</td>
-                          <td class="text-center">Ingesta azúcares - Primavera 2020</td>
-                          <td class="text-center">15/10/2020</td>
-                          <td class="text-center">23/11/2020</td>
-                          <td class="text-center text-danger">Finalizada</td>
-                        </tr>
-                        <tr>
-                          <td class="text-center">Lácteos</td>
-                          <td class="text-center">Ingesta de calcio - Invierno 2020</td>
-                          <td class="text-center">10/08/2020</td>
-                          <td class="text-center">30/08/2020</td>
-                          <td class="text-center text-danger">Finalizada</td>
-                        </tr>
+                          <td class="text-center">'.$dbEncTotal['nombre'].'</td>
+                          <td class="text-center">'.$dbEncTotal['descripcion'].'</td>
+                          <td class="text-center">'.$dbEncTotal['fechacreacion'].'</td>
+                          <td class="text-center">'.$dbEncTotal['fechaumod'].'</td>
+                          <td class="text-center '.$formatoEstado.'">'.$estado.'</td>
+                        </tr>';
+                          }
+                        }
+                      ?>
+                        
                       </tbody>
+                      <tfoot>
+                        <tr>
+                          <th class="text-center" colspan="5">Última actualización: <?php echo $dbLastUpdate['encuestas'];?></th>
+                        </tr>
+                      </tfoot>
                     </table>
                   </div>
                 </div>

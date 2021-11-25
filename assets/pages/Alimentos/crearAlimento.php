@@ -126,7 +126,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
     $insert = mysqli_query($conect, "INSERT INTO alimentos VALUES (NULL, '$nombre', '$cant', '$umedida', '$porcion1', '$porcion2', '$porcion3', '$porcion4', '$grupo', '$nutrientes[1]', '$nutrientes[2]', '$nutrientes[3]', '$nutrientes[4]', '$nutrientes[5]', '$nutrientes[6]', '$nutrientes[7]', '$nutrientes[8]', '$nutrientes[9]', '$nutrientes[10]', '$nutrientes[11]', '$nutrientes[12]', '$nutrientes[13]', '$nutrientes[14]', '$nutrientes[15]', '$nutrientes[16]', '$nutrientes[17]', '$nutrientes[18]', '$nutrientes[19]', '$nutrientes[20]', '$nutrientes[21]', '$nutrientes[22]', '$nutrientes[23]', '$nutrientes[24]', '$nutrientes[25]', '$nutrientes[26]', '$nutrientes[27]', '$nutrientes[28]', '$nutrientes[29]', '$nutrientes[30]', '$nutrientes[31]', '$nutrientes[32]', '$nutrientes[33]', '$nutrientes[34]', '$nutrientes[35]', '$nutrientes[36]', '$nutrientes[37]', '$nutrientes[38]', '$nutrientes[39]', '$nutrientes[40]', '$estado')");
     if ($insert == 1) {
 
-      mysqli_query($conect, "INSERT INTO lastupdate VALUES ('$fechaActual')");
+      mysqli_query($conect, "UPDATE lastupdate SET alimentos='$fechaActual' WHERE idlastupdate=1");
       $archf = move_uploaded_file($_FILES['fotoalimento']['tmp_name'], "../../img/ImgAlimentos/" . $namef . ".jpg");
       $arch1 = move_uploaded_file($_FILES['fotoporcion1']['tmp_name'], "../../img/ImgPorciones/" . $name1 . ".jpg");
       $arch2 = move_uploaded_file($_FILES['fotoporcion2']['tmp_name'], "../../img/ImgPorciones/" . $name2 . ".jpg");
@@ -278,9 +278,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     <div class="imgPorcionesFiles">
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
+                        <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc01" src="" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1" required>
-                            <label class="custom-file-label" for="inputGroupFile01">Porción
+                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1" accept="image/png, image/gif, image/jpeg" required>
+                            <label class="custom-file-label" id="imagenLabelPorc01" for="inputGroupFile01">Porción
                               01</label>
                           </div>
                           <div class="InputInfoPorcion">
@@ -290,9 +291,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       </div>
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
+                        <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc02" src="" alt="foodImage">
                           <div class="custom-file">
                             <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02" required>
-                            <label class="custom-file-label" for="inputGroupFile02">Porción
+                            <label class="custom-file-label" id="imagenLabelPorc02" for="inputGroupFile02">Porción
                               02</label>
                           </div>
                           <div class="InputInfoPorcion">
@@ -302,9 +304,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       </div>
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
+                        <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc03" src="" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile03" name="fotoporcion3">
-                            <label class="custom-file-label" for="inputGroupFile03">Porción
+                          <input type="file" class="custom-file-input" name="fotoporcion3" id="inputGroupFile03" required>
+                            <label class="custom-file-label" id="imagenLabelPorc03" for="inputGroupFile03">Porción
                               03</label>
                           </div>
                           <div class="InputInfoPorcion">
@@ -314,9 +317,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       </div>
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
+                        <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc04" src="" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04">
-                            <label class="custom-file-label" for="inputGroupFile04">Porción
+                          <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04" required>
+                            <label class="custom-file-label" id="imagenLabelPorc04" for="inputGroupFile04">Porción
                               04</label>
                           </div>
                           <div class="InputInfoPorcion">
@@ -746,7 +750,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     </div>
                     <div class="modal-body">Estás seguro?</div>
                     <div class="modal-footer">
-                      <a class="btn btn-secondary" href="#">Cancelar</a>
+                      <a class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
                       <button class="btn btn-success">Guardar</button>
                     </div>
                   </div>
@@ -785,48 +789,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
-  <script>
-    $("#imagenAlimento").on("change", function(e) {
-      const filepath = e.target.value
-      const pathsplit = filepath.split(/[\\\/]/)
-
-      const filename = pathsplit[pathsplit.length - 1]
-      $("#imagenLabel").text(filename)
-      $("#imagePreview").attr("src", filepath)
-
-
-      const srcImage = URL.createObjectURL(e.target.files[0]);
-      $("#imagePreview").attr("src", srcImage)
-
-    })
-  </script>
-
-  <!-- 
-    Ezequiel Barrales18:24
-https://assets.justinmind.com/wp-content/uploads/2020/05/testing-radio-buttons-ui-design.png
-https://cdn.dribbble.com/users/404524/screenshots/9890260/card_switcher.png?compress=1&resize=400x300
-Ezequiel Barrales18:25
-https://cdn.dribbble.com/users/267552/screenshots/6546524/select_reward_4x.png?compress=1&resize=400x300
-https://i.pinimg.com/originals/c2/53/ae/c253aeff04b83da8e2fac892831c0800.png
-https://assets.justinmind.com/wp-content/uploads/2020/05/drop-down-list-design-multi-select.png
-Ezequiel Barrales18:34
-https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
-Ezequiel Barrales18:47
-https://codepen.io/
-Ezequiel Barrales18:52
-https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onbeforeunload
-Ezequiel Barrales19:20
- [\\\/]
-Ezequiel Barrales19:23
-accept="image/png, image/gif, image/jpeg"
-Ezequiel Barrales19:29
-const [file] = imgInp.files
-  if (file) {
-    blah.src = URL.createObjectURL(file)
-  }
-Ezequiel Barrales19:40
-const filePath = URL.createObjectURL(e.target.files[0]);
-   -->
+  <script src="../../../js/helper.js"></script>
 
 </body>
 
