@@ -26,6 +26,19 @@ p {
   padding-bottom: 20px;
 }
 
+.primerosPasosDesc1 {
+  margin-bottom: 20px;
+}
+
+.fotoPerfilUsuario {
+  width: 350px;
+}
+
+.usuarioInactivo {
+  font-style: italic;
+  color: lightgrey;
+}
+
 #checkboxFrec {
   padding: 10px;
   margin-top: 30px;
@@ -327,9 +340,9 @@ margin: 0 20px;
   color: green;
 }
 
-/* #outputPorc01, #outputPorc02, #outputPorc03, #outputPorc04 {
+#outputPorc01, #outputPorc02, #outputPorc03, #outputPorc04 {
   display: none;
-} */
+}
 
 .noGroup {
   font-weight: bold;
@@ -339,4 +352,9 @@ margin: 0 20px;
 .sexSelect {
   border-start-start-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+.messageWarningNoComplete {
+  color: red;
+  display: none;
 }

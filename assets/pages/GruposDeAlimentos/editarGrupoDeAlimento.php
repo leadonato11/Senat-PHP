@@ -77,6 +77,9 @@ if (isset($_REQUEST['cerrar'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/Favicon/favicon-16x16.png">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -117,10 +120,10 @@ if (isset($_REQUEST['cerrar'])) {
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Agregar nuevo grupo de alimentos</h6>
             </div>
-            <div class="row m-3 justify-content-center">
-              <div class="col-lg-8 col-md-4 col-sm-12">
-                <div class="alimento__dataInicial">
-                  <form action="editarGrupoDeAlimento.php" class="form-inline d-flex flex-column align-items-center">
+            <form action="editarGrupoDeAlimento.php" class="form-inline d-flex flex-column align-items-center">
+              <div class="row m-3 justify-content-center">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="alimento__dataInicial">
                     <h3>Datos del grupo de alimentos</h3>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -128,19 +131,55 @@ if (isset($_REQUEST['cerrar'])) {
                       </div>
                       <input type="text" name="nombreGrupo" class="form-control" placeholder="Nombre del grupo..." aria-label="nombreAlimento" aria-describedby="basic-addon1" value="<?php echo $grupo['nombres']; ?>">
                     </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Botonera -->
+              <div class="row m-3 justify-content-center">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="buttons__AlimentoAlta">
+                    <a class="btn btn-outline-danger m-2" href="#" data-toggle="modal" data-target="#cancelarGrupoAlimentoModal" role="button">Cancelar</a>
+                    <a href="#" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarGrupoAlimentoModal" role="button">Guardar Cambios</a>
+                  </div>
+                </div>
+              </div> <!-- Fin Botonera -->
+              <!-- Guardar grupo alimento Modal-->
+              <div class="modal fade" id="guardarGrupoAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos del grupo de alimentos</h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">Estás seguro?</div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button class="btn btn-success">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- Cancelar Guardar grupo alimento Modal-->
+            <div class="modal fade" id="cancelarGrupoAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos del grupo de alimentos</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">Estás seguro? Se perderán los datos no guardados.</div>
+                  <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href="gestionGrupoDeAlimentos.php" class="btn btn-danger" role="button">Si, estoy seguro</a>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- Botonera -->
-            <div class="row m-3 justify-content-center">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="buttons__AlimentoAlta">
-                  <a class="btn btn-outline-danger m-2" href="gestionGrupoDeAlimentos.php">Cancelar</a>
-                  <button class="btn btn-success m-2">Guardar cambios</button>
-                </div>
-              </div>
-            </div> <!-- Fin Botonera -->
-            </form>
           </div>
         </div> <!-- Fin alta de grupos -->
       </div>
@@ -173,6 +212,7 @@ if (isset($_REQUEST['cerrar'])) {
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
+  <script src="../../../js/helper.js"></script>
 
 </body>
 

@@ -57,6 +57,9 @@ if (isset($_REQUEST['eliminarUsuario'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/Favicon/favicon-16x16.png">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -180,17 +183,17 @@ if (isset($_REQUEST['eliminarUsuario'])) {
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="deleteGroupLabel">Eliminar usuario</h5>
+                    <h5 class="modal-title" id="deleteGroupLabel">Dar de baja usuario</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      ¿Está seguro que desea eliminar el usuario seleccionado?
-                    </div>
+                                ¿Está seguro que desea dar de baja el usuario?
+                              </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <a type="button" class="btn btn-danger" href="gestionUsuarios.php?eliminarUsuario=<?php echo $userEdit['idusuario']; ?>">Borrar usuario</a>
+                      <a type="button" class="btn btn-danger" href="gestionUsuarios.php?eliminarUsuario=<?php echo $userEdit['idusuario']; ?>">Dar de baja usuario</a>
                     </div>
                   </div>
                 </div>

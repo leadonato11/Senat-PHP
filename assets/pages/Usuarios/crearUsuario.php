@@ -29,7 +29,7 @@ if (isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])) {
 
   $f = $_FILES['fotoUsuario']['name'];
   $estInt = 1;
- 
+
 
   $checcar = mysqli_query($conect, "SELECT dni FROM usuario");
 
@@ -50,7 +50,7 @@ if (isset($_REQUEST['dni']) && !empty($_REQUEST['dni'])) {
   } else {
     $insert = mysqli_query($conect, "INSERT INTO usuario VALUES (NULL, '$u', '$p', '$n', '$ap', '$r', '$c', '$f', '$estInt')");
     if ($insert == 1) {
-     mysqli_query($conect, "UPDATE lastupdate SET usuarios='$fechaActual'");
+      mysqli_query($conect, "UPDATE lastupdate SET usuarios='$fechaActual'");
 
       $arch = move_uploaded_file($_FILES['fotoUsuario']['tmp_name'], "../../img/ImgUsuarios/" . $u . ".jpg");
       if ($arch) {
@@ -95,6 +95,9 @@ if (isset($_REQUEST['cerrar'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/Favicon/favicon-16x16.png">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -135,10 +138,10 @@ if (isset($_REQUEST['cerrar'])) {
                 <div class="col-lg-4 col-md-4 col-sm-12">
                   <div class="alimento__fotoPrincipal">
                     <h3>Foto de perfil</h3>
-                    <img src="../../img/undraw_profile.svg" width="350" class="img-fluid rounded mb-2" alt="foodImage">
+                    <img src="../../img/undraw_profile.svg" id="previewImagenUsuario" class="img-fluid rounded mb-2 fotoPerfilUsuario" alt="foodImage">
                     <div class="custom-file">
-                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario">
-                      <label class="custom-file-label" for="imagenUsuario">Imagen Usuario</label>
+                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario" accept="image/png, image/gif, image/jpeg">
+                      <label class="custom-file-label" id="labelImagenUsuario" for="imagenUsuario">Imagen Usuario</label>
                     </div>
                   </div>
                 </div>
@@ -194,7 +197,7 @@ if (isset($_REQUEST['cerrar'])) {
               <div class="row m-3 justify-content-center">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="buttons__AlimentoAlta">
-                    <a href="gestionUsuarios.php" class="btn btn-outline-danger m-2">Cancelar</a>
+                    <a href="#" class="btn btn-outline-danger m-2" data-toggle="modal" data-target="#cancelarUsuarioModal" role="button">Cancelar</a>
                     <a href="#" id="guardarUsuario" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarUsuarioModal" role="button">Guardar usuario</a>
                   </div>
                 </div>
@@ -217,13 +220,29 @@ if (isset($_REQUEST['cerrar'])) {
                   </div>
                 </div>
               </div>
-              <!-- End content -->
-            </form>
+            </form> <!-- Carga usuarios End -->
+            <!-- Cancelar Guardar Usuario Modal-->
+            <div class="modal fade" id="cancelarUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos del usuario</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">Estás seguro? Se perderán los datos no guardados.</div>
+                  <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href="gestionUsuarios.php" class="btn btn-danger" role="button">Si, estoy seguro</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </div> <!-- End content -->
     </div>
-    <!-- Carga usuarios End -->
   </div>
   <!-- Footer -->
   <?php
@@ -250,6 +269,7 @@ if (isset($_REQUEST['cerrar'])) {
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
+  <script src="../../../js/helper.js"></script>
 
 </body>
 

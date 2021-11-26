@@ -128,11 +128,14 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 <html lang="es">
 
 <head>
-<meta charset="utf-8">
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/Favicon/favicon-16x16.png">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -226,30 +229,30 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Grupo</span>
                       </div>
                       <select class="custom-select" name="grupo" id="inputGroupSelect01">
-                        
-                          <?php 
-                          $queryGrupoElim=mysqli_query($conect, "SELECT * FROM grupos");
-                          $validarGrupoElim=false;
-                          if(mysqli_num_rows($queryGrupoElim)!=0){
-                            while($dbGrupoElim=$queryGrupoElim->fetch_assoc()){
-                              if($db['grupo']==$dbGrupoElim['nombres']){
-                                $validarGrupoElim=true;
-                              } 
+
+                        <?php
+                        $queryGrupoElim = mysqli_query($conect, "SELECT * FROM grupos");
+                        $validarGrupoElim = false;
+                        if (mysqli_num_rows($queryGrupoElim) != 0) {
+                          while ($dbGrupoElim = $queryGrupoElim->fetch_assoc()) {
+                            if ($db['grupo'] == $dbGrupoElim['nombres']) {
+                              $validarGrupoElim = true;
                             }
                           }
-                          if($validarGrupoElim){
-                            echo '
+                        }
+                        if ($validarGrupoElim) {
+                          echo '
                             <option disabled value="">Seleccione...</option>
-                            <option selected value="'.$db['grupo'].'">'.$db['grupo'] ;
-                          }else{
-                            echo '<option selected disabled> Sin Grupo' ;
-                          } 
-                            
-                          ?>
+                            <option selected value="' . $db['grupo'] . '">' . $db['grupo'];
+                        } else {
+                          echo '<option selected disabled> Sin Grupo';
+                        }
+
+                        ?>
                         </option>
                         <?php
                         foreach ($gdbs as $gdb) {
-                          if($gdb['nombres']!=$db['grupo']){
+                          if ($gdb['nombres'] != $db['grupo']) {
                             echo '<option value="' . $gdb["nombres"] . '">' . $gdb["nombres"] . '</option>';
                           }
                         }
@@ -268,39 +271,43 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       alimento de referencia
                     </p>
                     <div class="imgPorcionesFiles">
+
+                      <!-- Porción 01 -->
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
-                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion1.jpg" alt="foodImage">
+                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="imagenPorc01" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion1.jpg" alt="foodImage">
                           <div class="custom-file">
                             <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1" accept="image/png, image/gif, image/jpeg">
-                            <label class="custom-file-label" for="inputGroupFile01">Porción
-                              01</label>
+                            <label class="custom-file-label" id="imagenLabelPorc01" for="inputGroupFile01">Porción 01</label>
                           </div>
                           <div class="InputInfoPorcion">
                             <input type="number" step="any" min="0" value="<?php echo $db['porcion1']; ?>" class="form-control" name="porcion1" value="" placeholder="Peso/Volumen porción 01" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                           </div>
                         </div>
                       </div>
+                      <!-- Porción 01 -->
+
+                      <!-- Porción 02 -->
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
-                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion2.jpg" alt="foodImage">
+                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="imagenPorc02" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion2.jpg" alt="foodImage">
                           <div class="custom-file">
                             <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02" accept="image/png, image/gif, image/jpeg">
-                            <label class="custom-file-label" for="inputGroupFile02">Porción
-                              02</label>
+                            <label class="custom-file-label" id="imagenLabelPorc02" for="inputGroupFile02">Porción 02</label>
                           </div>
                           <div class="InputInfoPorcion">
                             <input type="number" step="any" min="0" value="<?php echo $db['porcion2']; ?>" class="form-control" name="porcion2" placeholder="Peso/Volumen porción 02" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
                           </div>
                         </div>
                       </div>
+                      <!-- Porción 02 -->
+
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
-                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion3.jpg" alt="foodImage">
+                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="imagenPorc03" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion3.jpg" alt="foodImage">
                           <div class="custom-file">
                             <input type="file" class="custom-file-input" id="inputGroupFile03" name="fotoporcion3" accept="image/png, image/gif, image/jpeg">
-                            <label class="custom-file-label" for="inputGroupFile03">Porción
-                              03</label>
+                            <label class="custom-file-label" id="imagenLabelPorc03" for="inputGroupFile03">Porción 03</label>
                           </div>
                           <div class="InputInfoPorcion">
                             <input type="number" step="any" min="0" value="<?php echo $db['porcion3']; ?>" class="form-control" name="porcion3" placeholder="Peso/Volumen porción 03" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
@@ -309,11 +316,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                       </div>
                       <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="porcion">
-                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion4.jpg" alt="foodImage">
+                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="imagenPorc04" src="../../img/imgPorciones/<?php echo $db['nombre']; ?>porcion4.jpg" alt="foodImage">
                           <div class="custom-file">
                             <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04" accept="image/png, image/gif, image/jpeg">
-                            <label class="custom-file-label" for="inputGroupFile04">Porción
-                              04</label>
+                            <label class="custom-file-label" id="imagenLabelPorc04" for="inputGroupFile04">Porción 04</label>
                           </div>
                           <div class="InputInfoPorcion">
                             <input type="number" step="any" min="0" value="<?php echo $db['porcion4']; ?>" class="form-control" name="porcion4" placeholder="Peso/Volumen porción 04" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
@@ -723,7 +729,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                   <div class="row m-3 justify-content-center">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <div class="buttons__AlimentoAlta">
-                        <a class="btn btn-outline-danger m-2" href="gestionAlimentos.php">Cancelar</a>
+                        <a class="btn btn-outline-danger m-2" href="#" data-toggle="modal" data-target="#cancelarAlimentoModal" role="button">Cancelar</a>
                         <a href="#" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarAlimentoModal" role="button">Guardar Cambios</a>
                       </div>
                     </div>
@@ -749,6 +755,24 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                 </div>
               </div>
             </form>
+            <!-- Cancelar Guardar alimento Modal-->
+            <div class="modal fade" id="cancelarAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos del alimento</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">Estás seguro? Se perderán los datos no guardados.</div>
+                  <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href="gestionAlimentos.php" class="btn btn-danger" role="button">Si, estoy seguro</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -783,7 +807,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
-  <!-- <script src="../../../js/helper.js"></script> -->
+  <script src="../../../js/helper.js"></script>
 
 
 </body>

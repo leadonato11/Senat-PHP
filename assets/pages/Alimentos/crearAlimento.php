@@ -151,7 +151,6 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
 <script type="text/javascript">
   var validarJS = <?php echo json_encode($validarConJS); ?>;
   let nombreAlimento = document.getElementById('nombreAlimento');
-  console.log(nombreAlimento.value);
   let buttonGuardarAlimento = document.getElementById('guardarAlimento');
   nombreAlimento.addEventListener('change', stateHandle);
 
@@ -179,6 +178,9 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/Favicon/favicon-16x16.png">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -277,21 +279,21 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     </p>
                     <div class="imgPorcionesFiles">
                       <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="porcion">
-                        <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc01" src="" alt="foodImage">
+                        <div class="porcion text-center">
+                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc01" src="" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1" accept="image/png, image/gif, image/jpeg" required>
+                            <input type="file" class="custom-file-input" id="inputGroupFile01" onkeyup="validarCargaPorcion()" onclick="validarCargaPorcion()" name="fotoporcion1" accept="image/png, image/gif, image/jpeg" required>
                             <label class="custom-file-label" id="imagenLabelPorc01" for="inputGroupFile01">Porción
                               01</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" step="any" min="0" class="form-control" name="porcion1" placeholder="Peso/Volumen porción 01" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
+                            <input type="number" step="any" min="0" id="cantPorcion1" class="form-control" name="porcion1" placeholder="Peso/Volumen porción 01" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
                           </div>
                         </div>
                       </div>
                       <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="porcion">
-                        <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc02" src="" alt="foodImage">
+                        <div class="porcion text-center">
+                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc02" src="" alt="foodImage">
                           <div class="custom-file">
                             <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02" required>
                             <label class="custom-file-label" id="imagenLabelPorc02" for="inputGroupFile02">Porción
@@ -303,10 +305,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         </div>
                       </div>
                       <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="porcion">
-                        <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc03" src="" alt="foodImage">
+                        <div class="porcion text-center">
+                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc03" src="" alt="foodImage">
                           <div class="custom-file">
-                          <input type="file" class="custom-file-input" name="fotoporcion3" id="inputGroupFile03" required>
+                            <input type="file" class="custom-file-input" name="fotoporcion3" id="inputGroupFile03">
                             <label class="custom-file-label" id="imagenLabelPorc03" for="inputGroupFile03">Porción
                               03</label>
                           </div>
@@ -316,10 +318,10 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         </div>
                       </div>
                       <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="porcion">
-                        <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc04" src="" alt="foodImage">
+                        <div class="porcion text-center">
+                          <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc04" src="" alt="foodImage">
                           <div class="custom-file">
-                          <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04" required>
+                            <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04">
                             <label class="custom-file-label" id="imagenLabelPorc04" for="inputGroupFile04">Porción
                               04</label>
                           </div>
@@ -731,7 +733,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                   <div class="row m-3 justify-content-center">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <div class="buttons__AlimentoAlta">
-                        <a class="btn btn-outline-danger m-2" href="gestionAlimentos.php">Cancelar</a>
+                        <a class="btn btn-outline-danger m-2" href="#" data-toggle="modal" data-target="#cancelarAlimentoModal" role="button">Cancelar</a>
                         <a id="guardarAlimento" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarAlimentoModal" role="button">Guardar alimento</a>
                       </div>
                     </div>
@@ -757,6 +759,24 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                 </div>
               </div>
             </form>
+            <!-- Cancelar Guardar alimento Modal-->
+            <div class="modal fade" id="cancelarAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos del alimento</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">Estás seguro? Se perderán los datos no guardados.</div>
+                  <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href="gestionAlimentos.php" class="btn btn-danger" role="button">Si, estoy seguro</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

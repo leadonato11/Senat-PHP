@@ -216,6 +216,9 @@ if($cantFrecEnc!=0){
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/Favicon/favicon-16x16.png">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -282,12 +285,6 @@ if($cantFrecEnc!=0){
                     <h4>Selector de frecuencia</h4>
                     <p>Indique qué frecuencias desea que figuren en el cuestionario (2 como mínimo)</p>
                     <div id="checkbox_frec" class="text-left">
-                      <div class="form-check">
-                        <input class="form-check-input" name="frecuencia1" type="checkbox" value="1" id="frec_nunca" <?php echo $nunca; ?>>
-                        <label class="form-check-label" for="frec_nunca">
-                          Nunca
-                        </label>
-                      </div>
                       <div class="form-check">
                         <input class="form-check-input" name="frecuencia2" type="checkbox" value="2" id="frec_menosUnaVezPorSemana" <?php echo $menosDeUnaVezSemana; ?>>
                         <label class="form-check-label" for="frec_menosUnaVezPorSemana">
@@ -479,6 +476,7 @@ if($cantFrecEnc!=0){
 
   <!-- Custom scripts for all pages-->
   <script src="../../../js/sb-admin-2.min.js"></script>
+  <script src="../../../js/helper.js"></script>
 
   <!-- Page level plugins -->
   <script src="../../../vendor/datatables/jquery.dataTables.min.js"></script>

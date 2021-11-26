@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
 
 //Fecha
 date_default_timezone_set("America/Argentina/Buenos_Aires");
-$fechaActual = Date("Y-m-d h:i:s");
+$fechaActual = Date("d-m-Y h:i:s");
 
 //Base de datos del usuario --> $dbUser
 $u = $_SESSION['user'];
@@ -28,6 +28,8 @@ if (isset($_REQUEST['cerrar'])) {
 $queryLast=mysqli_query($conect, "SELECT * FROM lastupdate WHERE idlastupdate=1");
 $dbLastUpdate=mysqli_fetch_assoc($queryLast);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -37,6 +39,9 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/Favicon/favicon-16x16.png">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -106,7 +111,13 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                         <?php
                         $contU = 0;
                         $queryUserTotal = mysqli_query($conect, "SELECT * FROM usuario ORDER BY idusuario DESC");
+                        
                         while ($dbUsuariosTotal = $queryUserTotal->fetch_assoc()) {
+                          if($dbUsuariosTotal['rol']==1){
+                            $rol='Administrador';
+                            }else{
+                              $rol='Nutricionista';
+                            }
                           $contU = $contU+1;
                           if ($contU <= 5) {
                             echo '
@@ -114,7 +125,7 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                               <td class="text-center">' . $dbUsuariosTotal['dni'] . '</td>
                               <td class="text-center">' . $dbUsuariosTotal['nombre'] . '</td>
                               <td class="text-center">' . $dbUsuariosTotal['apellido'] . '</td>
-                              <td class="text-center">' . $dbUsuariosTotal['rol'] . '</td>
+                              <td class="text-center">' . $rol . '</td>
                             </tr>';
                           }
                         }
@@ -145,9 +156,15 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                   <p>Manual de usuario: <a href="#">Descargar PDF</a></p>
                   <p>Video tutorial: <a href="#">Ver en Drive</a></p>
                   <hr class="sidebar-divider">
-                  <p>Este sistema fue desarrollado por el equipo de Ingenieros:
+                  <p class="primerosPasosDesc1">Este sistema fue desarrollado por el equipo de Ingenieros:
                     Leandro Donato, Sebastián Meza y Hernán Sosa,
                     alumnos de la carrera ISI de la Universidad UCEL.</p>
+                  <p>Agradecimientos a:</p>
+                  <p>Luciano Ripani</p>
+                  <p>Cecilia Torrent</p>
+                  <p>Antonio Rial</p>
+                  <p>Juan Francisco Plá</p>
+                  <p>Juan Cruz Utge</p>
                 </div>
               </div>
             </div>
@@ -168,7 +185,7 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <a class="dropdown-item" href="../Alimentos/gestionAlimentos.html">Ver panel de
+                      <a class="dropdown-item" href="../Alimentos/gestionAlimentos.php">Ver panel de
                         alimentos</a>
                     </div>
                   </div>

@@ -71,6 +71,9 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Sistema desarrollado para la carrera de Nutrición de la Universidad del Centro Educativo Latinoamericano y presentado como proyecto final de los alumnos Leandro Donato, Sebastián Meza y Hernán Sosa, alumnos de la carrera de Ingeniería en Sistemas también de dicha Universidad.">
   <meta name="author" content="Leandro Donato, Sebastián Meza, Hernán Sosa, Juan Cruz Utge">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/Favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/Favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/Favicon/favicon-16x16.png">
   <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -109,7 +112,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Crear nueva encuesta</h6>
             </div>
-            <form>
+            <form name="formCrearEncuesta" id="formCrearEncuesta">
               <div class="row m-3 justify-content-center">
                 <div class="col-lg-8 col-md-4 col-sm-12">
                   <div class="alimento__dataInicial">
@@ -137,44 +140,38 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     <h4>Selector de frecuencia</h4>
                     <p>Indique qué frecuencias desea que figuren en el cuestionario (2 como mínimo)</p>
                     <div id="checkbox_frec" class="text-left">
-                      <div class="form-check">
-                        <input class="form-check-input" name="frecuencia1" type="checkbox" value="1" id="frec_nunca">
-                        <label class="form-check-label" for="frec_nunca">
-                          Nunca
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" name="frecuencia2" type="checkbox" value="2" id="frec_menosUnaVezPorSemana">
+                      <div class="form-check" id="form-check">
+                        <input class="form-check-input frecuenciaAlimento" name="frecuencia2" type="checkbox" value="2" id="frec_menosUnaVezPorSemana">
                         <label class="form-check-label" for="frec_menosUnaVezPorSemana">
                           Menos de 1 vez por semana
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia3" type="checkbox" value="3" id="frec_unaVezPorSemana">
+                        <input class="form-check-input frecuenciaAlimento" name="frecuencia3" type="checkbox" value="3" id="frec_unaVezPorSemana">
                         <label class="form-check-label" for="frec_unaVezPorSemana">
                           1 vez por semana
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia4" type="checkbox" value="4" id="frec_dosTresVecesPorSemana">
+                        <input class="form-check-input frecuenciaAlimento" name="frecuencia4" type="checkbox" value="4" id="frec_dosTresVecesPorSemana">
                         <label class="form-check-label" for="frec_dosTresVecesPorSemana">
                           2-3 veces por semana
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia5" type="checkbox" value="5" id="frec_cuatroSeisVecesPorSemana">
+                        <input class="form-check-input frecuenciaAlimento" name="frecuencia5" type="checkbox" value="5" id="frec_cuatroSeisVecesPorSemana">
                         <label class="form-check-label" for="frec_cuatroSeisVecesPorSemana">
                           4-6 veces por semana
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia6" type="checkbox" value="6" id="frec_diariamente">
+                        <input class="form-check-input frecuenciaAlimento" name="frecuencia6" type="checkbox" value="6" id="frec_diariamente">
                         <label class="form-check-label" for="frec_diariamente">
                           Diariamente
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" name="frecuencia7" type="checkbox" value="7" id="frec_masDeUnaVezAlDia">
+                        <input class="form-check-input frecuenciaAlimento" name="frecuencia7" type="checkbox" value="7" id="frec_masDeUnaVezAlDia">
                         <label class="form-check-label" for="frec_masDeUnaVezAlDia">
                           Más de 1 vez al día
                         </label>
@@ -275,7 +272,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos de la encuesta creada</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos de la encuesta</h5>
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">×</span>
                                 </button>
@@ -328,7 +325,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
   <!-- Page level plugins -->
   <script src="../../../vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="../../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+  <script src="../../../js/helper.js"></script>
 
   <!-- Page level custom scripts -->
   <script src="../../../js/demo/datatables-demo.js"></script>
