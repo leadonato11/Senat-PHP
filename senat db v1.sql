@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-09-2021 a las 02:39:21
--- Versión del servidor: 10.1.38-MariaDB
--- Versión de PHP: 7.3.2
+-- Tiempo de generación: 28-11-2021 a las 02:51:06
+-- Versión del servidor: 10.4.21-MariaDB
+-- Versión de PHP: 7.3.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `senat`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `alimentoencuesta`
+--
+
+CREATE TABLE `alimentoencuesta` (
+  `idalimentoencuesta` int(11) NOT NULL,
+  `idencuesta` int(11) NOT NULL,
+  `idalimento` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -78,37 +89,144 @@ CREATE TABLE `alimentos` (
   `grasaspi` float NOT NULL,
   `cloruro` float NOT NULL,
   `caroteno` float NOT NULL,
-  `fecha` datetime NOT NULL
+  `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `alimentos`
---
-
-INSERT INTO `alimentos` (`idalimentos`, `nombre`, `cant`, `umedida`, `porcion1`, `porcion2`, `porcion3`, `porcion4`, `grupo`, `energia`, `grasa`, `hcarbono`, `proteina`, `colesterol`, `falimentaria`, `sodio`, `agua`, `vitaminaa`, `vitaminab6`, `vitaminab12`, `vitaminac`, `vitaminad`, `vitaminae`, `vitaminak`, `almidon`, `lactosa`, `alcohol`, `cafeina`, `azucares`, `calcio`, `hierro`, `magnesio`, `fosforo`, `cinc`, `cobre`, `fluor`, `manganeso`, `selenio`, `tiamina`, `acpant`, `riboflavina`, `niacina`, `folato`, `acfolico`, `grasast`, `grasasmi`, `grasaspi`, `cloruro`, `caroteno`, `fecha`) VALUES
-(3, 'Manzana', 0, '', 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-09-20 01:28:56'),
-(4, 'Pera', 0, '', 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-09-20 01:30:58'),
-(5, 'Mandarina', 0, '', 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-09-20 01:33:09'),
-(6, 'Arroz', 0, '', 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-09-20 01:35:25'),
-(7, 'brd', 0, '', 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-09-20 01:35:43'),
-(8, 'drby', 0, '', 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-09-20 01:41:30'),
-(10, 'Pan de Salvado', 100, 'gr', 100, 200, 300, 450, 'Harinas', 1.2, 2.3, 3.4, 5.633, 1.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20.3, '2021-09-26 20:33:14');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `encuestas`
+-- Estructura de tabla para la tabla `encuesta`
 --
 
-CREATE TABLE `encuestas` (
-  `idencuestas` int(11) NOT NULL,
-  `idcreador` int(200) NOT NULL,
-  `nombre` varchar(200) NOT NULL,
-  `descripcion` varchar(2000) NOT NULL,
-  `estado` varchar(200) NOT NULL,
-  `fechac` datetime NOT NULL,
-  `fechaum` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `encuesta` (
+  `idencuesta` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `descripcion` varchar(300) NOT NULL,
+  `estado` int(11) NOT NULL,
+  `fechacreacion` datetime NOT NULL,
+  `fechaumod` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `encuestado`
+--
+
+CREATE TABLE `encuestado` (
+  `idencuestado` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL,
+  `idencuesta` int(11) NOT NULL,
+  `edad` int(11) NOT NULL,
+  `sexo` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `encuestafrecuencia`
+--
+
+CREATE TABLE `encuestafrecuencia` (
+  `idencuestafrecuencia` int(11) NOT NULL,
+  `idfrecuencia` int(11) NOT NULL,
+  `idencuesta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `encuestafrecuencia`
+--
+
+INSERT INTO `encuestafrecuencia` (`idencuestafrecuencia`, `idfrecuencia`, `idencuesta`) VALUES
+(61, 3, 32),
+(62, 4, 32),
+(63, 5, 32),
+(64, 6, 32),
+(65, 1, 33),
+(66, 4, 33),
+(67, 7, 33),
+(68, 1, 34),
+(69, 2, 34),
+(70, 4, 34),
+(71, 5, 34),
+(72, 6, 34),
+(73, 7, 32),
+(74, 7, 31),
+(75, 2, 31),
+(76, 1, 31),
+(77, 2, 31),
+(78, 4, 31),
+(80, 7, 31),
+(81, 1, 31),
+(82, 2, 31),
+(83, 4, 31),
+(85, 7, 31),
+(86, 1, 31),
+(87, 2, 31),
+(88, 4, 31),
+(90, 7, 31),
+(91, 1, 31),
+(92, 2, 31),
+(93, 4, 31),
+(95, 7, 31),
+(96, 3, 31),
+(97, 1, 35),
+(98, 2, 35),
+(99, 3, 35),
+(100, 4, 35),
+(101, 1, 36),
+(102, 2, 36),
+(103, 3, 36),
+(104, 4, 36),
+(105, 1, 37),
+(106, 5, 37),
+(107, 6, 37),
+(108, 7, 37),
+(109, 2, 38),
+(110, 3, 38),
+(111, 4, 38),
+(112, 5, 38),
+(113, 2, 39),
+(114, 3, 39),
+(115, 4, 39),
+(116, 5, 39),
+(117, 2, 40),
+(118, 3, 40),
+(119, 4, 40),
+(120, 5, 40),
+(121, 4, 41),
+(122, 2, 42),
+(123, 3, 42),
+(124, 4, 42),
+(125, 5, 42),
+(126, 6, 42),
+(127, 7, 42);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `frecuencias`
+--
+
+CREATE TABLE `frecuencias` (
+  `idfrecuencia` int(11) NOT NULL,
+  `nombrefrec` varchar(50) NOT NULL,
+  `valorfrec` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `frecuencias`
+--
+
+INSERT INTO `frecuencias` (`idfrecuencia`, `nombrefrec`, `valorfrec`) VALUES
+(1, 'Nunca', 0),
+(2, 'Menos de 1 vez por semana', 0.5),
+(3, '1 vez por semana', 1),
+(4, '2-3 veces por semana', 2.5),
+(5, '4-6 veces por semana', 5),
+(6, 'Diariamente', 7),
+(7, 'Más de 1 vez al día', 10);
 
 -- --------------------------------------------------------
 
@@ -121,19 +239,6 @@ CREATE TABLE `grupos` (
   `nombres` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `grupos`
---
-
-INSERT INTO `grupos` (`idgrupos`, `nombres`) VALUES
-(1, 'Fruta'),
-(2, 'Lacteo'),
-(3, 'Huevo'),
-(4, 'Harinas'),
-(5, 'Legumbres'),
-(6, 'LegumHarinasbres'),
-(7, 'Carnes Blancas');
-
 -- --------------------------------------------------------
 
 --
@@ -141,39 +246,32 @@ INSERT INTO `grupos` (`idgrupos`, `nombres`) VALUES
 --
 
 CREATE TABLE `lastupdate` (
-  `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `idlastupdate` int(11) NOT NULL,
+  `usuarios` datetime NOT NULL,
+  `alimentos` datetime NOT NULL,
+  `encuestas` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `lastupdate`
 --
 
-INSERT INTO `lastupdate` (`lastupdate`) VALUES
-('2021-07-11 03:00:00'),
-('2021-07-11 03:00:00'),
-('2021-07-11 03:00:00'),
-('2021-07-11 03:00:00'),
-('2021-07-11 03:00:00'),
-('2021-07-11 03:00:00'),
-('2021-07-11 03:00:00'),
-('2021-08-03 01:39:02'),
-('2021-08-03 01:47:02'),
-('2021-08-03 01:50:37'),
-('2021-08-02 03:00:00'),
-('2021-09-15 19:01:55'),
-('2021-09-15 19:05:25'),
-('2021-09-16 20:43:23'),
-('2021-09-16 20:52:06'),
-('2021-09-20 03:50:17'),
-('2021-09-20 03:53:04'),
-('2021-09-20 04:28:56'),
-('2021-09-20 04:30:58'),
-('2021-09-20 04:33:09'),
-('2021-09-20 04:35:25'),
-('2021-09-20 04:35:43'),
-('2021-09-20 04:41:30'),
-('2021-09-26 21:08:56'),
-('2021-09-26 23:33:14');
+INSERT INTO `lastupdate` (`idlastupdate`, `usuarios`, `alimentos`, `encuestas`) VALUES
+(1, '2021-11-27 22:17:51', '2021-11-26 00:50:45', '2021-11-27 21:12:09');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas`
+--
+
+CREATE TABLE `respuestas` (
+  `idrespuesta` int(11) NOT NULL,
+  `idencuesta` int(11) NOT NULL,
+  `idalimento` int(11) NOT NULL,
+  `idfrecuencia` int(11) NOT NULL,
+  `idporcion` int(11) NOT NULL COMMENT 'Peso de la porcion'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -198,11 +296,17 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idusuario`, `dni`, `clave`, `nombre`, `apellido`, `rol`, `correo`, `foto`, `estado`) VALUES
-(1, '0000', 'senat', 'Joe', 'Doee', 'admin', 'joe@gmail.com', 'TEM.jpg', 1);
+(1, '0000', 'senat', 'Administrador', 'Administrador', '1', 'administrador@administrador.com', 'Lechuga 01.png', 1);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `alimentoencuesta`
+--
+ALTER TABLE `alimentoencuesta`
+  ADD PRIMARY KEY (`idalimentoencuesta`);
 
 --
 -- Indices de la tabla `alimentos`
@@ -211,16 +315,46 @@ ALTER TABLE `alimentos`
   ADD PRIMARY KEY (`idalimentos`);
 
 --
--- Indices de la tabla `encuestas`
+-- Indices de la tabla `encuesta`
 --
-ALTER TABLE `encuestas`
-  ADD PRIMARY KEY (`idencuestas`);
+ALTER TABLE `encuesta`
+  ADD PRIMARY KEY (`idencuesta`);
+
+--
+-- Indices de la tabla `encuestado`
+--
+ALTER TABLE `encuestado`
+  ADD PRIMARY KEY (`idencuestado`);
+
+--
+-- Indices de la tabla `encuestafrecuencia`
+--
+ALTER TABLE `encuestafrecuencia`
+  ADD PRIMARY KEY (`idencuestafrecuencia`);
+
+--
+-- Indices de la tabla `frecuencias`
+--
+ALTER TABLE `frecuencias`
+  ADD PRIMARY KEY (`idfrecuencia`);
 
 --
 -- Indices de la tabla `grupos`
 --
 ALTER TABLE `grupos`
   ADD PRIMARY KEY (`idgrupos`);
+
+--
+-- Indices de la tabla `lastupdate`
+--
+ALTER TABLE `lastupdate`
+  ADD PRIMARY KEY (`idlastupdate`);
+
+--
+-- Indices de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD PRIMARY KEY (`idrespuesta`);
 
 --
 -- Indices de la tabla `usuario`
@@ -233,28 +367,64 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `alimentoencuesta`
+--
+ALTER TABLE `alimentoencuesta`
+  MODIFY `idalimentoencuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+
+--
 -- AUTO_INCREMENT de la tabla `alimentos`
 --
 ALTER TABLE `alimentos`
-  MODIFY `idalimentos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idalimentos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT de la tabla `encuestas`
+-- AUTO_INCREMENT de la tabla `encuesta`
 --
-ALTER TABLE `encuestas`
-  MODIFY `idencuestas` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `encuesta`
+  MODIFY `idencuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT de la tabla `encuestado`
+--
+ALTER TABLE `encuestado`
+  MODIFY `idencuestado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `encuestafrecuencia`
+--
+ALTER TABLE `encuestafrecuencia`
+  MODIFY `idencuestafrecuencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+
+--
+-- AUTO_INCREMENT de la tabla `frecuencias`
+--
+ALTER TABLE `frecuencias`
+  MODIFY `idfrecuencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
-  MODIFY `idgrupos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idgrupos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `lastupdate`
+--
+ALTER TABLE `lastupdate`
+  MODIFY `idlastupdate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  MODIFY `idrespuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
