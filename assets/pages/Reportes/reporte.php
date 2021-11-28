@@ -25,8 +25,8 @@ $idEncuesta=$_SESSION['imprimirReporte'];
 $documento = new Spreadsheet();
 $documento
 ->getProperties()
-->setCreator($usuarioReport)
-->setLastModifiedBy($usuarioReport)
+->setCreator('SenatCreator')
+->setLastModifiedBy('SenatModified')
 ->setTitle('Archivo generado automaticamente')
 ->setDescription('Tabla de ingesta de alimentos');
 
@@ -110,6 +110,4 @@ $writer = new Xlsx($documento);
 # Le pasamos la ruta de guardado
 $writer->save('Reporte-'.$dbEnc['nombre'].'.xlsx'); 
 /* $writer->save('php://output'); */
-header("Location:Reporte-".$dbEnc['nombre'].".xlsx");  
-
-?>
+header("Location:Reporte-".$dbEnc['nombre'].".xlsx");

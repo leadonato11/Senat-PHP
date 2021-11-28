@@ -1,9 +1,14 @@
 // Crear usuario
 $("#imagenUsuario").on("change", function (e) {
   const filepath = e.target.value;
+  // C:\images\comida.jpg
+
   const pathsplit = filepath.split(/[\\\/]/);
+  // [C:, images, comida.jpg]
 
   const filename = pathsplit[pathsplit.length - 1];
+  // comida.jpg
+
   $("#labelImagenUsuario").text(filename);
   $("#previewImagenUsuario").attr("src", filepath);
 
@@ -35,7 +40,8 @@ $("#inputGroupFile01").on("change", function (e) {
 
   const imagePorc01 = URL.createObjectURL(e.target.files[0]);
   $("#outputPorc01").attr("src", imagePorc01);
-  $("#outputPorc01").show()
+  $("#outputPorc01").show();
+  $("#cantPorcion1").show();
 });
 
 // Crear alimento porción 2
@@ -49,7 +55,9 @@ $("#inputGroupFile02").on("change", function (e) {
 
   const imagePorc02 = URL.createObjectURL(e.target.files[0]);
   $("#outputPorc02").attr("src", imagePorc02);
-  $("#outputPorc02").show()
+  $("#outputPorc02").show();
+  $("#cantPorcion2").show();
+  $("#contenedorPorcion3").show();
 });
 
 // Crear alimento porción 3
@@ -63,7 +71,9 @@ $("#inputGroupFile03").on("change", function (e) {
 
   const imagePorc03 = URL.createObjectURL(e.target.files[0]);
   $("#outputPorc03").attr("src", imagePorc03);
-  $("#outputPorc03").show()
+  $("#outputPorc03").show();
+  $("#cantPorcion3").show();
+  $("#contenedorPorcion4").show();
 });
 
 // Crear alimento porción 4
@@ -77,5 +87,16 @@ $("#inputGroupFile04").on("change", function (e) {
 
   const imagePorc04 = URL.createObjectURL(e.target.files[0]);
   $("#outputPorc04").attr("src", imagePorc04);
-  $("#outputPorc04").show()
+  $("#outputPorc04").show();
+});
+
+$("#selectorPorciones").on("change", function () {
+  console.log("Entre en el change")
+  if ($("#selectorPorciones option[value='0']").attr("selected", false)) {
+    console.log("Entre en el if")
+    $("#frec_nunca1").prop("checked", false);
+  } else if ($("#selectorPorciones option[value='0']").attr("selected", true)){
+    console.log("Entre en el else")
+    $("#frec_nunca1").prop("checked", true);
+  }
 });

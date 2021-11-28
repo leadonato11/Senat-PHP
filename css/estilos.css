@@ -354,7 +354,10 @@ margin: 0 20px;
   border-bottom-left-radius: 0;
 }
 
-.messageWarningNoComplete {
-  color: red;
+#cantPorcion1, #cantPorcion2, #cantPorcion3, #cantPorcion4 {
+  display: none;
+}
+
+#contenedorPorcion3, #contenedorPorcion4 {
   display: none;
 }

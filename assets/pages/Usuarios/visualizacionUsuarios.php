@@ -101,7 +101,19 @@ if (isset($_REQUEST['eliminarUsuario'])) {
                 <div class="col-lg-4 col-md-4 col-sm-12">
                   <div class="alimento__fotoPrincipal">
                     <h3>Foto de perfil</h3>
-                    <img src="../../img/ImgUsuarios/<?php echo $userEdit['dni']; ?>.jpg" width="350" class="img-fluid rounded mb-2" alt="foodImage">
+                    <?php 
+                    if($userEdit['foto']!=''){
+                    echo '
+                    <img src="../../img/ImgUsuarios/'.$userEdit['dni'].'.jpg" width="350" class="img-fluid rounded mb-2" alt="foodImage">
+
+                      '; 
+                    }else{
+                      echo '
+                      <img src="../../img/ImgUsuarios/undraw_profile.svg" width="350" class="img-fluid rounded mb-2" alt="foodImage">
+
+                    '; 
+                    }
+                    ?>
                   </div>
                 </div>
                 <div class="col-lg-8 col-md-4 col-sm-12">

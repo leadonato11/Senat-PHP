@@ -75,7 +75,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
     mysqli_query($conect, "UPDATE lastupdate SET usuarios='$fechaActual' WHERE idlastupdate=1");
     if ($_FILES['fotoUsuario']['name'] != "") {
       
-      $arch1 = move_uploaded_file($_FILES['fotoUsuario']['tmp_name'], "../../img/imgUsuarios/" . $dni . ".jpg");
+      $arch1 = move_uploaded_file($_FILES['fotoUsuario']['tmp_name'], "../../img/ImgUsuarios/" . $dni . ".jpg");
       if ($arch1) {
         header("Location:gestionUsuarios.php?Carga=exitosa");
       } else {
@@ -85,6 +85,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
       header("Location:gestionUsuarios.php?Carga=Fallida");
     }
     }
+    $ver=$_FILES['fotoUsuario']['name']; 
     header("Location:gestionUsuarios.php");
   }
 
@@ -143,7 +144,17 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                 <div class="col-lg-4 col-md-4 col-sm-12">
                   <div class="alimento__fotoPrincipal">
                     <h3>Foto de perfil</h3>
-                    <img src="../../img/ImgUsuarios/<?php echo $userEdit['dni']; ?>.jpg" id="previewImagenUsuario" class="img-fluid rounded mb-2 fotoPerfilUsuario" alt="foodImage">
+                    <?php 
+                    if($userEdit['foto']!=''){
+                    echo '
+                    <img src="../../img/ImgUsuarios/'.$userEdit['dni'].'.jpg" id="previewImagenUsuario" class="img-fluid rounded mb-2 fotoPerfilUsuario" alt="foodImage">
+                    '; 
+                    }else{
+                      echo '
+                      <img src="../../img/ImgUsuarios/undraw_profile.svg" id="previewImagenUsuario" class="img-fluid rounded mb-2 fotoPerfilUsuario" alt="foodImage">
+                      '; 
+                    }
+                    ?>
                     <div class="custom-file">
                       <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario">
                       <label class="custom-file-label" id="labelImagenUsuario" for="imagenUsuario">Imagen Usuario</label>

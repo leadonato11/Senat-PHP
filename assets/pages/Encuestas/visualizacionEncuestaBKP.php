@@ -183,7 +183,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
                   <?php
 
                   if ($cantAliEnc != 0) {
-
+                  
                     foreach ($dbAliEncS as $dbAliEnc) {
                       $idAlimento = $dbAliEnc['idalimento'];
                       $queryAli = mysqli_query($conect, "SELECT * FROM alimentos WHERE idalimentos='$idAlimento'");
