@@ -88,6 +88,7 @@ $("#inputGroupFile04").on("change", function (e) {
   const imagePorc04 = URL.createObjectURL(e.target.files[0]);
   $("#outputPorc04").attr("src", imagePorc04);
   $("#outputPorc04").show();
+  $("#cantPorcion4").show();
 });
 
 $("#selectorPorciones").on("change", function () {

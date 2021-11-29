@@ -282,7 +282,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <div class="porcion text-center">
                           <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc01" src="" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01" onkeyup="validarCargaPorcion()" onclick="validarCargaPorcion()" name="fotoporcion1" accept="image/png, image/gif, image/jpeg" required>
+                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="fotoporcion1" accept="image/png, image/gif, image/jpeg" required>
                             <label class="custom-file-label" id="imagenLabelPorc01" for="inputGroupFile01">Porción
                               01</label>
                           </div>
@@ -295,7 +295,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <div class="porcion text-center">
                           <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc02" src="" alt="foodImage">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02" required>
+                            <input type="file" class="custom-file-input" name="fotoporcion2" id="inputGroupFile02" accept="image/png, image/gif, image/jpeg" required>
                             <label class="custom-file-label" id="imagenLabelPorc02" for="inputGroupFile02">Porción
                               02</label>
                           </div>
@@ -308,12 +308,12 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <div class="porcion text-center">
                           <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc03" src="" alt="foodImage">
                           <div class="custom-file" id="contenedorPorcion3">
-                            <input type="file" class="custom-file-input" name="fotoporcion3" id="inputGroupFile03">
+                            <input type="file" class="custom-file-input" name="fotoporcion3" id="inputGroupFile03" accept="image/png, image/gif, image/jpeg">
                             <label class="custom-file-label" id="imagenLabelPorc03" for="inputGroupFile03">Porción
                               03</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" step="any" min="0" id="cantPorcion3" class="form-control" name="porcion3" placeholder="Peso/Volumen porción 03" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                            <input type="number" step="any" min="0" id="cantPorcion3" class="form-control" name="porcion3" placeholder="Peso/Volumen porción 03" aria-label="fuenteAlimento" aria-describedby="basic-addon1" required>
                           </div>
                         </div>
                       </div>
@@ -321,12 +321,12 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                         <div class="porcion text-center">
                           <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="outputPorc04" src="" alt="foodImage">
                           <div class="custom-file" id="contenedorPorcion4">
-                            <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04">
+                            <input type="file" class="custom-file-input" name="fotoporcion4" id="inputGroupFile04" accept="image/png, image/gif, image/jpeg">
                             <label class="custom-file-label" id="imagenLabelPorc04" for="inputGroupFile04">Porción
                               04</label>
                           </div>
                           <div class="InputInfoPorcion">
-                            <input type="number" step="any" min="0" id="cantPorcion4" class="form-control" name="porcion4" placeholder="Peso/Volumen porción 04" aria-label="fuenteAlimento" aria-describedby="basic-addon1">
+                            <input type="number" step="any" min="0" id="cantPorcion4" class="form-control" name="porcion4" placeholder="Peso/Volumen porción 04" aria-label="fuenteAlimento" aria-describedby="basic-addon1" requierd>
                           </div>
                         </div>
                       </div>

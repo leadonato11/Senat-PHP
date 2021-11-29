@@ -131,12 +131,48 @@ if (isset($_REQUEST['cerrar'])) {
             <div class="row m-3 justify-content-center">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="buttons__AlimentoAlta">
-                  <a class="btn btn-outline-danger m-2" href="gestionGrupoDeAlimentos.php">Cancelar</a>
-                  <button class="btn btn-success m-2">Guardar grupo de alimentos</button>
+                  <a class="btn btn-outline-danger m-2" href="#" data-toggle="modal" data-target="#cancelarGrupoAlimentoModal" role="button">Cancelar</a>
+                  <a id="guardarGrupoAlimento" class="btn btn-success m-2" data-toggle="modal" data-target="#guardarGrupoAlimentoModal" role="button">Guardar Grupo de alimentos</a>
                 </div>
               </div>
             </div> <!-- Fin Botonera -->
+            <!-- Guardar alimento Modal-->
+            <div class="modal fade" id="guardarGrupoAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Se guardarán los datos del grupo del alimento</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">Estás seguro?</div>
+                  <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success">Guardar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             </form>
+            <!-- Cancelar Guardar grupo alimento Modal-->
+            <div class="modal fade" id="cancelarGrupoAlimentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Se perderán los datos que no hayan sido guardados</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">Estás seguro?</div>
+                  <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href="gestionGrupoDeAlimentos.php" class="btn btn-danger">Si, salir</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div> <!-- Fin alta de grupos -->
       </div>

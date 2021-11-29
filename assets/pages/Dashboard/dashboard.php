@@ -77,6 +77,31 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
           </div>
           <div class="row">
 
+            <!-- Area Primeros pasos con SENAT -->
+            <div class="col-xl-5 col-lg-5">
+              <div class="card shadow mb-4 border-bottom-info">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Primeros pasos con SENAT</h6>
+                </div>
+                <div class="card-body">
+                  <p>Manual de usuario: <a href="#">Descargar PDF</a></p>
+                  <p>Video tutorial: <a href="#">Ver en Drive</a></p>
+                  <hr class="sidebar-divider">
+                  <p class="primerosPasosDesc1">Este sistema fue desarrollado por el equipo de Ingenieros:
+                    Leandro Donato, Sebastián Meza y Hernán Sosa,
+                    alumnos de la carrera ISI de la Universidad UCEL.</p>
+                  <p>Agradecimientos a:</p>
+                  <p>Luciano Ripani</p>
+                  <p>Cecilia Torrent</p>
+                  <p>Antonio Rial</p>
+                  <p>Juan Francisco Plá</p>
+                  <p>Juan Cruz Utge</p>
+                  <p>Ezequiel Barrales</p>
+                </div>
+              </div>
+            </div>
+            <!-- End Area Primeros pasos con SENAT -->
+
             <!-- Area Panel de usuarios -->
             <div class="col-xl-7 col-lg-7">
               <div class="card shadow mb-4 border-bottom-info">
@@ -144,31 +169,7 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
               </div>
             </div>
             <!-- Fin Area Panel de usuarios -->
-
-
-            <!-- Area Primeros pasos con SENAT -->
-            <div class="col-xl-5 col-lg-5">
-              <div class="card shadow mb-4 border-bottom-info">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Primeros pasos con SENAT</h6>
-                </div>
-                <div class="card-body">
-                  <p>Manual de usuario: <a href="#">Descargar PDF</a></p>
-                  <p>Video tutorial: <a href="#">Ver en Drive</a></p>
-                  <hr class="sidebar-divider">
-                  <p class="primerosPasosDesc1">Este sistema fue desarrollado por el equipo de Ingenieros:
-                    Leandro Donato, Sebastián Meza y Hernán Sosa,
-                    alumnos de la carrera ISI de la Universidad UCEL.</p>
-                  <p>Agradecimientos a:</p>
-                  <p>Luciano Ripani</p>
-                  <p>Cecilia Torrent</p>
-                  <p>Antonio Rial</p>
-                  <p>Juan Francisco Plá</p>
-                  <p>Juan Cruz Utge</p>
-                </div>
-              </div>
-            </div>
-            <!-- End Area Primeros pasos con SENAT -->
+            
           </div>
 
 

@@ -197,7 +197,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     <h3>Imagen representativa</h3>
                     <img class="img-fluid rounded mb-2 imgAlimentoProfile" id="imagePreview" accept="image/png, image/gif, image/jpeg" src="../../img/imgAlimentos/<?php echo $db['nombre'] ?>falimento.jpg" alt="foodImage">
                     <div class="custom-file">
-                      <input type="file" name="fotoalimento" class="custom-file-input" id="imagenAlimento">
+                      <input type="file" name="fotoalimento" class="custom-file-input" id="imagenAlimento" accept="image/png, image/gif, image/jpeg">
                       <label class="custom-file-label justify-content-start" for="imagenAlimento" id="imagePreview">Imagen
                         alimento</label>
                     </div>

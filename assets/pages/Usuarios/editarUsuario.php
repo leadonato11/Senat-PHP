@@ -156,7 +156,7 @@ if (isset($_REQUEST['nombre']) && !empty($_REQUEST['nombre'])) {
                     }
                     ?>
                     <div class="custom-file">
-                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario">
+                      <input type="file" name="fotoUsuario" class="custom-file-input" id="imagenUsuario" accept="image/png, image/gif, image/jpeg">
                       <label class="custom-file-label" id="labelImagenUsuario" for="imagenUsuario">Imagen Usuario</label>
                     </div>
                   </div>

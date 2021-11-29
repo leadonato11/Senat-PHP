@@ -68,10 +68,16 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
         $porcion = 'porcion';
         if (isset($_REQUEST[$porcion . $idA]) && !empty($_REQUEST[$porcion . $idA])) {
           $idporcion = $_REQUEST[$porcion . $idA];
-          $idfrecuencia = $_REQUEST['frecEncuesta' . $idA];
-          if ($idfrecuencia == 0) {
-            $idporcion = 0;
+          if($idporcion=='ninguna'){
+            $idporcion=0;
+            $idfrecuencia=0;
           }
+          if (isset($_REQUEST['frecEncuesta' . $idA]) && !empty($_REQUEST[$porcion . $idA])) {
+          $idfrecuencia = $_REQUEST['frecEncuesta' . $idA];
+          }else{
+            $idfrecuencia=0;
+          }
+          
           $idEncuestado = $idLastEncuestado;
 
           mysqli_query($conect, "INSERT INTO respuestas VALUES(NULL, '$idEncuestado', '$idA', '$idfrecuencia', '$idporcion') ");
@@ -217,7 +223,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
                             <h4>Selector de porciones</h4>
                             <select name="porcion' . $idAlimento . '"  class="selectorPorciones" id="selectorPorciones" required>
                             <option selected disabled value="">Elija una porción...</option>
-                            <option value="0">Ninguna</option>
+                            <option value="ninguna">Ninguna</option>
                             ';
 
                 for ($k = 1; $k <= 4; $k++) {
