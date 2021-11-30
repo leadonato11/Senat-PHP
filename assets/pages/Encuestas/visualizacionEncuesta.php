@@ -70,12 +70,12 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
           $idporcion = $_REQUEST[$porcion . $idA];
           if($idporcion=='ninguna'){
             $idporcion=0;
-            $idfrecuencia=0;
+            $idfrecuencia=1;
           }
           if (isset($_REQUEST['frecEncuesta' . $idA]) && !empty($_REQUEST[$porcion . $idA])) {
           $idfrecuencia = $_REQUEST['frecEncuesta' . $idA];
           }else{
-            $idfrecuencia=0;
+            $idfrecuencia=1;
           }
           
           $idEncuestado = $idLastEncuestado;
@@ -244,7 +244,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
                             ';
                 echo '
                             <div class="form-check">
-                            <input class="form-check-input" name="frecEncuesta' . $idAlimento . '" type="radio" value="0" id="frec_nunca' . $contAlimentos . '">
+                            <input class="form-check-input" name="frecEncuesta' . $idAlimento . '" type="radio" value="1" id="frec_nunca' . $contAlimentos . '" required>
                             <label class="form-check-label" for="frec_nunca">
                              Nunca 
                             </label>
@@ -264,7 +264,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
 
                     echo '
                                   <div class="form-check">
-                                  <input class="form-check-input" name="frecEncuesta' . $idAlimento . '" type="radio" value="' . $dbFrec['valorfrec'] . '" id="frec_nunca">
+                                  <input class="form-check-input" name="frecEncuesta' . $idAlimento . '" type="radio" value="' . $dbFrec['idfrecuencia'] . '" id="frec_nunca">
                                   <label class="form-check-label" for="frecEncuesta">
                                   ' . $dbFrec['nombrefrec'] . '
                                   </label>

@@ -78,7 +78,7 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
           <div class="row">
 
             <!-- Area Primeros pasos con SENAT -->
-            <div class="col-xl-5 col-lg-5">
+            <div class="col-xl-12 col-lg-12">
               <div class="card shadow mb-4 border-bottom-info">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Primeros pasos con SENAT</h6>
@@ -103,7 +103,10 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
             <!-- End Area Primeros pasos con SENAT -->
 
             <!-- Area Panel de usuarios -->
-            <div class="col-xl-7 col-lg-7">
+            <?php
+            if($dbUser['rol']==1){
+              echo '
+            <div class="col-xl-12 col-lg-12">
               <div class="card shadow mb-4 border-bottom-info">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -132,8 +135,8 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                           <th class="text-center" scope="col">Rol</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <?php
+                      <tbody>';
+                      
                         $contU = 0;
                         $queryUserTotal = mysqli_query($conect, "SELECT * FROM usuario ORDER BY idusuario DESC");
                         
@@ -154,12 +157,12 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                             </tr>';
                           }
                         }
-                        ?>
-
+                       
+                        echo '
                       </tbody>
                       <tfoot>
                         <tr>
-                          <th class="text-center" colspan="4">Última actualización: <?php echo $dbLastUpdate['usuarios'];?></th>
+                          <th class="text-center" colspan="4">Última actualización:'.$dbLastUpdate['usuarios'].'</th>
                         </tr>
                       </tfoot>
                     </table>
@@ -168,7 +171,9 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                 <!-- End Card Body panel de usuarios -->
               </div>
             </div>
-            <!-- Fin Area Panel de usuarios -->
+            <!-- Fin Area Panel de usuarios -->';
+                      }
+                      ?>
             
           </div>
 
