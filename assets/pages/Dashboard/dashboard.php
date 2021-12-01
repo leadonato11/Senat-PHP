@@ -84,7 +84,7 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                   <h6 class="m-0 font-weight-bold text-primary">Primeros pasos con SENAT</h6>
                 </div>
                 <div class="card-body text-center">
-                  <p>Manual de usuario: <a href="https://drive.google.com/file/d/1lxSyKtSv5qOHhf96zhiHie60IbHSkyz0" target="_blank">Descargar PDF</a></p>
+                  <p>Manual de usuario: <a href="https://drive.google.com/file/d/1v1pzCSZjfzi6mNW4vpQRutbWF3FLld6R" target="_blank">Descargar PDF</a></p>
                   <hr class="sidebar-divider">
                   <p class="primerosPasosDesc1">Este sistema fue desarrollado por el equipo de Ingenieros:
                     Leandro Donato, Sebastián Meza y Hernán Sosa,
