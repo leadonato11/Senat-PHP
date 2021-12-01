@@ -31,10 +31,10 @@ $documento
 ->setDescription('Tabla de ingesta de alimentos');
 
 $hojaDeReporte = $documento->getActiveSheet();
-$hojaDeReporte->setTitle("Productos");
+$hojaDeReporte->setTitle("Reporte");
 
 # Encabezado de los productos
-$encabezado = ["Nombre y Apellido Encuestador", "Identificación del Encuestado", "Edad Encuestado", "Sexo Encuestado", "Alimento", "NroPorcion", "Frecuencia", "Peso Asociado", "Unidad de medida", "Energia", "Grasas", "Hidratos de carbono", "Proteínas", "Colesterol", "Fibra Alimentaria", "Sodio", "Agua", "Vitamina A", "Vitamina B6", "Vitamina B12", "Vitamina C", "Vitamina D", "Vitamina E", "Vitamina K", "Almidón", "Lactosa", "Alcohol", "Cafeína", "Azúcares", "Calcio", "Hierro", "Magnesio", "Fósforo", "Cinc", "Cobre", "Fluor", "Manganeso", "Selenio", "Tiamina", "Ácido Pantetónico", "Riboflavina", "Niacina", "Folato", "Ácido Fólico", "Gasas Trans", "Grasas Monoinsaturadas", "Grasas Poliinsaturadas", "Cloruro", "Caroteno"];
+$encabezado = ["Nombre y Apellido Encuestador", "Identificación del Encuestado", "Edad Encuestado", "Sexo Encuestado", "Alimento", "NroPorcion", "Frecuencia", "Peso Asociado", "Unidad de medida", "Energía", "Grasas", "Hidratos de carbono", "Proteínas", "Colesterol", "Fibra Alimentaria", "Sodio", "Agua", "Vitamina A", "Vitamina B6", "Vitamina B12", "Vitamina C", "Vitamina D", "Vitamina E", "Vitamina K", "Almidón", "Lactosa", "Alcohol", "Cafeína", "Azúcares", "Calcio", "Hierro", "Magnesio", "Fósforo", "Cinc", "Cobre", "Flúor", "Manganeso", "Selenio", "Tiamina", "Ácido Pantetónico", "Riboflavina", "Niacina", "Folato", "Ácido Fólico", "Gasas Trans", "Grasas Monoinsaturadas", "Grasas Poliinsaturadas", "Cloruro", "Caroteno"];
 # El último argumento es por defecto A1
 $hojaDeReporte->fromArray($encabezado, null, 'A1');
 /* 
@@ -108,6 +108,6 @@ if(mysqli_num_rows($queryEncuestado)!=0){
 # Crear un "escritor"
 $writer = new Xlsx($documento);
 # Le pasamos la ruta de guardado
-$writer->save('Reporte-'.$dbEnc['nombre'].'.xlsx'); 
+/* $writer->save('Reporte-'.$dbEnc['nombre'].'.xlsx');  */
 /* $writer->save('php://output'); */
 header("Location:Reporte-".$dbEnc['nombre'].".xlsx");

@@ -83,16 +83,15 @@ $dbLastUpdate=mysqli_fetch_assoc($queryLast);
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Primeros pasos con SENAT</h6>
                 </div>
-                <div class="card-body">
-                  <p>Manual de usuario: <a href="#">Descargar PDF</a></p>
-                  <p>Video tutorial: <a href="#">Ver en Drive</a></p>
+                <div class="card-body text-center">
+                  <p>Manual de usuario: <a href="https://drive.google.com/file/d/1lxSyKtSv5qOHhf96zhiHie60IbHSkyz0" target="_blank">Descargar PDF</a></p>
                   <hr class="sidebar-divider">
                   <p class="primerosPasosDesc1">Este sistema fue desarrollado por el equipo de Ingenieros:
                     Leandro Donato, Sebastián Meza y Hernán Sosa,
                     alumnos de la carrera ISI de la Universidad UCEL.</p>
-                  <p>Agradecimientos a:</p>
+                  <p class="primerosPasosDesc1">Agradecimientos a:</p>
                   <p>Luciano Ripani</p>
-                  <p>Cecilia Torrent</p>
+                  <p>María Cecilia Torrent</p>
                   <p>Antonio Rial</p>
                   <p>Juan Francisco Plá</p>
                   <p>Juan Cruz Utge</p>

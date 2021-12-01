@@ -160,7 +160,7 @@ if (isset($_REQUEST['edad']) && !empty($_REQUEST['edad'])) {
                     <div class="input-group-prepend">
                       <span class="input-group-text bg-dark text-light labelMacroMicroNut" id="basic-addon1">Edad</span>
                     </div>
-                    <input type="number" name="edad" class="form-control" placeholder="Edad..." aria-label="edad" aria-describedby="basic-addon1" required>
+                    <input type="number" name="edad" class="form-control" id="edadEncuestado" min="1" max="99" placeholder="Edad..." aria-label="edad" aria-describedby="basic-addon1" required>
                   </div>
                   <div class="input-group">
                     <div class="input-group-prepend">
